@@ -17,8 +17,8 @@ namespace WebAdmin.Controllers
     {
         private readonly DBAdminContext _context;
 
-        public bool IsTechSupport { get; set; }
-        public string Si { get; set; }
+        public static bool IsTechSupport { get; set; }
+       
 
         
 
@@ -93,14 +93,13 @@ namespace WebAdmin.Controllers
             //si encontro un usuario Significa que es de Technical Support por logica si tiene Acceso A Cases
             if (admin == 1)
             {
-                this.Si = "Si";
-                string porque = Si;
+                
                 IsTechSupport = true;
                 return View(await dBAdminContext.ToListAsync());
             }
             else
             {
-                Si = "No";
+               
                 IsTechSupport = false;
                 return RedirectToAction("../Home/Privacy");
                 // return NotFound();
@@ -202,7 +201,7 @@ namespace WebAdmin.Controllers
                 return RedirectToAction("../Identity/Account/Login");
             }
 
-            if (this.Si == "No")
+            if (IsTechSupport == false)
             {
                 return RedirectToAction("../Home/Privacy");
             }
