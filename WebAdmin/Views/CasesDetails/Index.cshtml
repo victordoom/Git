@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebAdmin.Models.CasesDetails>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+
+
+<table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Suggestion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NormalRow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cases)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SegUsuarios)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DetailDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Suggestion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NormalRow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cases.CasesID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SegUsuarios.UserID)
+            </td>
+            <td width="13%">
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.DetailId"><span class="glyphicon glyphicon-edit"></span></a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.DetailId"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.DetailId"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,341 @@
+﻿@model WebAdmin.Models.Cases
+
+@{
+    ViewData["Title"] = "Create";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "In Proccess",
+        Value = "In Proccess"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Pending",
+        Value = "Pending",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Resolved",
+        Value = "Resolved"
+    });
+}
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+        $("#AssignedTo").change(function () {
+            $.ajax({
+                url: '@Url.Action("GetUserData", "Cases")',
+                type: 'POST',
+                dataType: 'json',
+                data: { clientID: $("#AssignedTo").val() },
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    if (data.success) {
+                        // fill the product code
+                        alert(data.Login);
+                        //$("#LoginUser").(data.Login);
+                    }
+                    else {
+                        // show a message in a alert or div
+                        alert('This Product ID is not valid. Try again!');
+                    }
+                }
+            });
+        });
+    });
+
+
+</script>*@
+
+
+<br />
+<div class="panel panel-primary">
+    <div class="panel-heading">Create Case</div>
+    <div class="panel-body">
+
+        <div class="row col-md-12">
+
+            <div>
+                <form asp-action="Create">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="CasesID" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*ok 1 *@
+                                    <div class="form-group">
+                                        <label asp-for="ContractId" class="control-label"></label>
+                                        <input asp-for="ContractId" class="form-control" />
+                                        <span asp-validation-for="ContractId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group">
+
+                                    <div class="col-md-10">
+                                        @*ok 2 *@
+                                        <label asp-for="CompanyId" class="control-label"></label>
+                                    </div>
+                                    <div class="col-md-12 col-sm-6 col-xs-12">
+                                        <select asp-for="CompanyId" id="companyID" class="example col-md-12 form-control" asp-items="ViewBag.CompanyId"></select>
+                                        <span asp-validation-for="CompanyId" class="text-danger"></span>
+                                        @*@Html.DropDownListFor(model => model.CompanyId, (SelectList)ViewBag.CompanyId,"Select Item", htmlAttributes: new {@id="companyID", @class = "example form-control" })*@
+                                    </div>
+
+                                    @*<div class="col-md-2">
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+
+                        </div>*@
+
+
+                                </div>
+                            </div>
+
+                            @*ok 3 *@
+                            <br />
+                            <div class="form-group">
+                                <label asp-for="LocationId" class="control-label"></label>
+                                @*<select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId"></select>*@
+                                @Html.DropDownListFor(model => model.LocationId, new SelectList(string.Empty, "value", "text"), "Select Item", htmlAttributes: new { @id = "locationID", @class = "example form-control customDrowDown" })
+                                <span asp-validation-for="LocationId" class="text-danger"></span>
+                            </div>
+                            @*ok 4  *@
+
+                            @*ok 5*@
+
+                        </div>
+
+                        <div class="col-md-6">
+                            @*ok 1*@
+                            <div class="form-group">
+                                <label asp-for="OpenedDate" class="control-label"></label>
+                                <input asp-for="OpenedDate" class="form-control" disabled="disabled" />
+                                <span asp-validation-for="OpenedDate" class="text-danger"></span>
+                            </div>
+                            @*ok 2*@
+                            <div class="form-group">
+                                <label asp-for="OpenedBy" class="control-label"></label>
+                                @*<input asp-for="OpenedBy" class="form-control" />*@
+                                <select asp-for="OpenedBy" class="form-control" asp-items="ViewBag.OpenedBy"></select>
+                                <span asp-validation-for="OpenedBy" class="text-danger"></span>
+                            </div>
+                            @*ok 3*@
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label"></label>
+                                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                            @*ok 4*@
+                            @*<div class="form-group">
+                    <label asp-for="AssignedToSendEmail" class="control-label"></label>
+                    <input asp-for="AssignedToSendEmail" class="form-control" />
+                    <span asp-validation-for="AssignedToSendEmail" class="text-danger"></span>
+                </div>*@
+
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="col-md-12" style="background-color:cornflowerblue;">
+                                <div class="form-group">
+                                    <label asp-for="Title" class="control-label"></label>
+                                    <input asp-for="Title" class="form-control" />
+                                    @*@Html.TextAreaFor(m => m.Title, new { @class = "form-control" })*@
+                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    <br />
+                    <div class="row col-sm-12">
+                        <div class="col-md-6" style="background-color:gainsboro;">
+                            <div class="form-group">
+                                <label asp-for="CallerName" class="control-label"></label>
+                                <input asp-for="CallerName" class="form-control" />
+                                <span asp-validation-for="CallerName" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CallerTitle" class="control-label"></label>
+                                <input asp-for="CallerTitle" class="form-control" />
+                                <span asp-validation-for="CallerTitle" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6" style="background-color:gainsboro;">
+                            <div class="form-group">
+                                <label asp-for="CallerEmail" class="control-label"></label>
+                                <input asp-for="CallerEmail" class="form-control" />
+                                <span asp-validation-for="CallerEmail" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CallerPhone" class="control-label"></label>
+                                <input asp-for="CallerPhone" class="form-control" />
+                                <span asp-validation-for="CallerPhone" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                @*@Html.TextAreaFor(m => m.Description, new { @class = "form-control" })*@
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="AssignedTo" class="control-label"></label>
+                                <select asp-for="AssignedTo" id="Select_assignedto" class="form-control" asp-items="ViewBag.AssignedTo"></select>
+                                <span asp-validation-for="AssignedTo" class="text-danger"></span>
+                            </div>
+
+                            @*<div class="form-group col-md-6">
+                                <label class="control-label"> Name</label>
+                                <input class="form-control" id="Name" disabled />
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Last Name</label>
+                                <input class="form-control" id="LastName" disabled />
+                            </div>*@
+
+                            @*<div class="form-group">
+            <label asp-for="DueDate" class="control-label"></label>
+            <input asp-for="DueDate" class="form-control" />
+            <span asp-validation-for="DueDate" class="text-danger"></span>
+        </div>*@
+                            <div class="form-group">
+                                <label asp-for="Priority" class="control-label"></label>
+                                <select asp-for="Priority" class="form-control" asp-items="ViewBag.Priority"></select>
+                                <span asp-validation-for="Priority" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+
+
+                            <div class="form-group">
+                                <label asp-for="Category" class="control-label"></label>
+                                <select asp-for="Category" class="form-control" asp-items="ViewBag.Category"></select>
+                                <span asp-validation-for="Category" class="text-danger"></span>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="ResolvedDate" class="control-label"></label>
+                                <input asp-for="ResolvedDate" class="form-control" />
+                                <span asp-validation-for="ResolvedDate" class="text-danger"></span>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="row col-sm-12">
+                        <div class="col-md-6" style="background-color:gainsboro;">
+                            <div class="form-group">
+                                <label class="control-label">Comment</label>
+                                <textarea name="Comment" class="form-control" required></textarea>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="background-color:gainsboro;">
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label"></label>
+                                <select class="form-control" name="SelectStatus" asp-items="listItems"></select>
+                               
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                                <br />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row col-lg-12 col-sm-12">
+                        <br />
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+</div>
+
+<input type="hidden" id="IDLocation" value="0" />
+@*<div class="modal fade bs-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade active in" id="signin">
+                            <form class="form-horizontal">
+                                <fieldset>
+                                    <!-- Sign In Form -->
+                                    <!-- Text input-->
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input required="" id="userid" name="userid" type="text" class="form-control" placeholder="Search for item" class="input-medium" required="">
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="search"></label>
+                                        <div class="controls">
+                                            <button id="search" name="search" class="btn btn-success btn-lg btn-block">Search</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="signin"></label>
+                                        <center>
+                                            <div class="controls">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+    </div>*@
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+}

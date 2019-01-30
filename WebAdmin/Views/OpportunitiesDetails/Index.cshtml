@@ -1,0 +1,90 @@
+﻿@model IEnumerable<WebAdmin.Models.OpportunitiesDetails>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OpportunitiesID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DetailDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NextVisitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailNotification)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailSent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpportunitiesID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DetailDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NextVisitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailNotification)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailSent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DetailID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DetailID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DetailID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

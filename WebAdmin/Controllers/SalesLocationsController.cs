@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using WebAdmin.Models;
+
+namespace WebAdmin.Controllers
+{
+    public class SalesLocationsController : Controller
+    {
+        private readonly DBAdminContext _context;
+
+        public SalesLocationsController(DBAdminContext context)
+        {
+            _context = context;
+        }
+
+        // GET: SalesLocations
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            var dBAdminContext = _context.SalesLocations.Include(s => s.Company);
+            if (ViewBag.User == null)
+            {
+                //return RedirectToAction("Login", "SegUsuarios");
+                return RedirectToPage("./Login");
+            }
+            return View(await dBAdminContext.ToListAsync());
+        }
+
+        // GET: SalesLocations/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var salesLocations = await _context.SalesLocations
+                .Include(s => s.Company)
+                .FirstOrDefaultAsync(m => m.LocationId == id);
+            if (salesLocations == null)
+            {
+                return NotFound();
+            }
+
+            return View(salesLocations);
+        }
+
+        // GET: SalesLocations/Create
+        public IActionResult Create()
+        {
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName");
+            return View();
+        }
+
+        // POST: SalesLocations/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("LocationId,CompanyId,Address,City,State,ZipCode,Country,Phone,Fax,TaxId,ContactOwnerId,ContactBirthday,ContactName,WebPage,Email,EmailMerchant,DbaAddress,DbaName,LegalName,DbaCity,DbaState,DbaZipCode,HomePhone,MobilePhone")] SalesLocations salesLocations)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(salesLocations);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyId", salesLocations.CompanyId);
+            return View(salesLocations);
+        }
+
+        // GET: SalesLocations/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var salesLocations = await _context.SalesLocations.FindAsync(id);
+            if (salesLocations == null)
+            {
+                return NotFound();
+            }
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName", salesLocations.CompanyId);
+            return View(salesLocations);
+        }
+
+        // POST: SalesLocations/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("LocationId,CompanyId,Address,City,State,ZipCode,Country,Phone,Fax,TaxId,ContactOwnerId,ContactBirthday,ContactName,WebPage,Email,EmailMerchant,DbaAddress,DbaName,LegalName,DbaCity,DbaState,DbaZipCode,HomePhone,MobilePhone")] SalesLocations salesLocations)
+        {
+            if (id != salesLocations.LocationId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(salesLocations);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SalesLocationsExists(salesLocations.LocationId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyId", salesLocations.CompanyId);
+            return View(salesLocations);
+        }
+
+        // GET: SalesLocations/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var salesLocations = await _context.SalesLocations
+                .Include(s => s.Company)
+                .FirstOrDefaultAsync(m => m.LocationId == id);
+            if (salesLocations == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            return View(salesLocations);
+        }
+
+        // POST: SalesLocations/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var salesLocations = await _context.SalesLocations.FindAsync(id);
+            _context.SalesLocations.Remove(salesLocations);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool SalesLocationsExists(int id)
+        {
+            return _context.SalesLocations.Any(e => e.LocationId == id);
+        }
+    }
+}

@@ -1,0 +1,207 @@
+﻿
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using WebAdmin.Models;
+
+namespace WebAdmin.Controllers
+{
+
+    public class SegUsuariosController : Controller
+    {
+        private readonly DBAdminContext _context;
+
+        public SegUsuariosController(DBAdminContext context)
+        {
+            _context = context;
+        }
+
+        // GET: SegUsuarios
+        public async Task<IActionResult> Index()
+        {
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            return View(await _context.SegUsuarios.ToListAsync());
+        }
+
+        // GET: SegUsuarios/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var segUsuarios = await _context.SegUsuarios
+                .FirstOrDefaultAsync(m => m.UserID == id);
+            if (segUsuarios == null)
+            {
+                return NotFound();
+            }
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+
+            return View(segUsuarios);
+        }
+
+        // GET: SegUsuarios/Create
+        public IActionResult Create()
+        {
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            return View();
+        }
+
+        // POST: SegUsuarios/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("UserID,CodEmp,NombreUsuario,ApellidoUsuario,DireccionUsuario,TelefonoUsuario,Cargo,Sexo,Dui,Login,Password,FechaRegistro,FechaUltimoLogeo,VigenciaLogin,EstadoUsuario,Gestor,Acceso,DmUser,ImagenFirma,IdPersona,Ccodana")] SegUsuarios segUsuarios)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(segUsuarios);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(segUsuarios);
+        }
+
+        // GET: SegUsuarios/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var segUsuarios = await _context.SegUsuarios.FindAsync(id);
+            if (segUsuarios == null)
+            {
+                return NotFound();
+            }
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            return View(segUsuarios);
+        }
+
+        // POST: SegUsuarios/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("UserID,CodEmp,NombreUsuario,ApellidoUsuario,DireccionUsuario,TelefonoUsuario,Cargo,Sexo,Dui,Login,Password,FechaRegistro,FechaUltimoLogeo,VigenciaLogin,EstadoUsuario,Gestor,Acceso,DmUser,ImagenFirma,IdPersona,Ccodana")] SegUsuarios segUsuarios)
+        {
+            if (id != segUsuarios.UserID)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(segUsuarios);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SegUsuariosExists(segUsuarios.UserID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(segUsuarios);
+        }
+
+        // GET: SegUsuarios/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var segUsuarios = await _context.SegUsuarios
+                .FirstOrDefaultAsync(m => m.UserID == id);
+            if (segUsuarios == null)
+            {
+                return NotFound();
+            }
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            return View(segUsuarios);
+        }
+
+        // POST: SegUsuarios/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var segUsuarios = await _context.SegUsuarios.FindAsync(id);
+            _context.SegUsuarios.Remove(segUsuarios);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        //Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login([Bind("Login,WebPassword")]SegUsuarios usuarios)
+        {
+            var user = await _context.SegUsuarios.AnyAsync(u=>u.Login == usuarios.Login && u.WebPassword == usuarios.WebPassword);
+            if (user)
+            {
+                var datos = await _context.SegUsuarios.SingleAsync(u => u.Login == usuarios.Login);
+                HttpContext.Session.SetInt32("UserID",datos.UserID);
+                HttpContext.Session.SetString("User",datos.NombreUsuario+" "+datos.ApellidoUsuario);
+                return RedirectToAction("LoggedIn");
+            }
+            else
+            {
+                ModelState.AddModelError("","UserName o Password is wrong");
+            }
+
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return  RedirectToAction(nameof(this.Login),"SegUsuarios");
+        }
+
+        public ActionResult LoggedIn()
+        {
+            if (HttpContext.Session.GetString("UserID")!=null)
+            {
+
+                ViewData["User"] = HttpContext.Session.GetString("User");
+                return RedirectToAction("Index","Cases");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
+        private bool SegUsuariosExists(int id)
+        {
+            return _context.SegUsuarios.Any(e => e.UserID == id);
+        }
+    }
+}

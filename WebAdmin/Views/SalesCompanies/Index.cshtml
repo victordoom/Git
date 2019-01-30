@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebAdmin.Models.SalesCompany>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table id="example" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerId)
+            </td>
+
+            <td>
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CompanyId"><span class="glyphicon glyphicon-edit"></span></a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CompanyId"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CompanyId"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

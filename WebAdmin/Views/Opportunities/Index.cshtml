@@ -1,0 +1,214 @@
+﻿@model IEnumerable<WebAdmin.Models.Opportunities>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Cold.png",
+        Value = "~/images/Cold.png"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Cold.png",
+        Value = "~/images/Cold.png",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Hot.png",
+        Value = "~/images/Hot.png"
+    });
+
+
+
+}
+<style>
+    .customDrowDown {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0px;
+        background: transparent;
+    }
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+    .badge {
+        padding: 1px 9px 2px;
+        font-size: 12.025px;
+        font-weight: bold;
+        white-space: nowrap;
+        color: #ffffff;
+        background-color: #999999;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+    }
+
+        .badge:hover {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .badge-error {
+        background-color: #b94a48;
+    }
+
+        .badge-error:hover {
+            background-color: #953b39;
+        }
+
+    .badge-warning {
+        background-color: #f89406;
+    }
+
+        .badge-warning:hover {
+            background-color: #c67605;
+        }
+
+    .badge-success {
+        background-color: #468847;
+    }
+
+        .badge-success:hover {
+            background-color: #356635;
+        }
+
+    .badge-info {
+        background-color: #3a87ad;
+    }
+
+        .badge-info:hover {
+            background-color: #2d6987;
+        }
+
+    .badge-inverse {
+        background-color: #333333;
+    }
+
+        .badge-inverse:hover {
+            background-color: #1a1a1a;
+        }
+</style>
+
+<div class="block-header">
+    <h3> <img src="~/images/opportunities.png" class="user-image" alt="User Image" width="90"> Opportunities </h3>    <small class="text-muted">The opportunities registered in the last two months will be displayed here.</small>
+</div>
+
+<div class="text-right">
+    <p>
+        <a asp-action="Create" class="btn btn-success">Create New</a>
+    </p>
+</div>
+<table id="example" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
+
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+                @*@Html.DisplayNameFor(model => model.PhoneNumber)
+                @Html.DisplayNameFor(model => model.City)/State*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)/State
+            </th>*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.VisitedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HowFoundID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                FollowUp
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="5%">
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                    <br />
+                    Phone: @Html.DisplayFor(modelItem => item.PhoneNumber).
+                    <br />
+                    Address: @Html.DisplayFor(modelItem => item.City).
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerName)
+                </td>
+                @*<td>
+                   
+                </td>
+                <td>
+                   
+                </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.VisitedDate)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberLeadToFollowUp)
+                </td>
+                <td>
+                    <img src="@Url.Content("./images/" + item.Rating +".png")" alt="Image" />
+                </td>
+                <td  width="25%">
+                    @Html.Raw(item.LastComment)
+                </td>
+
+                @*<td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>*@
+                @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                @*</td>*@
+            </tr>
+        }
+    </tbody>
+</table>

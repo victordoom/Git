@@ -1,0 +1,167 @@
+﻿@model IEnumerable<WebAdmin.Models.SalesLocations>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New</a>
+</p>
+<table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="example">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactOwnerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactBirthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailMerchant)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DbaAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DbaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LegalName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DbaCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DbaState)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DbaZipCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HomePhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobilePhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fax)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaxId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactOwnerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactBirthday)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebPage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailMerchant)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DbaAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DbaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LegalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DbaCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DbaState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DbaZipCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Company.CompanyId)
+            </td>
+            <td width="13%">
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.LocationId"><span class="glyphicon glyphicon-edit"></span></a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.LocationId"><span class="glyphicon glyphicon-eye-open"></span></a>
+                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.LocationId"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

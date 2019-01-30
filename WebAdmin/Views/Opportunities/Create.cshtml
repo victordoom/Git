@@ -1,0 +1,272 @@
+﻿@model WebAdmin.Models.Opportunities
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "Hot",
+        Value = "Hot"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Warm",
+        Value = "Warm"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Cold",
+        Value = "Cold",
+        Selected = true
+    });
+
+    List<SelectListItem> listItems2 = new List<SelectListItem>();
+    listItems2.Add(new SelectListItem
+    {
+        Text = "In Proccess",
+        Value = "In Proccess"
+    });
+    listItems2.Add(new SelectListItem
+    {
+        Text = "Closed",
+        Value = "Closed"
+    });
+
+}
+
+<h2>Create</h2>
+
+<h4>Opportunities</h4>
+<hr />
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Create Opportunities</div>
+    <div class="panel-body">
+
+        <div class="row col-md-12">
+            <div>
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label asp-for="CreatedDate" class="control-label"></label>
+                                <input asp-for="CreatedDate" class="form-control" disabled="disabled" />
+                                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserID" class="control-label"></label>
+                                <select asp-for="UserID" id="Select_assignedto" class="form-control" disabled="disabled" asp-items="ViewBag.DDLUsers"></select>
+                                <span asp-validation-for="UserID" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label class="control-label"> Name</label>
+                                <input class="form-control" id="Name" disabled />
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Last Name</label>
+                                <input class="form-control" id="LastName" disabled />
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="VisitedDate" class="control-label"></label>
+                                <input asp-for="VisitedDate" class="form-control" />
+                                <span asp-validation-for="VisitedDate" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="HowFoundID" class="control-label"></label>
+                                    <select asp-for="HowFoundID" class="form-control" asp-items="ViewBag.DDLHowFound"></select>
+                                    <span asp-validation-for="HowFoundID" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="NumberLeadToFollowUp" class="control-label"></label>
+                                    <input asp-for="NumberLeadToFollowUp" class="form-control" />
+                                    <span asp-validation-for="NumberLeadToFollowUp" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ProgramID" class="control-label"></label>
+                                <select asp-for="ProgramID" id="Select_ProgramID" class="form-control" asp-items="ViewBag.DDLPrograms"></select>
+                                <span asp-validation-for="ProgramID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Description</label>
+                                <input class="form-control" id="sDescription" disabled />
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="control-label">Price</label>
+                                <input class="form-control" id="sPrice" disabled />
+                            </div>
+
+
+                            <div class="form-group">
+                                <label asp-for="CategoryID" class="control-label"></label>
+                                <select asp-for="CategoryID" class="form-control" asp-items="ViewBag.DDLCategories"></select>
+                                <span asp-validation-for="CategoryID" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-12" style="background-color:cornflowerblue;">
+                            <h4>Business Info</h4>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="CompanyName" class="control-label"></label>
+                                    <input asp-for="CompanyName" class="form-control" />
+                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="OwnerName" class="control-label"></label>
+                                    <input asp-for="OwnerName" class="form-control" />
+                                    <span asp-validation-for="OwnerName" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label asp-for="PhoneNumber" class="control-label"></label>
+                                    <input asp-for="PhoneNumber" class="form-control" />
+                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Address" class="control-label"></label>
+                                    <input asp-for="Address" class="form-control" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="City" class="control-label"></label>
+                                        <input asp-for="City" class="form-control" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="ZipCode" class="control-label"></label>
+                                        <input asp-for="ZipCode" class="form-control" />
+                                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="State" class="control-label"></label>
+                                        <input asp-for="State" class="form-control" />
+                                        <span asp-validation-for="State" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="EmailAddress" class="control-label"></label>
+                                        <input asp-for="EmailAddress" class="form-control" />
+                                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Description</label>
+                                    <textarea name="Description" class="form-control" required></textarea>
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="OpenDate" class="control-label"></label>
+                                        <input asp-for="OpenDate" class="form-control" />
+                                        <span asp-validation-for="OpenDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="EstClosedDate" class="control-label"></label>
+                                        <input asp-for="EstClosedDate" class="form-control" />
+                                        <span asp-validation-for="EstClosedDate" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label asp-for="EstRevenue" class="control-label"></label>
+                                        <input asp-for="EstRevenue" class="form-control" />
+                                        <span asp-validation-for="EstRevenue" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="Rating" class="control-label"></label>
+                                        <select class="form-control" name="Rating" asp-items="listItems"></select>
+                                        <span asp-validation-for="Rating" class="text-danger"></span>
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12" style="background-color:wheat;">
+                            <h4>Follow - up</h4>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Comment</label>
+                                    <textarea name="dComment" class="form-control" required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">Follow Up-Status </label>
+                                    <select class="form-control" name="dStatus" asp-items="listItems2"></select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group row">
+                                    <label for="example-date-input" class="col-2 col-form-label">Next Visit</label>
+                                    <input class="form-control" type="date" name="dNextVisit">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label">EmailMe Next Visit</label>
+                                    <input class="form-check-input" type="checkbox" name="dEmailnotification">
+
+                                    @*<input class="form-check-input" name="dEmailnotification" type="checkbox">*@
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+
+                    <div class="row col-lg-12 col-sm-12">
+                        <br />
+                    </div>
+                    <div class="form-group">
+
+                        <input type="submit" value="Create" class="btn btn-success" />
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

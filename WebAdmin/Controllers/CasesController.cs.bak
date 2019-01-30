@@ -1,0 +1,587 @@
+﻿using System;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using WebAdmin.Models;
+
+
+namespace WebAdmin.Controllers
+{
+    public class CasesController : Controller
+    {
+        private readonly DBAdminContext _context;
+
+        public CasesController(DBAdminContext context)
+        {
+            _context = context;
+           
+        }
+
+      
+        #region Cases
+        // GET: Cases
+        public async Task<IActionResult> Index()
+        {
+            var StatusFilter = "Active";
+            var dBAdminContext = _context.Cases
+                .Where(c => c.Status == StatusFilter)
+                .Include(c => c.AssignedToNavigation)
+                .Include(c => c.Company)
+                .Include(c => c.Location)
+                .Include(c => c.CasesDetails);
+         
+            ViewBag.DDlCompanies = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName");
+            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            if (ViewBag.User==null)
+            {
+                //return RedirectToAction("Login", "SegUsuarios");
+                return RedirectToAction("../Identity/Account/Login");
+            }
+            return View(await dBAdminContext.ToListAsync());
+        }
+
+
+
+        // GET: Cases/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cases = await _context.Cases
+                .Include(c => c.AssignedToNavigation)
+                .Include(c => c.Company)
+                .Include(c => c.Location)
+                .Include(c => c.CasesDetails)
+                .FirstOrDefaultAsync(m => m.CasesID == id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+
+            // IActionResult x = await getDetailsc(id);
+            //var cases = await _context.Cases.FindAsync(id);
+            //if (cases == null)
+            //{
+            //    return NotFound();
+            //}
+            ViewBag.Newdetails = new CasesDetails();
+            ViewBag.DDLdetails = _context.CasesDetails.Where(x => x.CasesID == cases.CasesID);
+            ViewBag.DDlCompanies = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName");
+            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("Login", "SegUsuarios");
+            }
+            return View(cases);
+
+
+          
+        }
+
+        [HttpPost]
+        public ActionResult Details(int? id, string action)
+        {
+        if (action == "NewDetail")
+            {
+                // Si no ha pasado nuestra validación, mostramos el mensaje personalizado de error
+            }
+            return View();
+        }
+
+        // GET: Cases/Create
+        public IActionResult Create()
+
+       {
+            //cases.OpenedDate = DateTime.Now;
+
+            Cases model = new Cases();
+
+            model.OpenedDate= DateTime.Now;
+
+
+
+            // Pass your model to this View
+
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+
+            ViewData["AssignedTo"] = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario", ViewBag.id);
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName", "Selected");
+            ViewData["LocationId"] = new SelectList(_context.SalesLocations, "LocationId", "Address", "Select Item");
+            ViewData["OpenedBy"] = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario", ViewBag.id);
+            ViewData["Category"] = new SelectList(_context.CasesCategories, "Description", "Description", "Select Item");
+            ViewData["Priority"] = new SelectList(_context.CasesPriority, "Description", "Description", "Select Item");
+            ViewData["Status"] = new SelectList(_context.CasesStatus, "Description", "Description", "Select Item");
+            ViewData["UserID"] = new SelectList(_context.SegUsuarios.OrderBy(x => x.Login), "UserID", "Login");
+
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("Login", "SegUsuarios");
+            }
+            return View(model);
+        }
+
+        // POST: Cases/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Cases cases, string Comment, string SelectStatus)
+        {
+            CasesDetails detail = new CasesDetails();
+            if (ModelState.IsValid)
+            {
+                _context.Add(cases);
+                cases.OpenedDate = DateTime.Now;
+
+                var resul =  await _context.SaveChangesAsync();
+
+                if (resul>0 && !string.IsNullOrEmpty(Comment)  && !string.IsNullOrEmpty(SelectStatus))
+                {
+                    var id = cases.CasesID;
+                    detail.CasesID = id;
+                    detail.Comment = Comment;
+                    detail.Status = SelectStatus;
+                    detail.DetailDatetime = DateTime.Now;
+                    detail.UserID = (int)cases.OpenedBy;
+
+                    _context.Add(detail);
+
+                    //send mail
+                    await _context.SaveChangesAsync();
+
+                    sendMail(cases.CasesID);
+
+                    return RedirectToAction(nameof(Index));
+                }
+
+             
+             return RedirectToAction(nameof(Index));
+            }
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            ViewData["AssignedTo"] = new SelectList(_context.SegUsuarios, "UserID", "UserID", cases.AssignedTo);
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyId", cases.CompanyId);
+            ViewData["LocationId"] = new SelectList(_context.SalesLocations, "LocationId", "LocationId", cases.LocationId);
+
+            return View(cases);
+        }
+
+        // GET: Cases/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cases = await _context.Cases.FindAsync(id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["AssignedTo"] = new SelectList(_context.SegUsuarios, "UserID", "Login", cases.AssignedTo);
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName", cases.CompanyId);
+            ViewData["LocationId"] = new SelectList(_context.SalesLocations, "LocationId", "DbaName", cases.LocationId);
+            ViewData["OpenedBy"] = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario", cases.OpenedBy);
+            ViewData["Category"] = new SelectList(_context.CasesCategories, "Description", "Description", cases.Category);
+            ViewData["Priority"] = new SelectList(_context.CasesPriority, "Description", "Description", cases.Priority);
+            ViewData["Status"] = new SelectList(_context.CasesStatus, "Description", "Description", cases.Status);
+            ViewBag.id = HttpContext.Session.GetInt32("UserID");
+            ViewBag.User = HttpContext.Session.GetString("User");
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("Login", "SegUsuarios");
+            }
+            return View(cases);
+        }
+
+        // POST: Cases/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit( Cases cases)
+        {
+            //if (id != cases.CasesID)
+            //{
+            //    return NotFound();
+            //}
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(cases);
+                    await _context.SaveChangesAsync();
+
+                    _context.Database.ExecuteSqlCommand("dbo.[SendEmail] @int_CaseID", cases.CasesID);
+                    //var id = cases.CasesID;
+                    ////send mail
+                    //_context.Database.ExecuteSqlCommand("dbo.SendEmail @p0", id);
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CasesExists(cases.CasesID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["AssignedTo"] = new SelectList(_context.SegUsuarios, "UserID", "Login", cases.AssignedTo);
+            ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName", cases.CompanyId);
+            ViewData["LocationId"] = new SelectList(_context.SalesLocations, "LocationId", "LocationId", cases.LocationId);
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("Login", "SegUsuarios");
+            }
+            return View(cases);
+        }
+
+        // GET: Cases/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            ViewBag.User = HttpContext.Session.GetString("User");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cases = await _context.Cases
+                .Include(c => c.AssignedToNavigation)
+                .Include(c => c.Company)
+                .Include(c => c.Location)
+                .FirstOrDefaultAsync(m => m.CasesID == id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("Login", "SegUsuarios");
+            }
+            return View(cases);
+        }
+
+        // POST: Cases/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cases = await _context.Cases.FindAsync(id);
+            _context.Cases.Remove(cases);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CasesExists(int? id)
+        {
+            return _context.Cases.Any(e => e.CasesID == id);
+        }
+
+
+        public async Task<IActionResult> getDetailsc(int? id)
+        {
+
+            var cases = await _context.Cases.FindAsync(id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+            var view = _context.CasesDetails.Where(x => x.CasesID == cases.CasesID);  
+
+            return View(view);
+
+
+        }
+
+        //public List<Cases> Listar(int id)
+        //{
+        //    return _context.CasesDetails.Where(x => x.CasesID == id);
+
+        //    }
+        //public List<Cases> Listar()
+        //{
+        //    using (var context = new DBAdminContext())
+        //    {
+        //        return context.Cases.OrderByDescending(x => x.Id)
+        //                                  .ToList();
+        //    }
+        //}
+
+        //public List<CompaniesLocations> GetCompaniesLocations(int id)
+        //{
+        //    //Se crea la lista que se enviara como resultado.
+        //    List<CompaniesLocations> lista = new List<CompaniesLocations>();
+        //Se instancia la conexion de datos
+        //string cnnString = System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionStringName"].ConnectionString;
+
+        //SqlConnection cnn = new SqlConnection(cnnString);
+        //SqlCommand cmd = new SqlCommand();
+        //cmd.Connection = cnn;
+        //    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+        //    cmd.CommandText = "ProcedureName";
+        //    //add any parameters the stored procedure might require
+        //    cnn.Open();
+        //    object o = cmd.ExecuteScalar();
+        //cnn.Close();
+
+
+
+        //    using (SqlConnection conn = ConexionDAL.ConexionSQL( ))
+                
+        //    {
+        //        // se setea el comando que define el procedimiento almacenado y conexion a utilizar para obtener los datos desde la bd.
+        //        using (SqlCommand comando = new SqlCommand("ListarPermisos", conn))
+        //        {
+        //            comando.CommandType = System.Data.CommandType.StoredProcedure;
+
+        //            comando.Parameters.Add(new SqlParameter("@id", id));
+
+        //            //Se instancia el adapter, que sirve para ejecutar el comando.
+        //            using (SqlDataAdapter adap = new SqlDataAdapter(comando))
+        //            {
+        //                DataTable tbResultados = new DataTable();
+
+        //                //ejecuto el comando utilizando el adapter y lleno la tabla con los datos obtenidos.
+        //                adap.Fill(tbResultados);
+
+        //                //si se lograron extraer datos entonces agregare todos los objetos a la lista.
+        //                if (tbResultados.Rows.Count > 0 || tbResultados.Rows != null)
+        //                {
+        //                    for (int i = 0; i < tbResultados.Rows.Count; i++)
+        //                    {
+        //                        DataRow fila = tbResultados.Rows[i];
+        //                        SolicitudesDTO Solicitud = new SolicitudesDTO();
+        //                        Solicitud.SolicitudID = Convert.ToInt32(fila["SolicitudID"]);
+        //                        Solicitud.FechaEmision = Convert.ToDateTime(fila["FechaEmision"]);
+        //                        Solicitud.FechaInicio = Convert.ToDateTime(fila["FechaInicio"]);
+        //                        Solicitud.FechaFin = Convert.ToDateTime(fila["FechaFin"]);
+        //                        Solicitud.Observacion = Convert.ToString(fila["Observacion"]);
+        //                        Solicitud.Estado = Convert.ToInt32(fila["Estado"]);
+        //                        Solicitud.Id = Convert.ToInt32(fila["Id"]);
+        //                        Solicitud.TipoSolicitudID = Convert.ToInt32(fila["TipoSolicitudID"]);
+        //                        lista.Add(Solicitud);
+        //                    }
+        //                }
+        //            }//FIN ADAPTER
+        //        }//FIN COMANDO
+        //    }//FIN CONEXION
+
+        //    return lista;
+        //}
+        #endregion
+
+        #region CasesDetailsController
+
+        // GET: CasesDetails
+        public async Task<IActionResult> IndexCasesDetails()
+        {
+            var dBAdminContext = _context.CasesDetails.Include(c => c.Cases).Include(c => c.SegUsuarios);
+            return View(await dBAdminContext.ToListAsync());
+        }
+
+        // GET: CasesDetails/Details/5
+        public async Task<IActionResult> DetailsCasesDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var casesDetails = await _context.CasesDetails
+                .Include(c => c.Cases)
+                .Include(c => c.SegUsuarios)
+                .FirstOrDefaultAsync(m => m.DetailId == id);
+            if (casesDetails == null)
+            {
+                return NotFound();
+            }
+
+   
+
+            return View(casesDetails);
+        }
+
+        // GET: CasesDetails/Create
+        public async Task<IActionResult> CreateCasesDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var cases = await _context.Cases.FindAsync(id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+
+            ViewData["UserID"] = new SelectList(_context.SegUsuarios.OrderBy(x=>x.Login), "UserID", "Login");
+            var view = new CasesDetails { CasesID = cases.CasesID };
+
+            return View(view);
+        }
+
+        // POST: CasesDetails/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateCasesDetails(CasesDetails casesDetails)
+        {
+            casesDetails.DetailDatetime = DateTime.Now; 
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(casesDetails);
+                await _context.SaveChangesAsync();
+                //send mail
+                var param = new SqlParameter[] {
+                        new SqlParameter() {
+                            ParameterName = "@int_CaseID",
+                            SqlDbType =  System.Data.SqlDbType.Int,
+                            Direction = System.Data.ParameterDirection.Input,
+                            Value = casesDetails.CasesID
+                        }};
+
+                sendMail(casesDetails.CasesID);
+
+     
+
+            return RedirectToAction(string.Format("Details/{0}", casesDetails.CasesID));
+            }
+            ViewData["UserID"] = new SelectList(_context.SegUsuarios, "Login", "UserID");
+            return View(casesDetails);
+        }
+
+        public virtual int sendMail(int casesID)
+        {
+            return _context.Database.ExecuteSqlCommand("SendEmail @p0", casesID);
+        }
+
+
+        // GET: CasesDetails/Edit/5
+        public async Task<IActionResult> EditCasesDetails(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var casesDetails = await _context.CasesDetails.FindAsync(id);
+            if (casesDetails == null)
+            {
+                return NotFound();
+            }
+            ViewData["CasesID"] = new SelectList(_context.Cases, "Id", "Id", casesDetails.CasesID);
+            ViewData["UserID"] = new SelectList(_context.SegUsuarios, "Login", "UserID", casesDetails.UserID);
+            return View(casesDetails);
+        }
+
+        // POST: CasesDetails/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditCasesDetails(int id, [Bind("DetailId,CasesID,DetailDatetime,Comment,UserID,Status,Suggestion,NormalRow")] CasesDetails casesDetails)
+        {
+            if (id != casesDetails.DetailId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(casesDetails);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CasesDetailsExists(casesDetails.DetailId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["CasesID"] = new SelectList(_context.Cases, "Id", "Id", casesDetails.CasesID);
+            ViewData["UserID"] = new SelectList(_context.SegUsuarios, "UserID", "UserID", casesDetails.UserID);
+            return View(casesDetails);
+        }
+
+        // GET: CasesDetails/Delete/5
+        public async Task<IActionResult> DeleteCasesDetails(int? id)
+        {
+            ViewBag.User = HttpContext.Session.GetString("User");
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var casesDetails = await _context.CasesDetails
+                .Include(c => c.Cases)
+                .Include(c => c.SegUsuarios)
+                .FirstOrDefaultAsync(m => m.DetailId == id);
+            if (casesDetails == null)
+            {
+                return NotFound();
+            }
+
+            return View(casesDetails);
+        }
+
+        // POST: CasesDetails/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmedCasesDetails(int id)
+        {
+            var casesDetails = await _context.CasesDetails.FindAsync(id);
+            _context.CasesDetails.Remove(casesDetails);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CasesDetailsExists(int id)
+        {
+            return _context.CasesDetails.Any(e => e.DetailId == id);
+        }
+
+        #endregion
+
+        #region Json
+        public JsonResult LlenarSelect(int? companyid)
+        {
+            object consulta;
+
+             consulta = from s in _context.SalesLocations
+                               where s.CompanyId == companyid
+                               select s;
+           
+         
+            //var list = consulta.ToArray();
+            return Json(consulta);
+        }
+        #endregion
+    }
+}

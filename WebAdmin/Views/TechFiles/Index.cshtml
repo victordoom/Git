@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebAdmin.Models.Techfiles>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="block-header">
+    <h3> <img src="~/images/technicalsupport.png" class="user-image" alt="User Image" width="90"> Technical Support - Files </h3>    <small class="text-muted">The Active Cases are shown here.</small>
+</div>
+
+<div class="text-right">
+    <p>
+       
+    </p>
+</div>
+
+
+<table id="example" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DBA_name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyAddress)
+            </th>
+            <th>
+                File
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRow)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DBA_name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyAddress)
+            </td>
+            <td>
+                <a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile">View File</a>
+            </td>
+
+            <td width="5%">
+                @*@Html.DisplayFor(modelItem => item.IdRow)*@
+                <br />
+                <br />
+                @*<a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.IdRow"><span class="zmdi zmdi-edit"></span></a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.IdRow"><span class="zmdi zmdi-square-right"></span></a>*@
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+

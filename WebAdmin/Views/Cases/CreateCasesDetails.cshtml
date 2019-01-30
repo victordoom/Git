@@ -1,0 +1,78 @@
+﻿ @model WebAdmin.Models.CasesDetails
+
+@{
+    ViewData["Title"] = "Create";
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "In Proccess",
+        Value = "In Proccess"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Pending",
+        Value = "Pending",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Resolved",
+        Value = "Resolved"
+    });
+}
+
+
+<br />
+<div class="row col-md-12">
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Follow up - Registration</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <form asp-action="CreateCasesDetails">
+
+                        @Html.HiddenFor(model => model.CasesID)
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="UserID" class="control-label"></label>
+                            @*<input asp-for="OpenedBy" class="form-control" />*@
+                            <select asp-for="UserID" class="form-control" asp-items="ViewBag.OpenedBy" disabled="disabled" ></select>
+                            <span asp-validation-for="UserID" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Comment" class="control-label"></label>
+                            @*<input asp-for="Comment" class="form-control" />*@
+                            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control" })
+                            <span asp-validation-for="Comment" class="text-danger" ></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @*<input asp-for="Status" class="form-control" />*@
+                            @Html.DropDownListFor(model => model.Status, listItems, "-- Select Status --", htmlAttributes: new { @class = "form-control" })
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

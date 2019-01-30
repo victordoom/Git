@@ -1,0 +1,80 @@
+﻿<ul class="sidebar-menu" data-widget="tree">
+
+    <!-- Optionally, you can add icons to the links -->
+    <li>
+        <a asp-action="Index" asp-controller="Home">
+            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+
+        </a>
+    </li>
+
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-phone"></i> <span>Technical Support</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="Index" asp-controller="Cases"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Register Case</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Licenses View</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Tech Fiel</a></li>
+        </ul>
+
+    </li>
+
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-file"></i> <span>Sales</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="Index" asp-controller="Opportunities"><i class="fa fa-circle-o"></i> Dashboard (Opportunities)</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Register Opportunities</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Query business data</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Saless Comment</a></li>
+        </ul>
+
+    </li>
+
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-file"></i> <span>Accounting</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Proccess</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Account Transaction</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Categories</a></li>
+        </ul>
+
+    </li>
+
+
+
+    @*<li>
+            <a asp-action="Index" asp-controller="Cases">
+                <i class="fa fa-phone"></i> <span>Cases</span>
+            </a>
+
+        </li>
+
+        <li>
+            <a asp-action="Index" asp-controller="TechFiles">
+                <i class="fa fa-file"></i> <span>Tech Files</span>
+            </a>
+        </li>
+
+        <li>
+            <a asp-action="Index" asp-controller="Opportunities">
+                <i class="fa fa-briefcase"></i> <span>Opportunities</span>
+            </a>
+        </li>*@
+
+</ul>

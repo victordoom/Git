@@ -1,0 +1,82 @@
+﻿@model WebAdmin.Models.OpportunitiesDetails
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OpportunitiesDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OpportunitiesID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OpportunitiesID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DetailDatetime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DetailDatetime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VisitDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VisitDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NextVisitDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NextVisitDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailNotification)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmailNotification)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailSent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmailSent)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="DetailID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
