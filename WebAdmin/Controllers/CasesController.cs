@@ -200,8 +200,20 @@ namespace WebAdmin.Controllers
             {
                 return RedirectToAction("../Identity/Account/Login");
             }
+            Int64 IDUser = User.UserID;
 
-            if (IsTechSupport == false)
+            //comprobando que cumple los requisitos
+            //Si el usuario es de Technical Support
+            var segsistemausuario = from x in _context.SegSistemaUsuario
+                                    where x.IdUsuario == IDUser &&
+                                      x.CodigoSistema == 2
+                                    select x;
+
+
+            var admin = segsistemausuario.Count();
+
+
+            if (admin != 1)
             {
                 return RedirectToAction("../Home/Privacy");
             }
