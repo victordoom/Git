@@ -6,6 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Modelos\**" />
+    <Compile Remove="Views\SegUsuarios\**" />
+    <Content Remove="Modelos\**" />
+    <Content Remove="Views\SegUsuarios\**" />
+    <EmbeddedResource Remove="Modelos\**" />
+    <EmbeddedResource Remove="Views\SegUsuarios\**" />
+    <None Remove="Modelos\**" />
+    <None Remove="Views\SegUsuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\OpportunitiesDetails\CreateOpportunitiesDetails.cshtml" />
   </ItemGroup>
 
@@ -2012,8 +2023,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
-    <Folder Include="Modelos\" />
-    <Folder Include="Views\SegUsuarios\" />
   </ItemGroup>
 
   <ItemGroup>
