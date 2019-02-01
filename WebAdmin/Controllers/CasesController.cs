@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebAdmin.Models;
+using X.PagedList;
 
 
 namespace WebAdmin.Controllers
@@ -19,7 +20,7 @@ namespace WebAdmin.Controllers
 
         public static bool IsTechSupport { get; set; }
        
-
+       public static int? Pagina { get; set; }
         
 
         public CasesController(DBAdminContext context)
@@ -31,9 +32,19 @@ namespace WebAdmin.Controllers
 
         #region Cases
         // GET: Cases
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sorOrder,
+            string currentFilter, string searchString, int? page)
         {
+            if (page != null)
+            {
+                Pagina = page;
+            }
 
+            ViewBag.CurrentSort = sorOrder;
+            //validando si nuestro parametro sororder es nulo o esta vacio
+            ViewData["NombreSortParm"] = String.IsNullOrEmpty(sorOrder) ? "nombre_desc" : "";
+            ViewData["DescripcionSortParm"] = sorOrder == "descripcion_asc" ? "descripcion_desc" : "descripcion_asc";
+            
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
 
             ViewBag.User = lEmail; // HttpContext.Session.GetString("Email");
@@ -53,6 +64,10 @@ namespace WebAdmin.Controllers
                 .Include(c => c.Company)
                 .Include(c => c.Location)
                 .Include(c => c.CasesDetails);
+
+
+            
+
 
             //var dBAdminContext = _context.Cases
             //    .OrderByDescending(c => c.CasesID )
@@ -93,9 +108,18 @@ namespace WebAdmin.Controllers
             //si encontro un usuario Significa que es de Technical Support por logica si tiene Acceso A Cases
             if (admin == 1)
             {
-                
+                //guardamos si es de technical
                 IsTechSupport = true;
-                return View(await dBAdminContext.ToListAsync());
+
+
+                int pageSize = 10;
+
+
+
+              
+                //page ?? quiere decir que devolver el valor de page si tiene un valor o devolver 1 si es nulo
+               return View(await Paginacion<Cases>.CreateAsync(dBAdminContext.AsNoTracking(), Pagina ?? 1, pageSize));
+                // return View(await dBAdminContext.ToListAsync());
             }
             else
             {
@@ -315,7 +339,7 @@ namespace WebAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( Cases cases)
+        public async Task<IActionResult> Edit( Cases cases, int pagina)
         {
             //if (id != cases.CasesID)
             //{
@@ -345,7 +369,8 @@ namespace WebAdmin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction(nameof (Index));
             }
             ViewData["AssignedTo"] = new SelectList(_context.SegUsuarios, "UserID", "Login", cases.AssignedTo);
             ViewData["CompanyId"] = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName", cases.CompanyId);

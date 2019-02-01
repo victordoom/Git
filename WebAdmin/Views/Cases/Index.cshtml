@@ -1,4 +1,6 @@
-﻿@model IEnumerable<WebAdmin.Models.Cases>
+﻿@model Paginacion<WebAdmin.Models.Cases>
+
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -10,21 +12,23 @@
         border: 0px;
         background: transparent;
     }
-    .uppercase {text-transform: uppercase;
+
+    .uppercase {
+        text-transform: uppercase;
     }
 </style>
 
 
 
 @*<section class="content-header">
-    <h1>
-        Negocios111
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Negocio</li>
-    </ol>
-</section>*@
+        <h1>
+            Negocios111
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Negocio</li>
+        </ol>
+    </section>*@
 
 <div class="block-header">
     <h3> <img src="~/images/technicalsupport.png" class="user-image" alt="User Image" width="90"> Technical Support - CASES </h3>    <small class="text-muted">The Active Cases are shown here.</small>
@@ -36,109 +40,147 @@
     </p>
 </div>
 @*<table class="table table-bordered table-condensed table-hover wrap dt-responsive" style="width:100%" id="example">*@
-        <table id="example" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
-            <thead>
-                <tr>
 
-                    <th>
-                        ID
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Company)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title) /  Commment
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AssignedTo)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Priority)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Category)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.OpenedBy)
-                    </th>
-                    <th>
-                        Opened
-                        @*@Html.DisplayNameFor(model => model.OpenedDate)*@
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
-                    </th>
 
-                    @*<th></th>*@
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                <tr>
+@*para la paginacion de data table de jsvascript poner id="example" en el table*@
+<table class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
 
-                    <td width="5%">
-                        @Html.DisplayFor(modelItem => item.CasesID)
-                        <br />
-                        <br />
-                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>
-                        <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>
-                    </td>
-                    <td width="20%">
-                        <b>@Html.DisplayFor(modelItem => item.Company.CompanyName)</b>
-                        <br />
-                        <p style="color:dimgrey;">@Html.DisplayFor(modelItem => item.Location.DbaAddress) @Html.DisplayFor(modelItem => item.Location.DbaCity) @Html.DisplayFor(modelItem => item.Location.DbaState) @Html.DisplayFor(modelItem => item.Location.DbaZipCode)</p>
+            <th>
+                ID
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Company)*@
+                Company
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Title) /  Commment*@
+                Title
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.AssignedTo)*@
+                AssignedTo
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Priority)*@
+                Priority
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Category)*@
+                Category
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.OpenedBy)*@
+                OpenedBy
+            </th>
+            <th>
+                @*Opened
+                    @Html.DisplayNameFor(model => model.OpenedDate)*@
+                Opened
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.Status)*@
+                Status
+            </th>
 
-                    </td>
-                    <td width="35%">
-                        <b>@Html.DisplayFor(modelItem => item.Title)</b>
-                        <br />
-                        <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment )</p>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
 
-                        @*<p style="color:#222222;"> <b>@Html.DisplayFor(modelItem => item.Title)</b></p>
+                <td width="5%">
+                    @Html.DisplayFor(modelItem => item.CasesID)
+                    <br />
+                    <br />
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID" asp-route-pagina="@ViewBag.PagM"><span class="zmdi zmdi-edit"></span></a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>
+                </td>
+                <td width="20%">
+                    <b>@Html.DisplayFor(modelItem => item.Company.CompanyName)</b>
+                    <br />
+                    <p style="color:dimgrey;">@Html.DisplayFor(modelItem => item.Location.DbaAddress) @Html.DisplayFor(modelItem => item.Location.DbaCity) @Html.DisplayFor(modelItem => item.Location.DbaState) @Html.DisplayFor(modelItem => item.Location.DbaZipCode)</p>
+
+                </td>
+                <td width="35%">
+                    <b>@Html.DisplayFor(modelItem => item.Title)</b>
+                    <br />
+                    <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>
+
+                    @*<p style="color:#222222;"> <b>@Html.DisplayFor(modelItem => item.Title)</b></p>
                         <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>*@
-                    </td>
-                    <td>
-                        <p style="color:orangered;">  @Html.DropDownListFor(model => item.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })</p>
+                </td>
+                <td>
+                    <p style="color:orangered;">  @Html.DropDownListFor(model => item.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })</p>
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Priority)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category)
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(model => item.OpenedBy, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Priority)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.OpenedBy, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OpenedDate)
-                    </td>
-                    <td>
-                        @if (item.Status == "Active")
-                        {
-                            <span class="label label-success">
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="label label-danger">
-                                @Html.DisplayFor(modelItem => item.Status)
-                            </span>
-                        }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpenedDate)
+                </td>
+                <td>
+                    @if (item.Status == "Active")
+                    {
+                        <span class="label label-success">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="label label-danger">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </span>
+                    }
 
-                    </td>
+                </td>
 
-                    @*<td width="7%">
-        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>
-        <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>*@
-                    @*<a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CasesID"><span class="glyphicon glyphicon-trash"></span></a>*@
-                    @*</td>*@
+                @*<td width="7%">
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>*@
+                @*<a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CasesID"><span class="glyphicon glyphicon-trash"></span></a>*@
+                @*</td>*@
 
-                </tr>
+            </tr>
 
-                }
-            </tbody>
-        </table>
+        }
+    </tbody>
+</table>
+
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-page="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Anterior
+</a>
+@for (int i = 1; i <= Model.TotalPages; i++)
+{
+    <a asp-action="Index"
+       a
+       asp-route-page="@i"
+       class="btn btn-default">
+        @i
+    </a>
+}
+<a asp-action="Index"
+   asp-route-page="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Siguiente
+</a>

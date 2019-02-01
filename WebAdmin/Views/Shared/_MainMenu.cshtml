@@ -16,10 +16,10 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a asp-action="Index" asp-controller="Cases"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
+            <li><a asp-action="Index" asp-controller="Cases" asp-route-page="1"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
             <li><a asp-action="Create" asp-controller="Cases"><i class="fa fa-circle-o"></i>Register Case</a></li>
             <li><a href="index2.html"><i class="fa fa-circle-o"></i>Licenses View</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Tech Fiel</a></li>
+            <li><a asp-action="Index" asp-controller="TechFiles"><i class="fa fa-circle-o"></i>Tech Files</a></li>
         </ul>
 
     </li>
@@ -107,7 +107,26 @@
 
     </li>
 
-    
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-user-o"></i> <span>User/Permission</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i>Modules</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Profiles</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Alcanses de Usuario</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Users</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Accesso Perfil</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Verify</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purchase Order -Cancel</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Enable Edition</a></li>
+           
+        </ul>
+
+    </li>
 
 
     @*<li>

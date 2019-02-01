@@ -25,6 +25,8 @@ namespace WebAdmin.Controllers
             ViewBag.id = HttpContext.Session.GetInt32("UserID");
             ViewBag.User = HttpContext.Session.GetString("User");
             var dBAdminContext = _context.SalesLocations.Include(s => s.Company);
+
+
             if (ViewBag.User == null)
             {
                 //return RedirectToAction("Login", "SegUsuarios");

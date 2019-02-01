@@ -16,6 +16,7 @@ namespace WebAdmin.Controllers
     {
 
         private readonly DBAdminContext _context;
+       
 
         public TechFilesController(DBAdminContext context)
         {
@@ -44,11 +45,36 @@ namespace WebAdmin.Controllers
             }
             Int64 IDUser = User.UserID;
 
-    
+
             //var students = _context.SegUsuarios.FromSql($"GetUserName {IDUser}")
             //          .ToList();
 
-            return View(await _context.Techfiles.ToListAsync());
+            //comprobando que cumple los requisitos
+            //Si el usuario es de Technical Support
+            var segsistemausuario = from x in _context.SegSistemaUsuario
+                                    where x.IdUsuario == IDUser &&
+                                      x.CodigoSistema == 2
+                                    select x;
+
+
+            var admin = segsistemausuario.Count();
+
+            //si encontro un usuario Significa que es de Technical Support por logica si tiene Acceso A Cases
+            if (admin == 1)
+            {
+
+               
+                return View(await _context.Techfiles.ToListAsync());
+            }
+            else
+            {
+
+                
+                return RedirectToAction("../Home/Privacy");
+                // return NotFound();
+            }
+
+            
         }
     }
 }
