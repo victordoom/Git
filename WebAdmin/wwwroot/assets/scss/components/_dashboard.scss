@@ -1,0 +1,165 @@
+﻿.dashboard-flot-chart {
+    height:210px;
+}
+
+.dashboard-donut-chart {
+    height: 265px;
+}
+
+.dashboard-line-chart {
+    height: 250px;
+}
+
+.dashboard-stat-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 40px;
+
+    li {
+        padding: 15px 0 0 0;
+
+        small {
+            font-size: 8px;
+        }
+    }
+}
+
+.dashboard-task-infos {
+    .progress {
+        height: 10px;
+        margin-bottom: 0;
+        position: relative;
+        top: 6px;
+    }
+}
+
+.top-report{
+
+    h3{
+        margin:0;
+        color:#3d4c5a;
+        font-weight:400;
+    }
+    
+    .progress{
+        height:5px;
+        margin-bottom:10px;
+    }
+}
+
+.current_progress{
+   .progress{
+        margin-bottom: 11px;
+   }
+}
+.applications{    
+    .lettericon {
+        display: inline-block;
+        min-height: 30px;
+        min-width: 30px;
+        border-radius: 50%;
+        
+        .letter-icon-wrapper{
+            height: 35px;
+            width: 35px;
+            
+            .letter-icon{
+                line-height:35px;
+                font-size:16px;
+                text-align:center;
+                display:block;
+            }
+        }
+    }
+    
+    .table{
+        margin:0;
+        
+         tbody{
+            
+             tr{
+                
+                 td{
+                    vertical-align:middle;
+                 }
+             }
+         }
+    }
+}
+.top-countries{
+    
+    .table{        
+        img{
+            max-width:16px;
+        }    
+    }
+}
+
+
+.activities{
+    
+    .streamline{
+        position: relative;
+        border-color: #dddee0;
+        
+        .b-info {
+            border-color: $blue;
+        }
+        .b-primary {
+            border-color: $deep-purple;
+        }
+        .b-warning {
+            border-color: $orange;
+        }
+    }
+
+    .b-accent{
+        border-color:$indigo !important;
+        border-left: 1px solid;
+        
+        .sl-item {
+            position: relative;
+            padding-bottom: 1px;           
+            
+            &:before{
+                display: table;
+                content: " ";
+            }
+            
+            &:after {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 11px;
+                height: 11px;
+                margin-left: -6px;
+                background-color: #fff;
+                border-color: inherit;
+                border-style: solid;
+                border-width: 2px;
+                border-radius: 50%;
+                content: '';
+            }
+            
+            .sl-content {
+                padding-bottom:6px;
+                margin-top: -6px;
+                margin-left: 24px;
+            }
+        }
+    }    
+}
+@media only screen and (max-width: 767px) {
+    .clearHeader{
+        .navbar-header{
+            margin-top: 5px;
+            position: relative;
+        }
+    }
+    
+    .cpu-usage{
+        .pull-right{
+            display:none;
+        }
+    }
+}
