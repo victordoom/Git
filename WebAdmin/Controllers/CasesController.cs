@@ -32,18 +32,9 @@ namespace WebAdmin.Controllers
 
         #region Cases
         // GET: Cases
-        public async Task<IActionResult> Index(string sorOrder,
-            string currentFilter, string searchString, int? page)
+        public async Task<IActionResult> Index()
         {
-            if (page != null)
-            {
-                Pagina = page;
-            }
-
-            ViewBag.CurrentSort = sorOrder;
-            //validando si nuestro parametro sororder es nulo o esta vacio
-            ViewData["NombreSortParm"] = String.IsNullOrEmpty(sorOrder) ? "nombre_desc" : "";
-            ViewData["DescripcionSortParm"] = sorOrder == "descripcion_asc" ? "descripcion_desc" : "descripcion_asc";
+           
             
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
 
@@ -112,14 +103,14 @@ namespace WebAdmin.Controllers
                 IsTechSupport = true;
 
 
-                int pageSize = 10;
+               // int pageSize = 10;
 
 
 
               
                 //page ?? quiere decir que devolver el valor de page si tiene un valor o devolver 1 si es nulo
-               return View(await Paginacion<Cases>.CreateAsync(dBAdminContext.AsNoTracking(), Pagina ?? 1, pageSize));
-                // return View(await dBAdminContext.ToListAsync());
+              // return View(await Paginacion<Cases>.CreateAsync(dBAdminContext.AsNoTracking(), Pagina ?? 1, pageSize));
+                 return View(await dBAdminContext.ToListAsync());
             }
             else
             {

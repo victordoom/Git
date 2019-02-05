@@ -1,4 +1,4 @@
-﻿@model Paginacion<WebAdmin.Models.Cases>
+﻿@model IEnumerable<WebAdmin.Models.Cases>
 
 
 @{
@@ -43,7 +43,7 @@
 
 
 @*para la paginacion de data table de jsvascript poner id="example" en el table*@
-<table class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+<table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
     <thead>
         <tr>
 
@@ -159,7 +159,7 @@
 </table>
 
 
-@{
+@*@{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
@@ -183,4 +183,4 @@
    asp-route-page="@(Model.PageIndex + 1)"
    class="btn btn-default @nextDisabled">
     Siguiente
-</a>
+</a>*@
