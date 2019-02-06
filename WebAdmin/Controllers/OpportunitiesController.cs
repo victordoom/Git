@@ -13,6 +13,7 @@ namespace WebAdmin.Controllers
     public class OpportunitiesController : Controller
     {
         private readonly DBAdminContext _context;
+        
 
         public OpportunitiesController(DBAdminContext context)
         {
@@ -40,6 +41,8 @@ namespace WebAdmin.Controllers
             }
             Int64 IDUser = User.UserID;
 
+
+
             ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
@@ -50,25 +53,44 @@ namespace WebAdmin.Controllers
 
 
             // show only data for the last three month
-            var today = DateTime.Today.AddMonths(-3);
-            //var lastmonth = new DateTime(today.Year, today.Month - 3,today.Day); 
+            var today = DateTime.Today.AddMonths(-6);
+            //var lastmonth = new DateTime(today.Year, today.Month - 3,today.Day);
+            
+            //consulta para admin
             var dBAdminContext = _context.Opportunities
-                .Where(c => c.UserID == IDUser)
+                //.Where(c => c.UserID == IDUser)
                 .Where(c => c.VisitedDate >= today)
                 .OrderByDescending(c => c.ID )
                 .Include(c => c.OpportunitiesDetails);
 
+            var consulSales =  _context.Opportunities
+                .Where(c => c.UserID == IDUser)
+                .Where(c => c.VisitedDate >= today)
+                .OrderByDescending(c => c.ID)
+                .Include(c => c.OpportunitiesDetails);
+
+            // si es de Sales y Admin
             var segsistemausuario = from x in _context.SegSistemaUsuario
+                                    where x.IdUsuario == IDUser &&
+                                      x.CodigoSistema == 3 && x.CodigoPerfil == 1
+                                    select x;
+
+
+            // si es solo Sales
+            var segsistemausuarionormal = from x in _context.SegSistemaUsuario
                                     where x.IdUsuario == IDUser &&
                                       x.CodigoSistema == 3
                                     select x;
 
+            var normal = segsistemausuarionormal.Count();
 
             var admin = segsistemausuario.Count();
 
-            //si encontro un usuario Significa que es de Sales por logica si tiene Acceso A Cases
+            //si encontro un usuario Significa que es de Sales por logica si tiene Acceso Sales
+
             if (admin == 1)
             {
+                ViewBag.Rol = "Administrador";
                 return View(await dBAdminContext.ToListAsync());
             }
             else
@@ -77,7 +99,19 @@ namespace WebAdmin.Controllers
                 // return NotFound();
             }
 
-            
+
+            if (normal == 1)
+            {
+                return View(await consulSales.ToListAsync());
+            }
+            else
+            {
+                return RedirectToAction("../Home/Privacy");
+                // return NotFound();
+            }
+
+
+
         }
 
         // GET: Opportunities/Details/5

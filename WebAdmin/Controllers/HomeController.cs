@@ -12,18 +12,63 @@ namespace WebAdmin.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly DBAdminContext _context;
 
-
+        public HomeController(DBAdminContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
            // ViewBag.Branches = PopulateBranches();
 
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
             ViewBag.User = lEmail;
+           
+
             if (lEmail == null)
             {
                 return RedirectToAction("../Identity/Account/Login");
             }
+
+            string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+            var User =  _context.AspNetUsers.SingleOrDefault(m => m.Email == Email);
+            if (User == null)
+            {
+                return NotFound();
+            }
+            Int64 IDUser = User.UserID;
+
+            var sistem = _context.SegSistemaUsuario.Where(x => x.IdUsuario == IDUser);
+
+            List<int?> idsis = new List<int?>();
+            List<string> nomsis = new List<string>();
+
+
+            foreach (var item in sistem)
+            {
+                
+                idsis.Add(item.CodigoSistema);
+                
+            }
+
+            foreach (var item in idsis)
+            {
+
+                var con = from x in _context.Sistemas
+                          where x.CodigoSistema == item
+                          select x.NombreSistema;
+                foreach (var nom in con)
+                {
+                    nomsis.Add(nom);
+                }
+                
+            }
+
+            ViewBag.RolSystem = nomsis;
+
+            
             return View();
         }
 
