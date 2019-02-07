@@ -103,10 +103,8 @@ namespace WebAdmin.Controllers
                 IsTechSupport = true;
 
 
-                // int pageSize = 10;
+               //le damos acceso a las opciones del menu segun el usuario
                 var rol = new UserRol.UserRol();
-               // rol.GetRoles();
-
                 ViewBag.RolSystem = rol.Rol;
 
 
@@ -162,7 +160,13 @@ namespace WebAdmin.Controllers
 
            // ViewBag.id = User.UserID;// HttpContext.Session.GetInt32("UserID");
             ViewBag.User = Email; // HttpContext.Session.GetString("User");
-           // ViewBag.User = HttpContext.Session.GetString("User");
+                                  // ViewBag.User = HttpContext.Session.GetString("User");
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             if (ViewBag.User == null)
             {
                 return RedirectToAction("../Identity/Account/Login");
@@ -230,6 +234,10 @@ namespace WebAdmin.Controllers
 
             var admin = segsistemausuario.Count();
 
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
 
             if (admin != 1)
             {
@@ -320,6 +328,13 @@ namespace WebAdmin.Controllers
 
             ViewBag.id = User.UserID;// HttpContext.Session.GetInt32("UserID");
             ViewBag.User = Email; // HttpContext.Session.GetString("User");
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             if (ViewBag.User == null)
             {
                 //return RedirectToAction("Login", "SegUsuarios");
@@ -399,6 +414,12 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             if (ViewBag.User == null)
             {
                 //return RedirectToAction("Login", "SegUsuarios");
@@ -501,6 +522,10 @@ namespace WebAdmin.Controllers
             ViewBag.OpenedBy = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario", ViewBag.id);
 
             view.UserID = ViewBag.id;
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
 
             return View(view);
         }
@@ -723,6 +748,10 @@ namespace WebAdmin.Controllers
                 return NotFound();
             }
             Int64 IDUser = User.UserID;
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
 
             return View(await _context.Techfiles.ToListAsync());
         }
