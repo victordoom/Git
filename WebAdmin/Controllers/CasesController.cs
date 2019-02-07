@@ -469,6 +469,12 @@ namespace WebAdmin.Controllers
         public async Task<IActionResult> IndexCasesDetails()
         {
             var dBAdminContext = _context.CasesDetails.Include(c => c.Cases).Include(c => c.SegUsuarios);
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             return View(await dBAdminContext.ToListAsync());
         }
 
@@ -489,7 +495,11 @@ namespace WebAdmin.Controllers
                 return NotFound();
             }
 
-   
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
 
             return View(casesDetails);
         }
@@ -580,6 +590,11 @@ namespace WebAdmin.Controllers
             }
             ViewData["CasesID"] = new SelectList(_context.Cases, "Id", "Id", casesDetails.CasesID);
             ViewData["UserID"] = new SelectList(_context.SegUsuarios, "Login", "UserID", casesDetails.UserID);
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             return View(casesDetails);
         }
 
@@ -645,6 +660,10 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
 
             return View(casesDetails);
         }

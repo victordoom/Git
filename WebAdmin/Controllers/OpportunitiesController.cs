@@ -86,6 +86,11 @@ namespace WebAdmin.Controllers
 
             var admin = segsistemausuario.Count();
 
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             //si encontro un usuario Significa que es de Sales por logica si tiene Acceso Sales
 
             if (admin == 1)
@@ -137,6 +142,12 @@ namespace WebAdmin.Controllers
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
             ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
 
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             return View(opportunities);
         }
 
@@ -163,6 +174,12 @@ namespace WebAdmin.Controllers
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
             ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
 
             return View(model);
         }
@@ -264,6 +281,12 @@ namespace WebAdmin.Controllers
             ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName", opportunities.ProgramID);
 
 
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             return View(opportunities);
         }
 
@@ -337,6 +360,10 @@ namespace WebAdmin.Controllers
                 return NotFound();
             }
 
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             return View(opportunities);
         }
 
@@ -388,6 +415,12 @@ namespace WebAdmin.Controllers
         {
             //return View(await _context.OpportunitiesDetails.ToListAsync());
             var dBAdminContext = _context.OpportunitiesDetails.Include(c => c.Opportunities);
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             return View(await dBAdminContext.ToListAsync());
         }
 
@@ -405,6 +438,12 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
 
             return View(opportunitiesDetails);
         }
@@ -431,6 +470,11 @@ namespace WebAdmin.Controllers
             var view = new OpportunitiesDetails { OpportunitiesID = opportunities.ID };
             view.UserID = ViewBag.id;
             view.VisitDate =  DateTime.Now;
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
 
             return View(view);
         }
@@ -476,6 +520,12 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             return View(opportunitiesDetails);
         }
 
@@ -528,6 +578,13 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
+
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
 
             return View(opportunitiesDetails);
         }

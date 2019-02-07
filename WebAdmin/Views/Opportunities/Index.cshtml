@@ -159,7 +159,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td width="5%">
                         <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
                         <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
                     </td>
@@ -202,7 +202,7 @@
                     <td>
                         <img src="@Url.Content("./images/" + item.Rating +".png")" alt="Image" />
                     </td>
-                    <td>
+                    <td width="25%">
                         @Html.Raw(item.LastComment)
                     </td>
 
