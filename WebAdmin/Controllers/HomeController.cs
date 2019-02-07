@@ -66,7 +66,10 @@ namespace WebAdmin.Controllers
                 
             }
 
-            ViewBag.RolSystem = nomsis;
+            UserRol.UserRol user = new UserRol.UserRol(nomsis);
+
+
+            ViewBag.RolSystem = user.Rol;
 
             
             return View();

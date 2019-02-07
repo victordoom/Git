@@ -103,14 +103,17 @@ namespace WebAdmin.Controllers
                 IsTechSupport = true;
 
 
-               // int pageSize = 10;
+                // int pageSize = 10;
+                var rol = new UserRol.UserRol();
+               // rol.GetRoles();
+
+                ViewBag.RolSystem = rol.Rol;
 
 
 
-              
                 //page ?? quiere decir que devolver el valor de page si tiene un valor o devolver 1 si es nulo
-              // return View(await Paginacion<Cases>.CreateAsync(dBAdminContext.AsNoTracking(), Pagina ?? 1, pageSize));
-                 return View(await dBAdminContext.ToListAsync());
+                // return View(await Paginacion<Cases>.CreateAsync(dBAdminContext.AsNoTracking(), Pagina ?? 1, pageSize));
+                return View(await dBAdminContext.ToListAsync());
             }
             else
             {
