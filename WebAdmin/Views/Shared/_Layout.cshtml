@@ -288,9 +288,11 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <form asp-controller="Account" asp-action="LogOff" method="post">
+                                        <partial name="_LoginPartial"/>
+
+                                        @*<form asp-controller="Account" asp-action="LogOff" method="post">
                                             <button type="submit" class="btn btn-default btn-flat">Sign out</button>
-                                        </form>
+                                        </form>*@
                                     </div>
                                 </li>
                             </ul>

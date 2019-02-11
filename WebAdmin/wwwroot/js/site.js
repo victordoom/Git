@@ -20,19 +20,23 @@ $(document).ready(function () {
 
     function drawChart(result) {
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'category');
+        data.addColumn('string', 'HowFoung');
+        
         data.addColumn('number', 'cases');
+        
+        
         var dataArray = [];
         $.each(result, function (i, obj) {
-            dataArray.push([obj.category, obj.cases]);
+            dataArray.push([obj.howFoung, obj.cases]);
         });
 
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'pie charts exito',
+            title: 'HOW FOUND',
             width: 400,
-            height: 300
+            height: 300,
+            pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
         piechart.draw(data, piechart_options);
@@ -47,3 +51,4 @@ $(document).ready(function () {
         barchart.draw(data, barchart_options);
     }
 });
+
