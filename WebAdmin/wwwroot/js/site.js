@@ -2,6 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+
 $(document).ready(function () {
 
     $.ajax({
@@ -21,10 +23,10 @@ $(document).ready(function () {
     function drawChart(result) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'HowFoung');
-        
+
         data.addColumn('number', 'cases');
-        
-        
+
+
         var dataArray = [];
         $.each(result, function (i, obj) {
             dataArray.push([obj.howFoung, obj.cases]);
@@ -51,4 +53,6 @@ $(document).ready(function () {
         barchart.draw(data, barchart_options);
     }
 });
+
+
 

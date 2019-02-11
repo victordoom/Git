@@ -176,5 +176,16 @@ namespace WebAdmin.Controllers
         {
             return _context.Employees.Any(e => e.Id == id);
         }
+
+        public async Task<List<SalesComments>> mostarComments(int id)
+        {
+            List<SalesComments> Comments = new List<SalesComments>();
+
+            var consul = await _context.SalesComments.ToListAsync();
+            Comments.AddRange(consul);
+            
+
+            return  Comments;
+        }
     }
 }

@@ -39,6 +39,7 @@ namespace WebAdmin.Models
         public virtual DbSet<Sistema> Sistemas { get; set; }
         public virtual DbSet<Opciones> Opciones { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
+        public virtual DbSet<SalesComments> SalesComments { get; set; }
 
 
 
@@ -752,6 +753,27 @@ namespace WebAdmin.Models
                 entity.Property(e => e.ZippostalCode)
                     .HasColumnName("ZIPPostalCode")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<SalesComments>(entity =>
+            {
+                entity.HasKey(e => e.CommentId);
+
+                entity.Property(e => e.CommentId).HasColumnName("CommentID");
+
+                entity.Property(e => e.Comment)
+                    .HasMaxLength(2500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CommentDatetime)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.SalesId).HasColumnName("SalesID");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
             });
         }

@@ -8,7 +8,7 @@
 <h2>Index</h2>
 
 
-<table id="example1" class="table table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+<table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
     <thead>
         <tr>
 
@@ -44,42 +44,164 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName) +  @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OfficeCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BusinessPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HomePhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MobilePhone)
-            </td>
-           
-            <td>
-                @Html.DisplayFor(modelItem => item.DepartmentId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+
+                <td>
+                    <p style="color:Highlight;">  @Html.DisplayFor(modelItem => item.JobTitle)</p>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficeCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusinessPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomePhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobilePhone)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DepartmentId)
+                </td>
+                <td>
+                    @if (item.Status == true)
+                    {
+                        <span class="label label-success">
+                            True
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="label label-danger">
+                            False
+                        </span>
+                    }
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalComments" onclick="getComments('@item.Id','SalesComments/mostarComments')">Ver</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalComments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Mas</button>
+
+                <table id="mitabla" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+                    <thead>
+                        <tr>
+
+                            <th>
+                                By/Datetime
+                            </th>
+                            <th>
+                                Title/Comment
+
+                            </th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                        
+                            <tr>
+
+                                <td >
+                                    
+                                </td>
+                                <td >
+                                    
+                                </td>
+                                
+
+                            </tr>
+
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="editarUsuario('Users/EditUsuario')">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAgregarComments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-warning" data-toggle="modal" data-target="#modalComments">Mas</button>
+                <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="Id" id="Id" />
+                    <div class="form-group">
+                        <label for="UserName" class="control-label">Usuario</label>
+                        <input readonly name="UserName" id="UserName" class="form-control" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Roles" class="control-label">Roles</label>
+                        <select id="Select" name="Select" class="form-control" onclick="getRoles('Users/GetRoles')">
+                            <option value="0">Selecione un rol</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Email" class="control-label">Email</label>
+                        <input name="Email" id="Email" class="form-control" />
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="PhoneNumber" class="control-label">Telefono</label>
+                        <input name="PhoneNumber" id="PhoneNumber" class="form-control" />
+
+                    </div>
+
+
+
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="editarUsuario('Users/EditUsuario')">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
