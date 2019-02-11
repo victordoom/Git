@@ -11,6 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using WebAdmin.Models;
+using Microsoft.AspNetCore.Identity;
+using WebAdmin.Services;
+using WebAdmin.Areas.Identity.Data;
 
 namespace WebAdmin
 {
@@ -42,6 +45,13 @@ namespace WebAdmin
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<DBAdminContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("dbAdminDatabase")));
+
+
+            
+
+            // Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

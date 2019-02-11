@@ -2,14 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 namespace WebAdmin.Models
 {
-    public partial class DBAdminContext : DbContext
+    public  class DBAdminContext : DbContext
     {
         public DBAdminContext()
         {
-        }
 
+        }
+        
         public DBAdminContext(DbContextOptions<DBAdminContext> options)
             : base(options)
         {
@@ -35,6 +38,7 @@ namespace WebAdmin.Models
         public virtual DbSet<SegSistemaUsuario> SegSistemaUsuario { get; set; }
         public virtual DbSet<Sistema> Sistemas { get; set; }
         public virtual DbSet<Opciones> Opciones { get; set; }
+        public virtual DbSet<Employees> Employees { get; set; }
 
 
 
@@ -628,6 +632,127 @@ namespace WebAdmin.Models
                     .WithMany(p => p.Opciones)
                     .HasForeignKey(d => d.CodigoSistema)
                     .HasConstraintName("FK_OPCIONES_SISTEMA_O_SISTEMA");
+            });
+
+            modelBuilder.Entity<Employees>(entity =>
+            {
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.Property(e => e.Accounting).HasColumnName("ACCOUNTING");
+
+                entity.Property(e => e.ActivarShift).HasColumnName("Activar_Shift");
+
+                entity.Property(e => e.Address)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Administration).HasColumnName("ADMINISTRATION");
+
+                entity.Property(e => e.Attachments)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Birthdate).HasColumnType("datetime");
+
+                entity.Property(e => e.BusinessPhone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.City)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Company)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryRegion)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
+
+                entity.Property(e => e.DepartmentId).HasColumnName("DepartmentID");
+
+                entity.Property(e => e.EmailAddress)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FaxNumber)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FirstName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.HomePhone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Inventory).HasColumnName("INVENTORY");
+
+                entity.Property(e => e.JobTitle)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LastModification).HasColumnType("datetime");
+
+                entity.Property(e => e.LastName)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobilePhone)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MostrarCintaOpciones).HasColumnName("Mostrar_Cinta_Opciones");
+
+                entity.Property(e => e.Notes)
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.OfficeCode)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Pass)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PositionId).HasColumnName("PositionID");
+
+                entity.Property(e => e.Salesdepartament).HasColumnName("SALESDEPARTAMENT");
+
+                entity.Property(e => e.Social)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.StateProvince)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TaxId)
+                    .HasColumnName("TaxID")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Technicalsupport).HasColumnName("TECHNICALSUPPORT");
+
+                entity.Property(e => e.Usuario)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.WebPage)
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ZippostalCode)
+                    .HasColumnName("ZIPPostalCode")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
         }
     }

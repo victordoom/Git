@@ -101,9 +101,9 @@ namespace WebAdmin.Controllers
             {
                 //guardamos si es de technical
                 IsTechSupport = true;
+                ViewBag.Rol = "Administrador";
 
-
-               //le damos acceso a las opciones del menu segun el usuario
+                //le damos acceso a las opciones del menu segun el usuario
                 var rol = new UserRol.UserRol();
                 ViewBag.RolSystem = rol.Rol;
 
@@ -699,7 +699,7 @@ namespace WebAdmin.Controllers
             //var list = consulta.ToArray();
             return Json(consulta);
         }
-
+        
         public JsonResult LlenarText(int? userid)
         {
             object consulta;

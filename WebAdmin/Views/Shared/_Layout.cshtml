@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="~/dist/css/skins/skin-blue.min.css">
 
+
+
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     @*<link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">*@
@@ -171,7 +173,7 @@
                 stateSave: true});
         });
 
-        
+
 
 //        $('#example').DataTable({
 //            stateSave: true,
@@ -183,13 +185,65 @@
 
     </script>
 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                type: 'GET',
+                dataType: "json",
+                contentType: "application/json",
+                url: '/api/Dashboard/getconsulta',
+                success: function (result) {
+                    google.charts.load('current', {
+                        'packages': ['corechart']
+                    });
+                    google.charts.setOnLoadCallback(function () {
+                        drawChart(result);
+                    });
+                }
+            });
+
+            function drawChart(result) {
+                var data = new google.visualization.DataTable();
+                data.addColum('string', 'category');
+                data.addColum('number', 'cases');
+                var dataArray = [];
+                $.each(result, function (i, obj) {
+                    dataArray.push([obj.category, obj.cases]);
+                });
+
+                data.addRows(dataArray);
+
+                var piechart_options = {
+                    title: 'pie charts exito',
+                    width: 400,
+                    height: 300
+                };
+                var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+                piechart.draw(data, piechart_options);
+
+                var barchart_options = {
+                    title: 'bart charts exito',
+                    width: 400,
+                    height: 300,
+                    legend: none
+                };
+                var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+                barchart.draw(data, barchart_options);
+            }
+        });
+    </script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini" >
-    <div class="wrapper"  >
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
         @*Header*@
         <header class="main-header" >
             <!-- Logo -->
-            <a asp-action="Index" asp-controller="Home" class="logo">
+            <a asp-action="Index" asp-controller="Home" class="logo" style="background: #466cab;">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>B</span>
                 <!-- logo for regular state and mobile devices -->
@@ -197,24 +251,24 @@
 
             </a>
             <!-- Header Navbar: style can be found in header.less -->
-            <nav class="navbar navbar-static-top">
+            <nav class="navbar navbar-static-top" style="background: linear-gradient(60deg, #466cab, #4e495c); min-height: 80px;">
                 <!-- Sidebar toggle button-->
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">Toggle navigation</span>
                 </a>
-                <div class="navbar-custom-menu">
+                <div class="navbar-custom-menu" >
                     <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
-                        <li class="dropdown user user-menu">
+                        <li class="dropdown user user-menu" >
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
                                 <img src="~/images/ABLogo2.png" class="user-image" alt="ui">
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">@ViewBag.User</span>
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu"  >
                                 <!-- The user image in the menu -->
-                                <li class="user-header">
+                                <li class="user-header" style="background: #4e495c;">
                                     <img src="~/images/ABLogo2.png" class="img-circle" alt="User Image">
                                     <p>
                                         @ViewBag.User
@@ -224,7 +278,7 @@
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="row ">
-                                        <a href="Identity/Account/Manage/ChangePassword" class="btn btn-info btn-block">Change Password</a>
+                                        <a asp-controller="Manage" asp-action="SetPassword" class="btn btn-info btn-block">Change Password</a>
                                     </div>
                                     <!-- /.row -->
                                 </li>
@@ -247,16 +301,16 @@
             </nav>
         </header>
         @*Asiede*@
-        <aside class="main-sidebar" >
+        <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
-            <section class="sidebar" >
+            <section class="sidebar">
                 <!-- Sidebar user panel -->
-                <div class="user-panel" style="background: #3c8dbc">
+                <div class="user-panel" style="background: #466cab;">
                     <div class="pull-left image">
-                        <img src="~/images/ABLogo2.png" class="user-image" alt="User Image" />
+                        <img src="~/images/logoApp2.png" class="img-circle" alt="User Image" />
                     </div>
                     <div class="pull-left info">
-                        <p>@ViewBag.User</p>
+                        <p>@ViewBag.Rol</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
@@ -297,6 +351,9 @@
             </section>
         </div>
 
+        <div class="color-bg"></div>
+
+
         @*Footer*@
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
@@ -306,7 +363,7 @@
             reserved.
         </footer>
 
-       
+
     </div>
 
     @RenderSection("Scripts", required: false)

@@ -1,174 +1,177 @@
 ﻿<ul class="sidebar-menu" data-widget="tree">
 
-    <!-- Optionally, you can add icons to the links -->
-    <li>
-        <a asp-action="Index" asp-controller="Home">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+<!-- Optionally, you can add icons to the links -->
+<li>
+    <a asp-action="Index" asp-controller="Home">
+        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
 
+    </a>
+</li>
+   
+
+@if (@ViewBag.RolSystem.Contains("Technical Support"))
+{
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-phone"></i> <span>Technical Support</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a asp-action="Index" asp-controller="Cases" asp-route-page="1"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
+            <li><a asp-action="Create" asp-controller="Cases"><i class="fa fa-circle-o"></i>Register Case</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Licenses View</a></li>
+            <li><a asp-action="Index" asp-controller="TechFiles"><i class="fa fa-circle-o"></i>Tech Files</a></li>
+        </ul>
+
+    </li>
+}
+
+@if (@ViewBag.RolSystem.Contains("Sales Department"))
+{
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-briefcase"></i> <span>Sales</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="Index" asp-controller="Opportunities"><i class="fa fa-circle-o"></i> Dashboard (Opportunities)</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Register Opportunities</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Query business data</a></li>
+            <li><a asp-action="Index" asp-controller="SalesComments"><i class="fa fa-circle-o"></i>Saless Comment</a></li>
+        </ul>
+
+    </li>
+
+}
+@*Accounting*@
+
+@*@if (@ViewBag.RolSystem.Contains("Accounting"))
+{
+
+
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-user-circle"></i> <span>Accounting</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Accounting Transaction</a></li>
+
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Categories</a></li>
+        </ul>
+
+    </li>
+
+}*@
+
+@*@if (@ViewBag.RolSystem.Contains("Inventory"))
+{
+   
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-archive"></i> <span>Inventory</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i>List Products</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Suppliers</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purch Orders</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Manager</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders Hardware Data</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purh -Orders -Approved</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purh -Orders -Closed</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders by Store</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>View Inventory</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Returns</a></li>
+
+        </ul>
+
+    </li>
+}*@
+
+@*@if (@ViewBag.RolSystem.Contains("Administration"))
+{
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-desktop"></i> <span>Administration</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Contracts</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Companies/Locations</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Owners</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Employes</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Constracts-Approve</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Register Invoice</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Programs</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Licences</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Producs</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Info</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Cases -Technical</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Sales</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Contracts</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Enable Editions</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Payments</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Cases -Administrative</a></li>
+        </ul>
+
+    </li>
+
+}*@
+
+@*@if (@ViewBag.RolSystem.Contains("User Permission"))
+{
+    <li class=" treeview">
+        <a>
+            <i class="fa fa-user-o"></i> <span>User/Permission</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i>Modules</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Profiles</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Alcanses de Usuario</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Users</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Accesso Perfil</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Verify</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purchase Order -Cancel</a></li>
+            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Enable Edition</a></li>
+
+        </ul>
+
+    </li>
+
+}*@
+
+@*<li>
+        <a asp-action="Index" asp-controller="Cases">
+            <i class="fa fa-phone"></i> <span>Cases</span>
+        </a>
+
+    </li>
+
+    <li>
+        <a asp-action="Index" asp-controller="TechFiles">
+            <i class="fa fa-file"></i> <span>Tech Files</span>
         </a>
     </li>
 
-    @if (@ViewBag.RolSystem.Contains("Technical Support"))
-    {
-        <li class=" treeview">
-            <a>
-                <i class="fa fa-phone"></i> <span>Technical Support</span>
-                <span class="pull-right-container">
-                    <i class="fa fa-angle-left pull-right"></i>
-                </span>
-            </a>
-            <ul class="treeview-menu">
-                <li><a asp-action="Index" asp-controller="Cases" asp-route-page="1"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
-                <li><a asp-action="Create" asp-controller="Cases"><i class="fa fa-circle-o"></i>Register Case</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i>Licenses View</a></li>
-                <li><a asp-action="Index" asp-controller="TechFiles"><i class="fa fa-circle-o"></i>Tech Files</a></li>
-            </ul>
-
-        </li>
-    }
-
-        @if (@ViewBag.RolSystem.Contains("Sales Department"))
-        {
-            <li class=" treeview">
-                <a>
-                    <i class="fa fa-briefcase"></i> <span>Sales</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="active"><a asp-action="Index" asp-controller="Opportunities"><i class="fa fa-circle-o"></i> Dashboard (Opportunities)</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i>Register Opportunities</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i>Query business data</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i>Saless Comment</a></li>
-                </ul>
-
-            </li>
-
-        }
-            @*Accounting*@
-
-            @if (@ViewBag.RolSystem.Contains("Accounting"))
-            {
-
-
-                <li class=" treeview">
-                    <a>
-                        <i class="fa fa-user-circle"></i> <span>Accounting</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Accounting Transaction</a></li>
-
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Categories</a></li>
-                    </ul>
-
-                </li>
-
-            }
-
-            @if (@ViewBag.RolSystem.Contains("Inventory"))
-            {
-                @*Inventory*@
-                <li class=" treeview">
-                    <a>
-                        <i class="fa fa-archive"></i> <span>Inventory</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i>List Products</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Suppliers</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purch Orders</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Manager</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders Hardware Data</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purh -Orders -Approved</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purh -Orders -Closed</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Orders by Store</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>View Inventory</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Returns</a></li>
-
-                    </ul>
-
-                </li>
-            }
-
-            @if (@ViewBag.RolSystem.Contains("Administration"))
-            {
-                <li class=" treeview">
-                    <a>
-                        <i class="fa fa-desktop"></i> <span>Administration</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Contracts</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Companies/Locations</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Owners</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Employes</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Constracts-Approve</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Register Invoice</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Programs</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Licences</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Producs</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Info</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Cases -Technical</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Sales</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Contracts</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Enable Editions</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Payments</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Cases -Administrative</a></li>
-                    </ul>
-
-                </li>
-
-            }
-            @if (@ViewBag.RolSystem.Contains("User Permission"))
-            {
-                <li class=" treeview">
-                    <a>
-                        <i class="fa fa-user-o"></i> <span>User/Permission</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i>Modules</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Profiles</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Alcanses de Usuario</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Users</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Accesso Perfil</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Verify</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Purchase Order -Cancel</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Enable Edition</a></li>
-
-                    </ul>
-
-                </li>
-
-            }
-            @*<li>
-                    <a asp-action="Index" asp-controller="Cases">
-                        <i class="fa fa-phone"></i> <span>Cases</span>
-                    </a>
-
-                </li>
-
-                <li>
-                    <a asp-action="Index" asp-controller="TechFiles">
-                        <i class="fa fa-file"></i> <span>Tech Files</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a asp-action="Index" asp-controller="Opportunities">
-                        <i class="fa fa-briefcase"></i> <span>Opportunities</span>
-                    </a>
-                </li>*@
+    <li>
+        <a asp-action="Index" asp-controller="Opportunities">
+            <i class="fa fa-briefcase"></i> <span>Opportunities</span>
+        </a>
+    </li>*@
 
         </ul>

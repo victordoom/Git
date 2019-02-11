@@ -20,6 +20,15 @@ namespace WebAdmin.Controllers
             _context = context;
         }
         #region Opportunities
+
+        public async Task<IActionResult> Dash()
+        {
+            // le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+            return View();
+        }
         // GET: Opportunities
         public async Task<IActionResult> Index()
         {
@@ -63,6 +72,8 @@ namespace WebAdmin.Controllers
                 .OrderByDescending(c => c.ID )
                 .Include(c => c.OpportunitiesDetails);
 
+
+            //consulta para user
             var consulSales =  _context.Opportunities
                 .Where(c => c.UserID == IDUser)
                 .Where(c => c.VisitedDate >= today)
@@ -98,13 +109,7 @@ namespace WebAdmin.Controllers
                 ViewBag.Rol = "Administrador";
                 return View(await dBAdminContext.ToListAsync());
             }
-            else
-            {
-                return RedirectToAction("../Home/Privacy");
-                // return NotFound();
-            }
-
-
+           
             if (normal == 1)
             {
                 return View(await consulSales.ToListAsync());
