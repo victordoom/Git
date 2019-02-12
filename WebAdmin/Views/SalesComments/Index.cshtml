@@ -16,7 +16,9 @@
                 @Html.DisplayNameFor(model => model.FirstName) @Html.DisplayNameFor(model => model.LastName)
             </th>
 
-
+            <th>
+                Departament
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.JobTitle)
             </th>
@@ -33,9 +35,7 @@
                 @Html.DisplayNameFor(model => model.MobilePhone)
             </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.DepartmentId)
-            </th>
+
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -46,52 +46,54 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
-                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+            </td>
 
-                <td>
-                    <p style="color:Highlight;">  @Html.DisplayFor(modelItem => item.JobTitle)</p>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OfficeCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BusinessPhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.HomePhone)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MobilePhone)
-                </td>
+            <td>
+                Sales
+            </td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartmentId)
-                </td>
-                <td>
-                    @if (item.Status == true)
-                    {
-                        <span class="label label-success">
-                            True
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="label label-danger">
-                            False
-                        </span>
-                    }
-                </td>
+            <td>
+                <p style="color:Highlight;">  @Html.DisplayFor(modelItem => item.JobTitle)</p>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OfficeCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BusinessPhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomePhone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobilePhone)
+            </td>
 
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalComments" onclick="getComments('@item.Id','SalesComments/mostarComments')">Ver</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
+
+            <td>
+                @if (item.Status == true)
+                {
+                    <span class="label label-success">
+                        True
+                    </span>
+                }
+                else
+                {
+                    <span class="label label-danger">
+                        False
+                    </span>
+                }
+            </td>
+
+            <td>
+                
+                <a class="btn btn-warning" data-toggle="modal" data-target="#modalComments" onclick="getComments('@item.Id','SalesComments/mostarComments')">Ver</a>
+               
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -102,13 +104,14 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Sales Comments</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Mas</button>
+            <div class="modal-body" id="modalcomment">
+               
+                @*<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Mas</button>
 
                 <table id="mitabla" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
                     <thead>
@@ -127,25 +130,15 @@
                     <tbody>
                        
                         
-                            <tr>
-
-                                <td >
-                                    
-                                </td>
-                                <td >
-                                    
-                                </td>
-                                
-
-                            </tr>
+                            
 
                         
                     </tbody>
-                </table>
+                </table>*@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="editarUsuario('Users/EditUsuario')">Guardar Cambios</button>
+                
             </div>
         </div>
     </div>
@@ -156,51 +149,42 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Commentarios / Revision</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <button class="btn btn-warning" data-toggle="modal" data-target="#modalComments">Mas</button>
+                
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" name="Id" id="Id" />
                     <div class="form-group">
-                        <label for="UserName" class="control-label">Usuario</label>
-                        <input readonly name="UserName" id="UserName" class="form-control" />
-
+                        <label for="UserName" class="control-label">To</label>
+                        <select id="Select" name="Select" class="form-control" >
+                            <option value="0">Selecione un rol</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="Roles" class="control-label">Roles</label>
-                        <select id="Select" name="Select" class="form-control" onclick="getRoles('Users/GetRoles')">
+                        <label for="Roles" class="control-label">By</label>
+                        <select id="Select" name="Select" class="form-control" >
                             <option value="0">Selecione un rol</option>
                         </select>
 
                     </div>
 
                     <div class="form-group">
-                        <label for="Email" class="control-label">Email</label>
-                        <input name="Email" id="Email" class="form-control" />
+                        <label for="Email" class="control-label">Comment</label>
+                        <input name="Email" id="Email" class="form-control" style="height: 30%;"/>
 
                     </div>
-
-                    <div class="form-group">
-                        <label for="PhoneNumber" class="control-label">Telefono</label>
-                        <input name="PhoneNumber" id="PhoneNumber" class="form-control" />
-
-                    </div>
-
-
-
-
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="editarUsuario('Users/EditUsuario')">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" >Guardar</button>
             </div>
         </div>
     </div>
