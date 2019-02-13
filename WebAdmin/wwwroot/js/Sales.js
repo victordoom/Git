@@ -2,11 +2,11 @@
 
 });
 
-function getComments(id, action) {
+function getComments(email, action) {
     $.ajax({
         type: "POST",
         url: action,
-        data: { id },
+        data: { email },
         success: function (response) {
             //los datos que obtenemos con nuestra funcion se las vamos a pasar a la funcion mostarUsuario
             mostrarComments(response);
@@ -28,7 +28,7 @@ function mostrarComments(response) {
     $.each(items, function (index, val) {
         
         row += '<tr>'
-        row += '<td><b>' + val.commentBy + '</b><br> <p>' + val.commentDatetime + '</p></td>';
+        row += '<td><b>' + val.nombre + '</b><br> <p>' + val.commentDatetime + '</p></td>';
         row += '<td><b>' + val.title + '</b> <br> <p>' + val.comment + '</p></td>';
         //row += '<td>' + val.comment + '</td>';
         row += '</tr>'
