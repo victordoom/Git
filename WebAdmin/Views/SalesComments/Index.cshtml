@@ -158,33 +158,62 @@
                 
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" name="Id" id="Id" />
+
+
+                    <input type="hidden" name="Idby" id="Idby" />
+
+
+
                     <div class="form-group">
-                        <label for="UserName" class="control-label">To</label>
-                        <select id="Select" name="Select" class="form-control" >
-                            <option value="0">Selecione un rol</option>
-                        </select>
+                        <label for="User" class="control-label">By</label>
+                        <input name="User" id="User" class="form-control" readonly="readonly" />
+                    </div>
+
+
+                    @if (ViewBag.Admin == "Admin")
+                    {
+                        <input type="hidden" name="Idto" id="Idto" />
+
+                    <div class="form-group">
+                        <label for="UserSelect" class="control-label">To</label>
+                        <input name="UserSelect" id="UserSelect" class="form-control" readonly="readonly" />
+
+                    </div>
+                    }
+
+                    @if (ViewBag.Admin == "No")
+                    {
+
+
+
+                    <div class="form-group">
+            <label for="Select" class="control-label">To</label>
+            <select id="Select" name="Select" class="form-control" onclick="getAdministra('SalesComments/GetAdmin')">
+                <option value="0">Selecione un Admin</option>
+            </select>
+
+                   </div>
+
+                    }
+                    <div class="form-group">
+                        <label for="Title" class="control-label">Title</label>
+                        <input name="Title" id="Title" class="form-control" style="height: 30%;" />
+
                     </div>
 
                     <div class="form-group">
-                        <label for="Roles" class="control-label">By</label>
-                        <select id="Select" name="Select" class="form-control" >
-                            <option value="0">Selecione un rol</option>
-                        </select>
+                        <label for="Comment" class="control-label">Comment</label>
+                        <input name="Comment" id="Comment" class="form-control" style="height: 30%;" />
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="Email" class="control-label">Comment</label>
-                        <input name="Email" id="Email" class="form-control" style="height: 30%;"/>
 
-                    </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" >Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="agregarComment('SalesComments/CrearComments')" >Save Comment</button>
             </div>
         </div>
     </div>

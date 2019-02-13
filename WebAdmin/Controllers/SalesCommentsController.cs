@@ -65,11 +65,13 @@ namespace WebAdmin.Controllers
             var admin = segsistemausuario.Count();
             if (admin == 1)
             {
+                ViewBag.Admin = "No";
                 return View(await Employees.ToListAsync());
             }
 
             if (normal == 1)
             {
+                ViewBag.Admin = "No";
                 return View(await empleadosales.ToListAsync());
             }
 
@@ -93,16 +95,22 @@ namespace WebAdmin.Controllers
             return _context.Employees.Any(e => e.Id == id);
         }
 
-        public async Task<List<SalesComments>> mostarComments(string email)
+        public async Task<List<InfoSalesComments>> mostarComments(string email)
         {
-            //identificar el usuario logeado
-            
+            //identificar el usuario seleccionado
             var User = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == email);
 
+            //identificar usuario logeado
+            var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
+            var UserLog = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == lEmail);
+
+             var NombreUserLog = _context.SegUsuarios.SingleOrDefault(x => x.UserID == UserLog.UserID);
+
+            var NombreSelect = _context.SegUsuarios.SingleOrDefault(y => y.UserID == User.UserID);
             //join
             var join = from comments in _context.SalesComments
-                       join usu in _context.SegUsuarios on comments.SalesId equals usu.UserID
-                       select new SalesComments
+                       join usu in _context.SegUsuarios on comments.CommentBy equals usu.UserID
+                       select new InfoSalesComments
                        {
                            CommentId = comments.CommentId,
                            SalesId = comments.SalesId,
@@ -110,8 +118,14 @@ namespace WebAdmin.Controllers
                            CommentDatetime = comments.CommentDatetime,
                            Title = comments.Title,
                            Comment = comments.Comment,
-                           Nombre = usu.NombreUsuario + " " + usu.ApellidoUsuario
+                           Nombre = usu.NombreUsuario + " " + usu.ApellidoUsuario,
+                           UserLogeado = UserLog.UserID,
+                           UserLogeadoNombre = NombreUserLog.NombreUsuario +" "+ NombreUserLog.ApellidoUsuario,
+                           UserSelect = NombreSelect.UserID,
+                           UserSelectNombre = NombreSelect.NombreUsuario +" "+ NombreSelect.ApellidoUsuario
                        };
+            
+
             var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).ToListAsync();
 
             //var consulta = await _context.SalesComments.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).ToListAsync();
@@ -132,7 +146,7 @@ namespace WebAdmin.Controllers
             //}
 
             
-            List<SalesComments> Comments = new List<SalesComments>();
+            List<InfoSalesComments> Comments = new List<InfoSalesComments>();
 
            // var consul = await _context.SalesComments.ToListAsync();
             Comments.AddRange(con);
@@ -141,20 +155,32 @@ namespace WebAdmin.Controllers
             return  Comments;
         }
 
-        public async Task<bool> CrearComments(int salesid, int commentby, string title, string comment)
+        public async Task<bool> CrearComments(int idby, int idto,  string comment, string title)
         {
+            bool Exito = false;
             var NewComment = new SalesComments
             {
-                SalesId = salesid,
-                CommentBy = commentby,
+                SalesId = idto,
+                CommentBy = idby,
                 Title = title,
                 Comment = comment
+                
+                
             };
 
-            var result = await _context.AddAsync(NewComment);
-            await _context.SaveChangesAsync();
+             _context.Add(NewComment);
+            var result = await _context.SaveChangesAsync();
 
-            return true;
+            if (result > 0)
+            {
+                Exito = true;
+            } else
+            {
+                Exito = false;
+            }
+            
+
+            return Exito;
 
         }
         
@@ -169,13 +195,66 @@ namespace WebAdmin.Controllers
 
         public async Task<List<SelectListItem>> GetAdmin()
         {
+            string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+            var User = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == Email);
 
-            
+
+
             List<SelectListItem> admins = new List<SelectListItem>();
+            var consul = from x in _context.SegSistemaUsuario
+                         join y in _context.SegUsuarios on x.IdUsuario equals y.UserID
+                         where x.CodigoSistema == 3 && x.CodigoPerfil == 1
+                         select new Administradores { Admin = y.NombreUsuario + " " + y.ApellidoUsuario, AdminID = y.UserID };
 
-           
+
+            foreach (var item in consul)
+            {
+                if (item.AdminID != User.UserID)
+                {
+                    admins.Add(new SelectListItem()
+                    {
+                        Value = item.AdminID.ToString(),
+                        Text = item.Admin
+
+                    });
+                }
+               
+            }
+
+
+
 
             return admins;
         }
+
+            class Administradores
+            {
+            public int AdminID { get; set; }
+            public string Admin { get; set; }
+
+
+            }
+
+        public class InfoSalesComments
+        {
+            public int CommentId { get; set; }
+            public int? SalesId { get; set; }
+            public int? CommentBy { get; set; }
+            public DateTime? CommentDatetime { get; set; }
+            public string Comment { get; set; }
+            public string Title { get; set; }
+
+
+
+
+            public string Nombre { get; set; }
+            public int UserLogeado { get; set; }
+            public string UserLogeadoNombre { get; set; }
+            public int UserSelect { get; set; }
+            public string UserSelectNombre { get; set; }
+        }
     }
+
 }
+

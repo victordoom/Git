@@ -13,6 +13,9 @@ namespace WebAdmin.Models
         public DateTime? CommentDatetime { get; set; }
         public string Comment { get; set; }
         public string Title { get; set; }
-        public string Nombre { get; set; }
+
+
+
+
     }
 }

@@ -2,20 +2,46 @@
 
 });
 
+var j = 0;
+
+var userLogeado;
+
 function getComments(email, action) {
     $.ajax({
         type: "POST",
         url: action,
         data: { email },
         success: function (response) {
+
+            if (response.length == 0) {
+                nohaycomments()
+
+            } else {
             //los datos que obtenemos con nuestra funcion se las vamos a pasar a la funcion mostarUsuario
+            $('input[name=Idby]').val(response[0].userLogeado);
+            $('input[name=User]').val(response[0].userLogeadoNombre);
+            $('input[name=Idto]').val(response[0].userSelect);
+            $('input[name=UserSelect]').val(response[0].userSelectNombre);
             mostrarComments(response);
+            }
+
         }
     });
 }
 
-function mostrarComments(response) {
+function nohaycomments() {
+    var row = '';
+    row += '<div class="text-right">';
+    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Crear</button>';
+    row += '</div>';
+    row += '<table  class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">'
+    row += '<thead><tr><th>By/Datetime</th><th>Title/Comment</th></tr></thead>'
+    row += '</table>'
 
+    $('#modalcomment').html(row);
+}
+function mostrarComments(response) {
+    j = 0;
    
     var row = '';
     
@@ -39,3 +65,61 @@ function mostrarComments(response) {
 
     $('#modalcomment').html(row);
 }
+
+function getAdministra(action) {
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            if (j == 0) {
+                for (var i = 0; i < response.length; i++) {
+                    document.getElementById('Select').options[i] = new Option(response[i].text, response[i].value);
+                   // document.getElementById('SelectNuevo').options[i] = new Option(response[i].text, response[i].value);
+                }
+                j = 1;
+            }
+        }
+    });
+}
+
+
+function agregarComment(action) {
+    var idby = $('input[name=Idby]')[0].value;
+    //var idto = $('input[name=Idto]')[0].value;
+    var comment = $('input[name=Comment]')[0].value;
+    var title = $('input[name=Title]')[0].value;
+
+    var role = document.getElementById('Select');
+    var selectRole = role.options[role.selectedIndex].value;
+
+    if (title == "") {
+        $('#Title').focus();
+    }
+    if (comment == "") {
+        $('#Comment').focus();
+    } else {
+
+
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: {
+                idby, idto, comment, title
+            },
+            success: function (response) {
+                if (response = true) {
+                    window.location.href = "SalesComments";
+                } else {
+                    alert("The comment could not be saved");
+                }
+
+
+
+            }
+        });
+    
+    }
+}
+
+
