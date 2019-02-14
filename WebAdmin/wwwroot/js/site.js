@@ -43,24 +43,17 @@ $(document).ready(function () {
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
         piechart.draw(data, piechart_options);
 
-        var barchart_options = {
-            title: 'bart charts exito',
-            width: 400,
-            height: 300,
-            legend: none
-        };
-        var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
-        barchart.draw(data, barchart_options);
+        
     }
 });
 
-$('#barchart_div').on(function () {
+$(document).ready(function () {
 
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getdataset1',
+        url: '/api/Dashboard/getdataset',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
@@ -72,35 +65,72 @@ $('#barchart_div').on(function () {
 
     function drawChart(result) {
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'HowFoung');
+        data.addColumn('string', 'Category');
+
+        data.addColumn('number', 'Cases');
+
+
+        var dataArray = [];
+        $.each(result, function (i, obj) {
+            dataArray.push([obj.category, obj.cases]);
+        });
+
+        data.addRows(dataArray);
+
+        var piechart_options = {
+            title: 'CATEGORY',
+            width: 400,
+            height: 300,
+            pieHole: 0.4,
+        };
+        var piechart = new google.visualization.PieChart(document.getElementById('barchart_div'));
+        piechart.draw(data, piechart_options);
+
+        
+    }
+});
+
+
+$(document).ready(function () {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getdatasetvisited',
+        success: function (result) {
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                drawChart(result);
+            });
+        }
+    });
+
+    function drawChart(result) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'assignedTo');
 
         data.addColumn('number', 'cases');
 
 
         var dataArray = [];
         $.each(result, function (i, obj) {
-            dataArray.push([obj.howFoung, obj.cases]);
+            dataArray.push([obj.assignedTo, obj.cases]);
         });
 
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'HOW FOUND',
+            title: 'VISITED BY SALER',
             width: 400,
             height: 300,
-            pieHole: 0.4,
+            
         };
-        var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+        var piechart = new google.visualization.ColumnChart(document.getElementById('visited_div'));
         piechart.draw(data, piechart_options);
 
-        var barchart_options = {
-            title: 'bart charts exito',
-            width: 400,
-            height: 300,
-            legend: none
-        };
-        var barchart = new google.visualization.BarChart(document.getElementById('barchart_div'));
-        barchart.draw(data, barchart_options);
+
     }
 });
 

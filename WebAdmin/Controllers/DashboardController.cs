@@ -24,7 +24,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("select VisitedDate date, dbo.Opp_getHowFoundName(HowFoundID)HowFound, dbo.Opp_getCategoryName(categoryID) category, dbo.seg_nomUsuario(userID) AssignedTo, count(*) cases from opportunities where (VisitedDate >= DATEADD(dd, -30, GETDATE())   AND VisitedDate <= GETDATE()) group by VisitedDate,HowFoundID,categoryID,userID order by VisitedDate", sqlConnection);
+                SqlCommand query = new SqlCommand("select dbo.Opp_getHowFoundName(HowFoundID)HowFound, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 60 , GETDATE() )   AND VisitedDate <= GETDATE()) group by HowFoundID", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -36,10 +36,10 @@ namespace WebAdmin.Controllers
                         // Usuario
                         var consul = new consulta
                         {
-                            date = Convert.ToDateTime(reader["date"]),
+                           // date = Convert.ToDateTime(reader["date"]),
                             HowFoung = reader["HowFound"].ToString(),
-                            category = reader["category"].ToString(),
-                            AssignedTo = reader["AssignedTo"].ToString(),
+                          //  category = reader["category"].ToString(),
+                          //  AssignedTo = reader["AssignedTo"].ToString(),
                             cases = Convert.ToInt32(reader["cases"])
                         };
 
@@ -58,7 +58,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("select VisitedDate date, dbo.Opp_getHowFoundName(HowFoundID)HowFound, dbo.Opp_getCategoryName(categoryID) category, dbo.seg_nomUsuario(userID) AssignedTo, count(*) cases from opportunities where (VisitedDate >= DATEADD(dd, -7, GETDATE())   AND VisitedDate <= GETDATE()) group by VisitedDate,HowFoundID,categoryID,userID", sqlConnection);
+                SqlCommand query = new SqlCommand("select dbo.Opp_getCategoryName(categoryID) category, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 60 , GETDATE() )   AND VisitedDate <= GETDATE()) group by categoryID", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -70,9 +70,44 @@ namespace WebAdmin.Controllers
                         // Usuario
                         var consul = new consulta
                         {
-                            date = Convert.ToDateTime(reader["date"]),
-                            HowFoung = reader["HowFound"].ToString(),
+                           // date = Convert.ToDateTime(reader["date"]),
+                          //  HowFoung = reader["HowFound"].ToString(),
                             category = reader["category"].ToString(),
+                          //  AssignedTo = reader["AssignedTo"].ToString(),
+                            cases = Convert.ToInt32(reader["cases"])
+                        };
+
+                        Consulta.Add(consul);
+
+                    }
+                }
+            }
+            return Consulta;
+        }
+
+
+        [HttpGet("getdatasetvisited")]
+        public List<consulta> GetDatasetvisited()
+        {
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand("select dbo.seg_nomUsuario(userID) AssignedTo, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd ,  - 30 , GETDATE() )   AND VisitedDate <= GETDATE()) group by userID", sqlConnection);
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Usuario
+                        var consul = new consulta
+                        {
+                            //date = Convert.ToDateTime(reader["date"]),
+                            //HowFoung = reader["HowFound"].ToString(),
+                            //category = reader["category"].ToString(),
                             AssignedTo = reader["AssignedTo"].ToString(),
                             cases = Convert.ToInt32(reader["cases"])
                         };

@@ -92,10 +92,10 @@ function agregarComment(action) {
     if (esadmin == "Admin") {
         var siadmin = $('input[name=Idto]')[0].value;
         idto = siadmin
-        
+
     } else {
         var admin = document.getElementById('Select');
-        var selectAdmin = admin.options[role.selectedIndex].value;
+        var selectAdmin = admin.options[admin.selectedIndex].value;
 
         idto = selectAdmin
     }
@@ -103,35 +103,48 @@ function agregarComment(action) {
     var comment = $('input[name=Comment]')[0].value;
     var title = $('input[name=Title]')[0].value;
 
-    
 
-    if (title == "") {
-        $('#Title').focus();
-    }
-    if (comment == "") {
-        $('#Comment').focus();
+    if (idto == "0") {
+        $('#Select').focus();
     } else {
+        if (title == "") {
+            $('#Title').focus();
+        } else {
 
+            if (title == "") {
+                $('#Title').focus();
+            } else {
 
-        $.ajax({
-            type: "POST",
-            url: action,
-            data: {
-                idby, idto, comment, title
-            },
-            success: function (response) {
-                if (response = true) {
-                    window.location.href = "SalesComments";
+                if (comment == "") {
+                    $('#Comment').focus();
                 } else {
-                    alert("The comment could not be saved");
+
+
+                    $.ajax({
+                        type: "POST",
+                        url: action,
+                        data: {
+                            idby, idto, comment, title
+                        },
+                        success: function (response) {
+                            if (response = true) {
+                                window.location.href = "SalesComments";
+                            } else {
+                                alert("The comment could not be saved");
+                            }
+
+
+
+                        }
+                    });
+
                 }
-
-
-
             }
-        });
-    
+        }
+
     }
+    
+    
 }
 
 
