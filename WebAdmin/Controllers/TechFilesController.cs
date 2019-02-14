@@ -59,6 +59,11 @@ namespace WebAdmin.Controllers
 
             var admin = segsistemausuario.Count();
 
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
             //si encontro un usuario Significa que es de Technical Support por logica si tiene Acceso A Cases
             if (admin == 1)
             {

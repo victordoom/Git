@@ -134,4 +134,47 @@ $(document).ready(function () {
     }
 });
 
+$(document).ready(function () {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getdatasetvisitedday',
+        success: function (result) {
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                drawChart(result);
+            });
+        }
+    });
+
+    function drawChart(result) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string','date');
+
+        data.addColumn('number', 'cases');
+
+
+        var dataArray = [];
+        $.each(result, function (i, obj) {
+            dataArray.push([obj.date, obj.cases]);
+        });
+
+        data.addRows(dataArray);
+
+        var piechart_options = {
+            title: 'VISITED BY DATE',
+            width: 400,
+            height: 300,
+
+        };
+        var piechart = new google.visualization.ColumnChart(document.getElementById('visiteddate_div'));
+        piechart.draw(data, piechart_options);
+
+
+    }
+});
+
 

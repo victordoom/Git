@@ -32,7 +32,7 @@ function getComments(email, action) {
 function nohaycomments() {
     var row = '';
     row += '<div class="text-right">';
-    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Crear</button>';
+    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">New</button>';
     row += '</div>';
     row += '<table  class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">'
     row += '<thead><tr><th>By/Datetime</th><th>Title/Comment</th></tr></thead>'
@@ -47,7 +47,7 @@ function mostrarComments(response) {
     
     items = response;
     row += '<div class="text-right">';
-    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Crear</button>';
+    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">New</button>';
     row += '</div>';
     row += '<table  class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">'
     row += '<thead><tr><th>By/Datetime</th><th>Title/Comment</th></tr></thead>'
@@ -100,7 +100,7 @@ function agregarComment(action) {
         idto = selectAdmin
     }
 
-    var comment = $('input[name=Comment]')[0].value;
+    var comment = $('textarea[name=Comment]')[0].value;
     var title = $('input[name=Title]')[0].value;
 
 

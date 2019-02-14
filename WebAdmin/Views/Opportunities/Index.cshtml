@@ -194,8 +194,17 @@
                         @Html.DropDownListFor(model => item.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
                     </td>
                     <td>
-                        @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                    </td>
+                        @if (item.HowFoundID == 10)
+                        {
+                            <span class="label label-success">
+                                @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </span>
+                        }
+                          else
+                                {
+                                   @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                                }
+                        </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.NumberLeadToFollowUp)
                     </td>
