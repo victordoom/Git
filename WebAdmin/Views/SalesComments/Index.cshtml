@@ -5,8 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
-
+<div class="block-header">
+    <h3> <img src="~/images/SalesComments.png" class="user-image" alt="User Image" width="90"> Sales Comments </h3>    <small class="text-muted">Show Sales Comments.</small>
+</div>
 
 <table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
     <thead>
@@ -162,7 +163,7 @@
 
                     <input type="hidden" name="Idby" id="Idby" />
 
-
+                    <input type="hidden" name="EsAdmin" id="EsAdmin" value="@ViewBag.Admin" />
 
                     <div class="form-group">
                         <label for="User" class="control-label">By</label>

@@ -86,12 +86,24 @@ function getAdministra(action) {
 
 function agregarComment(action) {
     var idby = $('input[name=Idby]')[0].value;
-    //var idto = $('input[name=Idto]')[0].value;
+    var idto;
+    var esadmin = $('input[name=EsAdmin]')[0].value;
+
+    if (esadmin == "Admin") {
+        var siadmin = $('input[name=Idto]')[0].value;
+        idto = siadmin
+        
+    } else {
+        var admin = document.getElementById('Select');
+        var selectAdmin = admin.options[role.selectedIndex].value;
+
+        idto = selectAdmin
+    }
+
     var comment = $('input[name=Comment]')[0].value;
     var title = $('input[name=Title]')[0].value;
 
-    var role = document.getElementById('Select');
-    var selectRole = role.options[role.selectedIndex].value;
+    
 
     if (title == "") {
         $('#Title').focus();

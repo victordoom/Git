@@ -65,7 +65,7 @@ namespace WebAdmin.Controllers
             var admin = segsistemausuario.Count();
             if (admin == 1)
             {
-                ViewBag.Admin = "No";
+                ViewBag.Admin = "Admin";
                 return View(await Employees.ToListAsync());
             }
 
@@ -126,7 +126,7 @@ namespace WebAdmin.Controllers
                        };
             
 
-            var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).ToListAsync();
+            var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).OrderBy(x => x.CommentDatetime).ToListAsync();
 
             //var consulta = await _context.SalesComments.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).ToListAsync();
 
