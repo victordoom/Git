@@ -56,7 +56,11 @@
                 @Html.DisplayFor(modelItem => item.CompanyAddress)
             </td>
             <td>
-                <a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile">View File</a>
+                @*<a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile">View File</a>*@
+
+                @if (@item.StrFile != null)
+                {<a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile" target="_blank"> <img src="@Url.Content("./images/" + item.StrFileExt +".png" )" height='24' width='24' alt="Attachment Document" /></a>
+                }
             </td>
 
             <td width="5%">

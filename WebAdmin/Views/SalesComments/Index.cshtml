@@ -4,7 +4,13 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .modal-body{
+    height: 350px;
+    overflow-y: auto;
+}
 
+</style>
 <div class="block-header">
     <h3> <img src="~/images/SalesComments.png" class="user-image" alt="User Image" width="90"> Sales Comments </h3>    <small class="text-muted">Show Sales Comments.</small>
 </div>
@@ -111,36 +117,51 @@
                 </button>
                 
             </div>
-            <div class="modal-body" id="modalcomment">
-               
+            <div class="modal-body" id="modalcomment" style="overflow-y: scroll;">
+
+
                 @*<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">Mas</button>
 
-                <table id="mitabla" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
-                    <thead>
-                        <tr>
+        <table id="mitabla" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+            <thead>
+                <tr>
 
-                            <th>
-                                By/Datetime
-                            </th>
-                            <th>
-                                Title/Comment
+                    <th>
+                        By/Datetime
+                    </th>
+                    <th>
+                        Title/Comment
 
-                            </th>
-                           
-                        </tr>
-                    </thead>
-                    <tbody>
-                       
-                        
-                            
+                    </th>
 
-                        
-                    </tbody>
-                </table>*@
+                </tr>
+            </thead>
+            <tbody>
+
+
+
+
+
+            </tbody>
+        </table>*@
+                <div>
+                    <span id="final"></span>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                
+                <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div >
+                        <input type="hidden" name="Idby" id="Idby" />
+                        <input type="hidden" name="Idto" id="Idto" />
+                        <input name="Title" id="Title" value="chat" type="hidden" />
+                        <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30%; width: 85% "></textarea>
+
+                        <button type="button" class="btn btn-warning pull-right" data-dismiss="modal" onclick="agregarComment('SalesComments/CrearComments')">Send</button>
+
+                    </div>
+                </form>
+
             </div>
         </div>
     </div>
@@ -162,7 +183,7 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-                    <input type="hidden" name="Idby" id="Idby" />
+                    
 
                     <input type="hidden" name="EsAdmin" id="EsAdmin" value="@ViewBag.Admin" />
 
@@ -174,7 +195,7 @@
 
                     @if (ViewBag.Admin == "Admin")
                     {
-                        <input type="hidden" name="Idto" id="Idto" />
+                       
 
                     <div class="form-group">
                         <label for="UserSelect" class="control-label">To</label>
@@ -199,15 +220,11 @@
                     }
                     <div class="form-group">
                         <label for="Title" class="control-label">Title</label>
-                        <input name="Title" id="Title" class="form-control" style="height: 30%;" />
+                        
 
                     </div>
 
-                    <div class="form-group">
-                        <label for="Comment" class="control-label">Comment</label>
-                        <textarea name="Comment" id="Comment" class="form-control" style="height: 30%;" ></textarea>
-
-                    </div>
+                    
 
 
 

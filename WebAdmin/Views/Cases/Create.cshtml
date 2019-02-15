@@ -58,7 +58,7 @@
         <div class="row col-md-12">
 
             <div>
-                <form asp-action="Create">
+                <form asp-action="Create" enctype="multipart/form-data"  method="post">
                     <div class="row">
                         <div class="col-md-6">
 
@@ -265,10 +265,17 @@
                             <div class="form-group">
                                 <label asp-for="Status" class="control-label"></label>
                                 <select class="form-control" name="SelectStatus" asp-items="listItems"></select>
-                               
+
                                 <span asp-validation-for="Status" class="text-danger"></span>
                                 <br />
                             </div>
+                        </div>
+
+                        @*prueba subir archivos*@
+                        <div class="form-group">
+                            <label>Example file input</label>
+                            <input type="file" asp-for="FileName" />
+
                         </div>
 
                     </div>

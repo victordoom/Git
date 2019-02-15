@@ -86,6 +86,9 @@ namespace WebAdmin.Models
         public string Web { get; set; }
         public string LastComment { get; set; }
 
+        public string FileName { get; set; }
+        public string FileType { get; set; }
+
         public SegUsuarios AssignedToNavigation { get; set; }
         public SalesCompany Company { get; set; }
         public SalesLocations Location { get; set; }

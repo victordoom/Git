@@ -14,6 +14,8 @@ using WebAdmin.Models;
 using Microsoft.AspNetCore.Identity;
 using WebAdmin.Services;
 using WebAdmin.Areas.Identity.Data;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WebAdmin
 {
@@ -51,6 +53,12 @@ namespace WebAdmin
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
+
+            services.AddSingleton<IFileProvider>(
+            new PhysicalFileProvider(
+               Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
+            services.AddMvc();
 
         }
 

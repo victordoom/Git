@@ -53,107 +53,139 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Company)
-                
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title) /  Commment
-                
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AssignedTo)
-                
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Priority)
-             
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Category)
-                
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OpenedBy)
-                
+
             </th>
             <th>
                 Opened
-                    @Html.DisplayNameFor(model => model.OpenedDate)
-               
+                @Html.DisplayNameFor(model => model.OpenedDate)
+
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
-                
-            </th>
 
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FileName)
+            </th>
             @*<th></th>*@
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+        <tr>
 
-                <td width="5%">
-                    @Html.DisplayFor(modelItem => item.CasesID)
-                    <br />
-                    <br />
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID" asp-route-pagina="@ViewBag.PagM"><span class="zmdi zmdi-edit"></span></a>
-                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>
-                </td>
-                <td width="20%">
-                    <b>@Html.DisplayFor(modelItem => item.Company.CompanyName)</b>
-                    <br />
-                    <p style="color:dimgrey;">@Html.DisplayFor(modelItem => item.Location.DbaAddress) @Html.DisplayFor(modelItem => item.Location.DbaCity) @Html.DisplayFor(modelItem => item.Location.DbaState) @Html.DisplayFor(modelItem => item.Location.DbaZipCode)</p>
+            <td width="5%">
+                @Html.DisplayFor(modelItem => item.CasesID)
+                <br />
+                <br />
+                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID" asp-route-pagina="@ViewBag.PagM"><span class="zmdi zmdi-edit"></span></a>
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>
+            </td>
+            <td width="20%">
+                <b>@Html.DisplayFor(modelItem => item.Company.CompanyName)</b>
+                <br />
+                <p style="color:dimgrey;">@Html.DisplayFor(modelItem => item.Location.DbaAddress) @Html.DisplayFor(modelItem => item.Location.DbaCity) @Html.DisplayFor(modelItem => item.Location.DbaState) @Html.DisplayFor(modelItem => item.Location.DbaZipCode)</p>
 
-                </td>
-                <td width="35%">
-                    <b>@Html.DisplayFor(modelItem => item.Title)</b>
-                    <br />
-                    <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>
+            </td>
+            <td width="35%">
 
-                    @*<p style="color:#222222;"> <b>@Html.DisplayFor(modelItem => item.Title)</b></p>
-                        <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>*@
-                </td>
-                <td>
-                    <p style="color:orangered;">  @Html.DropDownListFor(model => item.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })</p>
+                <b>@Html.DisplayFor(modelItem => item.Title)</b>
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Priority)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category)
-                </td>
-                <td>
-                    @Html.DropDownListFor(model => item.OpenedBy, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                @if (@item.Priority == "(1) High")
+                {
+                    <img src="@Url.Content("./images/priority3.png" )" height='24' width='24' />
+                }
 
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OpenedDate)
-                </td>
-                <td>
-                    @if (item.Status == "Active")
-                    {
-                        <span class="label label-success">
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </span>
-                    }
-                    else
-                    {
-                        <span class="label label-danger">
-                            @Html.DisplayFor(modelItem => item.Status)
-                        </span>
-                    }
+                <br />
+                <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>
 
-                </td>
+                @*<p style="color:#222222;"> <b>@Html.DisplayFor(modelItem => item.Title)</b></p>
+            <p style="color:Highlight;">@Html.DisplayFor(modelItem => item.LastComment)</p>*@
+            </td>
+            <td>
+                <p style="color:orangered;">  @Html.DropDownListFor(model => item.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })</p>
 
-                @*<td width="7%">
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>
-                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>*@
-                @*<a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CasesID"><span class="glyphicon glyphicon-trash"></span></a>*@
-                @*</td>*@
+            </td>
+            <td>
 
-            </tr>
+                @if (@item.Priority == "(1) High")
+                {
+                    <span class="label label-danger">
+                        @Html.DisplayFor(modelItem => item.Priority). Urgent Attention!
+                    </span>
+                    @*<p>
+                    <img src="@Url.Content("./images/priority3.png" )" height='24' width='24' />
+                </p>*@
+                }
+                else
+                {
+                    <span class="label label-default">
+                        @Html.DisplayFor(modelItem => item.Priority)
+                    </span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DropDownListFor(model => item.OpenedBy, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OpenedDate)
+            </td>
+            <td>
+                @if (item.Status == "Active")
+                {
+                    <span class="label label-success">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </span>
+                }
+                else
+                {
+                    <span class="label label-danger">
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </span>
+                }
+
+
+
+            </td>
+
+            <td>
+                @if (@item.FileName != null)
+                {<a href="UploadFiles/07/@item.CasesID/@item.FileName" target="_blank"> <img src="@Url.Content("./images/" + item.FileType +".png" )" height='24' width='24' alt="Attachment Document" /></a>
+                }
+            </td>
+
+            @*<td width="7%">
+        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>
+        <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>*@
+            @*<a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.CasesID"><span class="glyphicon glyphicon-trash"></span></a>*@
+            @*</td>*@
+
+        </tr>
 
         }
     </tbody>
@@ -161,27 +193,27 @@
 
 
 @*@{
-    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-}
-<a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
-   asp-route-page="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
-   class="btn btn-default @prevDisabled">
-    Anterior
-</a>
-@for (int i = 1; i <= Model.TotalPages; i++)
-{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
     <a asp-action="Index"
-       a
-       asp-route-page="@i"
-       class="btn btn-default">
-        @i
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-page="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Anterior
     </a>
-}
-<a asp-action="Index"
-   asp-route-page="@(Model.PageIndex + 1)"
-   class="btn btn-default @nextDisabled">
-    Siguiente
-</a>*@
+    @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a asp-action="Index"
+           a
+           asp-route-page="@i"
+           class="btn btn-default">
+            @i
+        </a>
+    }
+    <a asp-action="Index"
+       asp-route-page="@(Model.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">
+        Siguiente
+    </a>*@

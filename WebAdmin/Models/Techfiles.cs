@@ -14,6 +14,8 @@ namespace WebAdmin.Models
         public string DBA_name { get; private set; }
         public string CompanyAddress { get; private set; }
         public string StrFile { get; private set; }
+        public string StrFileExt { get; private set; }
+        
 
     }
 }

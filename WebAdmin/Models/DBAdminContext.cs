@@ -154,6 +154,16 @@ namespace WebAdmin.Models
                     .HasMaxLength(1)
                     .IsUnicode(false);
 
+                entity.Property(e => e.FileName)
+                .HasColumnName("FileName")
+                .HasMaxLength(250)
+                .IsUnicode(false);
+
+                entity.Property(e => e.FileType)
+                .HasColumnName("FileType")
+                .HasMaxLength(50)
+                .IsUnicode(false);
+
                 entity.HasOne(d => d.AssignedToNavigation)
                     .WithMany(p => p.Cases)
                     .HasForeignKey(d => d.AssignedTo)

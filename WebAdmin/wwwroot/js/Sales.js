@@ -1,6 +1,8 @@
 ﻿$('#modalComments').on('shown.bs.modal', function () {
-
+    
 });
+
+document.getElementById('final').scrollIntoView(true)
 
 var j = 0;
 
@@ -49,19 +51,67 @@ function mostrarComments(response) {
     row += '<div class="text-right">';
     row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">New</button>';
     row += '</div>';
-    row += '<table  class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">'
-    row += '<thead><tr><th>By/Datetime</th><th>Title/Comment</th></tr></thead>'
+    
     $.each(items, function (index, val) {
-        
-        row += '<tr>'
-        row += '<td><b>' + val.nombre + '</b><br> <p>' + val.commentDatetime + '</p></td>';
-        row += '<td><b>' + val.title + '</b> <br> <p>' + val.comment + '</p></td>';
-        //row += '<td>' + val.comment + '</td>';
-        row += '</tr>'
+
+        if (val.userLogeado == val.commentBy) {
+            // row += '<div class="box-body">';
+
+            // row += '<div class="direct-chat-messages">';
+
+            row += '<div class="direct-chat-msg">';
+            row += '<div class="direct-chat-info clearfix">';
+            row += '<button class="direct-chat-name pull-left btn btn-success">' + val.nombre + '</button>';
+            row += '<span class="direct-chat-timestamp pull-right">' + val.commentDatetime + '</span>';
+            row += '</div>';
+
+
+
+
+            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
+
+            row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+            row += '</div>';
+
+
+
+
+            row += '</div>';
+
+            // row += '</div>';
+
+            //  row +=        '</div>'
+
+
+
+
+        } else {
+
+            row += '<div class="direct-chat-msg right">';
+            row += '<div class="direct-chat-info clearfix">';
+            row += '<button class="direct-chat-name pull-right btn btn-info">' + val.nombre + '</button>';
+            row += '<span class="direct-chat-timestamp pull-left">' + val.commentDatetime + '</span>';
+            row += '</div>';
+
+
+
+
+            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
+
+            row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+            row += '</div>';
+
+
+
+
+            row += '</div>';
+        }
 
     });
 
-    row += '</table>'
+   
 
     $('#modalcomment').html(row);
 }

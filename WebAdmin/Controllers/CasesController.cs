@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -253,8 +254,17 @@ namespace WebAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Cases cases, string Comment, string SelectStatus)
+        public async Task<IActionResult> Create(Cases cases, string Comment, string SelectStatus, IFormFile FileName)
         {
+
+            //1. validate if filename is not null then save filename and type
+            if (!(FileName == null))
+            {
+                cases.FileName = FileName.GetFilename();
+                cases.FileType = Path.GetExtension(FileName.GetFilename());
+                cases.FileType = cases.FileType.Replace(".", "");
+            }
+
             CasesDetails detail = new CasesDetails();
             if (ModelState.IsValid)
             {
@@ -264,6 +274,26 @@ namespace WebAdmin.Controllers
                 _context.Add(cases);
 
                 var resul =  await _context.SaveChangesAsync();
+
+
+                //2. if filaneme is not null upload file
+                //path= wwwroot + UploadFiles + type('07: Cases' check table: Attachments_Type) + id
+                var folder = "wwwroot/UploadFiles/07/" + cases.CasesID + "/";
+                if (!(FileName == null))
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), folder);
+                    //validate if the directory exists
+                    if (!System.IO.File.Exists(path))
+                    { System.IO.Directory.CreateDirectory(path); }
+
+                    path = Path.Combine(Directory.GetCurrentDirectory(), folder, FileName.GetFilename());
+
+                    //copy file
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    { await FileName.CopyToAsync(stream); }
+                }
+
+
 
                 if (resul>0 && !string.IsNullOrEmpty(Comment)  && !string.IsNullOrEmpty(SelectStatus))
                 {
@@ -348,12 +378,22 @@ namespace WebAdmin.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit( Cases cases, int pagina)
+        public async Task<IActionResult> Edit( Cases cases, int pagina, IFormFile FileName)
         {
             //if (id != cases.CasesID)
             //{
             //    return NotFound();
             //}
+
+            //1. validate if filename is not null then save filename and type
+            if (!(FileName == null))
+            {
+                cases.FileName = FileName.GetFilename();
+                cases.FileType = Path.GetExtension(FileName.GetFilename());
+                cases.FileType = cases.FileType.Replace(".", "");
+            }
+
+
 
             if (ModelState.IsValid)
             {
@@ -361,6 +401,24 @@ namespace WebAdmin.Controllers
                 {
                     _context.Update(cases);
                     await _context.SaveChangesAsync();
+
+                    //2. if filaneme is not null upload file
+                    //path= wwwroot + UploadFiles + type('07: Cases' check table: Attachments_Type) + id
+                    var folder = "wwwroot/UploadFiles/07/" + cases.CasesID + "/";
+                    if (!(FileName == null))
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), folder);
+                        //validate if the directory exists
+                        if (!System.IO.File.Exists(path))
+                        { System.IO.Directory.CreateDirectory(path); }
+
+                        path = Path.Combine(Directory.GetCurrentDirectory(), folder, FileName.GetFilename());
+
+                        //copy file
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        { await FileName.CopyToAsync(stream); }
+                    }
+
 
                     //_context.Database.ExecuteSqlCommand("dbo.[SendEmail] @int_CaseID", cases.CasesID);
                     //var id = cases.CasesID;
