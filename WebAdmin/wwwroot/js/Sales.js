@@ -2,7 +2,7 @@
     
 });
 
-document.getElementById('final').scrollIntoView(true)
+
 
 var j = 0;
 
@@ -33,12 +33,7 @@ function getComments(email, action) {
 
 function nohaycomments() {
     var row = '';
-    row += '<div class="text-right">';
-    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">New</button>';
-    row += '</div>';
-    row += '<table  class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">'
-    row += '<thead><tr><th>By/Datetime</th><th>Title/Comment</th></tr></thead>'
-    row += '</table>'
+    
 
     $('#modalcomment').html(row);
 }
@@ -48,9 +43,7 @@ function mostrarComments(response) {
     var row = '';
     
     items = response;
-    row += '<div class="text-right">';
-    row += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalAgregarComments">New</button>';
-    row += '</div>';
+   
     
     $.each(items, function (index, val) {
 
@@ -111,9 +104,12 @@ function mostrarComments(response) {
 
     });
 
+    row += '<div><span id="final"></span></div>';
+
    
 
     $('#modalcomment').html(row);
+    document.getElementById('final').scrollIntoView(true);
 }
 
 function getAdministra(action) {
@@ -144,8 +140,8 @@ function agregarComment(action) {
         idto = siadmin
 
     } else {
-        var admin = document.getElementById('Select');
-        var selectAdmin = admin.options[admin.selectedIndex].value;
+       
+        var selectAdmin = $('input[name=Idtoadmin]')[0].value;
 
         idto = selectAdmin
     }
@@ -196,5 +192,8 @@ function agregarComment(action) {
     
     
 }
+
+
+
 
 

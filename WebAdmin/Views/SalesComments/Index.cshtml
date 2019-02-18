@@ -151,9 +151,18 @@
             <div class="modal-footer">
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div >
+                    <div>
+                        <input type="hidden" name="EsAdmin" id="EsAdmin" value="@ViewBag.Admin" />
+                        @if (ViewBag.Admin == "Admin")
+                        {
+                            <input type="hidden" name="Idto" id="Idto" />
+                        }
+                        @if (ViewBag.Admin == "No")
+                        {
+                            <input type="hidden" name="Idtoadmin" id="Idtoadmin" value="7" />
+                        }
                         <input type="hidden" name="Idby" id="Idby" />
-                        <input type="hidden" name="Idto" id="Idto" />
+
                         <input name="Title" id="Title" value="chat" type="hidden" />
                         <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30%; width: 85% "></textarea>
 
@@ -185,7 +194,7 @@
 
                     
 
-                    <input type="hidden" name="EsAdmin" id="EsAdmin" value="@ViewBag.Admin" />
+                    
 
                     <div class="form-group">
                         <label for="User" class="control-label">By</label>
