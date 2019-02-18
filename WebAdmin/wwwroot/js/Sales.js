@@ -2,8 +2,8 @@
     
 });
 
-
-
+var enmemo;
+var enmemoria;
 var j = 0;
 
 var userLogeado;
@@ -24,7 +24,9 @@ function getComments(email, action) {
             $('input[name=User]').val(response[0].userLogeadoNombre);
             $('input[name=Idto]').val(response[0].userSelect);
             $('input[name=UserSelect]').val(response[0].userSelectNombre);
-            mostrarComments(response);
+                mostrarComments(response);
+                enmemoria = email;
+                enmemo = action;
             }
 
         }
@@ -104,10 +106,11 @@ function mostrarComments(response) {
 
     });
 
+
     row += '<div><span id="final"></span></div>';
 
    
-
+    
     $('#modalcomment').html(row);
     document.getElementById('final').scrollIntoView(true);
 }
@@ -174,7 +177,9 @@ function agregarComment(action) {
                         },
                         success: function (response) {
                             if (response = true) {
-                                window.location.href = "SalesComments";
+                                //$('#modalComments').modal('show');
+                                $('textarea[name=Comment]').val('');
+                               getComments(enmemoria, enmemo);
                             } else {
                                 alert("The comment could not be saved");
                             }

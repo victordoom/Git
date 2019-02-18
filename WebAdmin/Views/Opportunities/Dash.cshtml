@@ -7,32 +7,119 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
 
+<select id="Select" name="Select" class="form-control" onclick="getAdministra('SalesComments/GetAdmin')" style="width:20%;">
+    <option value="0">All</option>
+</select>
+<br />
 
-<h2>Dash</h2>
+    <!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>1</h3>
+                <p>Visited</p>
+            </div>
+            <div class="icon" style="top: 5px;">
+                <i class="fa fa-shopping-bag"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>1<sup style="font-size: 20px"></sup></h3>
+                <p>Contract Closed</p>
+            </div>
+            <div class="icon" style="top: 5px;">
+                <i class="fa fa-signal"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>1</h3>
+                <p>Cases Opened</p>
+            </div>
+            <div class="icon" style="top: 5px;">
+                <i class="ion ion-person"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>65</h3>
+                <p>Most visited category</p>
+            </div>
+            <div class="icon" style="top: 5px;">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+    <!-- ./col -->
+</div>
+    @*<h2>Dash</h2>*@
 
-<table class="columns">
-    <tr>
-        <td>
-            <div id="piechart_div" style="border: 1px solid #ccc"></div>
-        </td>
-        <td>
-            <div id="barchart_div" style="border: 1px solid #ccc"></div>
-        </td>
-    </tr>
+    @*<table class="columns">
+        <tr>
+            <td>
+                <div id="piechart_div" style="border: 1px solid #ccc"></div>
+            </td>
+            <td>
+                <div id="barchart_div" style="border: 1px solid #ccc"></div>
+            </td>
+        </tr>
 
-    <tr>
-        <th>
-            <div id="visited_div" style="border: 1px solid #ccc"></div>
-        </th>
-        <th>
-            <div id="visiteddate_div" style="border: 1px solid #ccc"></div>
-        </th>
-    </tr>
-</table>
+        <tr>
+            <th>
+                <div id="visited_div" style="border: 1px solid #ccc"></div>
+            </th>
+            <th>
+                <div id="visiteddate_div" style="border: 1px solid #ccc"></div>
+            </th>
+        </tr>
+    </table>*@
 
-<script src="~/js/site.js" asp-append-version="true"></script>
+    <div class="row">
+        <!-- Left col -->
+        <section class=" connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <!-- DONUT CHART -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bar Chart</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div id="visiteddate_div" style="border: 1px solid #ccc"></div>
+                </div>
+                <!-- /.box-body -->
+
+                <div>
+                </div>
+
+            </div>
+            </section>
+        </div>
+
+            <script src="~/js/site.js" asp-append-version="true"></script>
