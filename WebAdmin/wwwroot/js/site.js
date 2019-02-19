@@ -178,3 +178,201 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function () {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getcurrentmonth',
+        success: function (result) {
+            document.getElementById("Goal").innerText = result[0].goalYear;
+            var mes = result[0].goalMonth;
+            var month;
+            switch (mes) {
+
+                case 1:
+                    month = "January";
+                    break;
+                case 2:
+                    month = "February";
+                    break;
+                case 3:
+                    month = "March";
+                    break;
+
+                case 4:
+                    month = "April";
+                    break;
+                case 5:
+                    month = "May";
+                    break;
+                case 6:
+                    month = "June";
+                    break;
+                case 7:
+                    month = "July";
+                    break;
+                case 8:
+                    month = "August";
+                    break;
+                case 9:
+                    month = "September";
+                    break;
+                case 10:
+                    month = "October";
+                    break;
+                case 11:
+                    month = "November";
+                    break;
+                case 3:
+                    month = "December";
+                    break;
+                default:
+            }
+
+            document.getElementById("Month").innerText = month;
+            document.getElementById("GoalNew").innerText = result[0].goalNewContracts;
+            document.getElementById("Quantity").innerText = result[0].quantityReal;
+            var calcu;
+            calcu = result[0].goalNewContracts - result[0].quantityReal;
+            document.getElementById("Calcu").innerText = calcu;
+
+
+            var monthby = result[0].goalMonth;
+            var yearby = result[0].goalYear;
+
+            GetByCurrentMonth(monthby, yearby);
+
+
+           
+        }
+    });
+
+    function GetByCurrentMonth(month, year) {
+        var row = '';
+
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            url: '/api/Dashboard/getbycurrentmonth/' + month + '/' + year + '',
+           
+            success: function (response) {
+                var result = response;
+
+                $.each(result, function (index, val) {
+                    row += '<tr>';
+                    row += '<td>' + val.salesMan + '</td>';
+                    row += '<td>' + val.cases + '</td>'
+                    row += '</tr>';
+                });
+
+
+                $('#bycurrent').html(row);
+            }
+        });
+    }
+
+    
+});
+
+
+$(document).ready(function () {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getcurrentmonthlast',
+        success: function (result) {
+            document.getElementById("GoalLast").innerText = result[0].goalYear;
+            var mes = result[0].goalMonth;
+            var month;
+            switch (mes) {
+
+                case 1:
+                    month = "January";
+                    break;
+                case 2:
+                    month = "February";
+                    break;
+                case 3:
+                    month = "March";
+                    break;
+
+                case 4:
+                    month = "April";
+                    break;
+                case 5:
+                    month = "May";
+                    break;
+                case 6:
+                    month = "June";
+                    break;
+                case 7:
+                    month = "July";
+                    break;
+                case 8:
+                    month = "August";
+                    break;
+                case 9:
+                    month = "September";
+                    break;
+                case 10:
+                    month = "October";
+                    break;
+                case 11:
+                    month = "November";
+                    break;
+                case 12:
+                    month = "December";
+                    break;
+                default:
+            }
+
+            document.getElementById("MonthLast").innerText = month;
+            document.getElementById("GoalNewLast").innerText = result[0].goalNewContracts;
+            document.getElementById("QuantityLast").innerText = result[0].quantityReal;
+            var calcu;
+            calcu = result[0].goalNewContracts - result[0].quantityReal;
+            document.getElementById("CalcuLast").innerText = calcu;
+
+
+            var monthby = result[0].goalMonth;
+            var yearby = result[0].goalYear;
+
+           GetByCurrentMonthLast(monthby, yearby);
+
+
+
+        }
+    });
+
+    function GetByCurrentMonthLast(month, year) {
+        var row = '';
+
+        $.ajax({
+            type: 'GET',
+            dataType: "json",
+            contentType: "application/json",
+            url: '/api/Dashboard/getbycurrentmonthlast/' + month + '/' + year + '',
+
+            success: function (response) {
+                var result = response;
+
+                $.each(result, function (index, val) {
+                    row += '<tr>';
+                    row += '<td>' + val.salesMan + '</td>';
+                    row += '<td>' + val.cases + '</td>'
+                    row += '</tr>';
+                });
+
+
+                $('#bycurrentlast').html(row);
+            }
+        });
+    }
+
+
+});

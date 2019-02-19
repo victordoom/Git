@@ -93,6 +93,7 @@ namespace WebAdmin
                 routes.MapRoute(
                     name: "Home",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                
 
 
             });
