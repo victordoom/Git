@@ -14,7 +14,7 @@
 </select>
 <br />
 
-    <!-- Small boxes (Stat box) -->
+<!-- Small boxes (Stat box) -->
 <div class="row">
     <div class="col-lg-3 col-xs-6">
         <!-- small box -->
@@ -73,9 +73,9 @@
     </div>
     <!-- ./col -->
 </div>
-    @*<h2>Dash</h2>*@
+@*<h2>Dash</h2>*@
 
-    @*<table class="columns">
+@*<table class="columns">
         <tr>
             <td>
                 <div id="piechart_div" style="border: 1px solid #ccc"></div>
@@ -95,31 +95,172 @@
         </tr>
     </table>*@
 
-    <div class="row">
-        <!-- Left col -->
-        <section class=" connectedSortable">
-            <!-- Custom tabs (Charts with tabs)-->
-            <!-- DONUT CHART -->
-            <div class="box box-danger">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Bar Chart</h3>
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <div class="box-body chart-responsive">
-                    <div id="visiteddate_div" style="border: 1px solid #ccc"></div>
-                </div>
-                <!-- /.box-body -->
+<div class="row">
 
-                <div>
+    <!-- Graficos de Pastel -->
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">How Found</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                 </div>
+            </div>
+            <div class="box-body chart-responsive" id="piechart_div">
 
             </div>
-            </section>
+            <!-- /.box-body -->
+
+            <div>
+            </div>
+
         </div>
 
-            <script src="~/js/site.js" asp-append-version="true"></script>
+
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Category</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body chart-responsive" id="piechart_divcate">
+
+            </div>
+            <!-- /.box-body -->
+
+            <div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="col-md-4" >
+        <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
+            <thead style="background: blue;" >
+                <tr>
+                    <th>Current Month</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table style="width: 100%;">
+                            <thead style="background: blue;">
+                                <tr>
+                                    <th>Year</th>
+                                    <th>Month</th>
+                                </tr>
+                                
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Año</td>
+                                    <td>Mes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                               
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+
+                        <table style="width: 100%;">
+                            <thead style="background: blue;">
+                                <tr>
+                                    <th>Goal</th>
+                                    <th>Archived</th>
+                                    <th></th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>meta</td>
+                                    <td>archivado</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+<div class="row">
+
+    <!-- Graficos de barra -->
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Visited by date</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body chart-responsive" id="visiteddate_div">
+
+            </div>
+            <!-- /.box-body -->
+
+            <div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Visited by saler</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body chart-responsive" id="visited_div">
+
+            </div>
+            <!-- /.box-body -->
+
+            <div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div>
+
+
+    </div>
+</div>
+
+<script src="~/js/site.js" asp-append-version="true"></script>

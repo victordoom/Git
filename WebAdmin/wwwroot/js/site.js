@@ -35,9 +35,9 @@ $(document).ready(function () {
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'HOW FOUND',
-            width: 400,
-            height: 300,
+           // title: 'HOW FOUND',
+            width: 350,
+            height: 250,
             pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
@@ -78,12 +78,12 @@ $(document).ready(function () {
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'CATEGORY',
-            width: 400,
-            height: 300,
+          //  title: 'CATEGORY',
+            width: 350,
+            height: 250,
             pieHole: 0.4,
         };
-        var piechart = new google.visualization.PieChart(document.getElementById('barchart_div'));
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
         piechart.draw(data, piechart_options);
 
         
@@ -122,9 +122,9 @@ $(document).ready(function () {
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'VISITED BY SALER',
-            width: 400,
-            height: 300,
+           // title: 'VISITED BY SALER',
+            width: 350,
+            height: 250,
             
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visited_div'));
@@ -165,9 +165,9 @@ $(document).ready(function () {
         data.addRows(dataArray);
 
         var piechart_options = {
-            title: 'VISITED BY DATE',
-            width: 400,
-            height: 300,
+            //title: 'VISITED BY DATE',
+            width: 350,
+            height: 250,
 
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visiteddate_div'));
