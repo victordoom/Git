@@ -20,14 +20,29 @@ namespace WebAdmin.Controllers
         private List<ByCurrentMonth> ConsulBy = new List<ByCurrentMonth>();
         private List<OpportunitiesOnline> OpportunitiesOnline = new List<OpportunitiesOnline>();
 
-        [HttpGet("getconsulta")]
-        public List<consulta> GetConsulta()
+        [HttpGet("getconsulta/{user}")]
+        public List<consulta> GetConsulta(int user)
         {
-
+            string Command;
+            if (user == 0)
+            {
+                Command = "select dbo.Opp_getHowFoundName(HowFoundID)HowFound, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) group by HowFoundID";
+            } else
+            {
+                Command = "select dbo.Opp_getHowFoundName(HowFoundID)HowFound, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) and UserID = @User group by HowFoundID";
+            }
+             
+            
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("select dbo.Opp_getHowFoundName(HowFoundID)HowFound, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 60 , GETDATE() )   AND VisitedDate <= GETDATE()) group by HowFoundID", sqlConnection);
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                if (user != 0)
+                {
+                    query.Parameters.AddWithValue("@User", user);
+                }
+
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -54,14 +69,29 @@ namespace WebAdmin.Controllers
             return Consulta;
         }
 
-        [HttpGet("getdataset")]
-        public List<consulta> GetDataset()
+        [HttpGet("getdataset/{user}")]
+        public List<consulta> GetDataset(int user)
         {
+            string Command;
+            if (user == 0)
+            {
+                Command = "select dbo.Opp_getCategoryName(categoryID) category, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) group by categoryID";
+            }
+            else
+            {
+                Command = "select dbo.Opp_getCategoryName(categoryID) category, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) and UserID = @User group by categoryID";
+            }
 
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("select dbo.Opp_getCategoryName(categoryID) category, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd , - 60 , GETDATE() )   AND VisitedDate <= GETDATE()) group by categoryID", sqlConnection);
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                if (user != 0)
+                {
+                    query.Parameters.AddWithValue("@User", user);
+                }
+
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -96,7 +126,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("select dbo.seg_nomUsuario(userID) AssignedTo, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd ,  - 30 , GETDATE() )   AND VisitedDate <= GETDATE()) group by userID", sqlConnection);
+                SqlCommand query = new SqlCommand("select dbo.seg_nomUsuario(userID) AssignedTo, count(*) cases from opportunities where (VisitedDate>= DATEADD (dd ,  - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) group by userID", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -131,7 +161,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("SELECT      ltrim(rtrim(substring(H.keyDate,1,5))) date, isnull(D.cases,0) cases FROM    vw_last7days AS H LEFT OUTER JOIN vw_SalesLast7day AS D ON H.keyDate = D.date order by h.keydate", sqlConnection);
+                SqlCommand query = new SqlCommand("SELECT   ltrim(rtrim(substring(H.keyDate,1,5))) date, sum(isnull(D.cases, 0)) cases FROM  vw_last7days AS H LEFT OUTER JOIN  vw_SalesLast7day AS D ON H.keyDate = D.date group by  h.keydate order by h.keydate", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -340,7 +370,7 @@ namespace WebAdmin.Controllers
                         var consul = new OpportunitiesOnline
                         {
                             salesman = (reader["salesman"]).ToString(),
-                            date = (reader["date"]).ToString(),
+                            date = Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy"),
                             rating = (reader["rating"]).ToString(),
                             ProgramName = (reader["ProgramName"]).ToString(),
                             company = (reader["company"]).ToString(),
@@ -353,6 +383,7 @@ namespace WebAdmin.Controllers
                             LastFollowup = (reader["LastFollowup"]).ToString(),
                             NumberLead = (reader["NumberLeadToFollowUp"]).ToString(),
                             PhoneNumber = (reader["PhoneNumber"]).ToString(),
+                            email = (reader["EmailAddress"]).ToString(),
 
 
 
@@ -408,6 +439,7 @@ namespace WebAdmin.Controllers
         public string LastFollowup { get; set; }
         public string NumberLead { get; set; }
         public string PhoneNumber { get; set; }
+        public string email { get; set; }
     }
 
 

@@ -14,10 +14,15 @@
     }
 </style>
 
+<input type="hidden" id="Email" name="Email" value="@ViewBag.Email" />
 
-<select id="Select" name="Select" class="form-control" onclick="getAdministra('SalesComments/GetAdmin')" style="width:20%;">
-    <option value="0">All</option>
-</select>
+@if (ViewBag.Adminsales == 1)
+{
+    <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" onclick="getAdministra('../Opportunities/GetSales')" style="width:20%;">
+        <option value="0">All</option>
+    </select>
+}
+
 <br />
 
 <!-- Small boxes (Stat box) -->
@@ -152,9 +157,9 @@
 
 
     </div>
-    <div class="col-md-4" >
+    <div class="col-md-4">
         <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
-            <thead style="background: blue;" >
+            <thead style="background: blue;">
                 <tr>
                     <th>Current Month</th>
                 </tr>
@@ -165,10 +170,10 @@
                         <table style="width: 100%;" class="table-bordered">
                             <thead style="background: blue;">
                                 <tr>
-                                    <th >Year</th>
-                                    <th >Month</th>
+                                    <th>Year</th>
+                                    <th>Month</th>
                                 </tr>
-                                
+
                             </thead>
                             <tbody>
                                 <tr>
@@ -177,7 +182,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                               
+
 
                     </td>
                 </tr>
@@ -187,8 +192,8 @@
                         <table style="width: 100%;" class="table-bordered">
                             <thead style="background: blue;">
                                 <tr>
-                                    <th >Goal</th>
-                                    <th >Archived</th>
+                                    <th>Goal</th>
+                                    <th>Archived</th>
                                     <th></th>
                                 </tr>
 
@@ -206,10 +211,10 @@
                 </tr>
                 <tr>
                     <td>
-                        <table  style="width: 100%;" class="table-bordered">
+                        <table style="width: 100%;" class="table-bordered">
                             <thead style="background: blue;">
                                 <tr>
-                                    <th >By</th>
+                                    <th>By</th>
                                     <th>Q</th>
                                 </tr>
                             </thead>
@@ -359,44 +364,94 @@
 
 <div class="row">
     <div class="col-md-5">
-        <table style="width: 100%;" class="table-bordered">
-            <thead style="background:#585858; ">
-                <tr>
-                    <th>
-                        Visited Date
-                    </th>
-                    <th>
-                        SalesMan / CompanyName
-                    </th>
-                    <th>
-                        #Lead
-                    </th>
-                    <th>
-                        F1
-                    </th>
-                    <th>
-                        F2
-                    </th>
-                    <th>
-                        F3
-                    </th>
-                    <th>
-                        F4
-                    </th>
-                    <th>
-                        F5
-                    </th>
-                    <th>
-                        R
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="opponline">
-                
-            </tbody>
-        </table>
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Opportunities Online</h3>
+                <div class="box-tools pull-right">
 
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <!-- In box-tools add this button if you intend to use the contacts pane -->
+
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <table style="width: 100%;" class="table-bordered">
+                    <thead style="background:#585858; ">
+                        <tr>
+                            <th>
+                                Visited Date
+                            </th>
+                            <th>
+                                SalesMan / CompanyName
+                            </th>
+                            <th>
+                                #Lead
+                            </th>
+                            <th>
+                                F1
+                            </th>
+                            <th>
+                                F2
+                            </th>
+                            <th>
+                                F3
+                            </th>
+                            <th>
+                                F4
+                            </th>
+                            <th>
+                                F5
+                            </th>
+                            <th>
+                                R
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="opponline"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="box box-danger direct-chat direct-chat-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Direct Chat</h3>
+                <div class="box-tools pull-right">
+
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <!-- In box-tools add this button if you intend to use the contacts pane -->
+
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" id="opporcomment" style="overflow-y: scroll; height: 300px">
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div>
+                    <form>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                        <input type="hidden" name="Idto" id="Idto" value="7" />
+
+                        <input type="hidden" name="Idby" id="Idby" />
+
+                        <input name="Title" id="Title" value="chat" type="hidden" />
+                        <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30%; width: 80% "></textarea>
+
+                        <button type="button" class="btn btn-warning pull-right" onclick="agregarComment('../Opportunities/CrearComments')">Send</button>
+                    </form>
+                </div>
+            </div>
+            <!-- /.box-footer-->
+        </div>
     </div>
 </div>
 
 <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/OpporComments.js"></script>

@@ -10,7 +10,7 @@ $(document).ready(function () {
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getconsulta',
+        url: '/api/Dashboard/getconsulta/0',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
@@ -53,7 +53,7 @@ $(document).ready(function () {
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getdataset',
+        url: '/api/Dashboard/getdataset/0',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
@@ -392,19 +392,20 @@ $(document).ready(function () {
 
                 row += '<tr>';
                 row += '<td colspan="9">';
-                row += '<table class="table-bordered">';
+                row += '<table  width="100%">';
                 row += '<thead style="background: blue; ">';
                 row += '<tr>';
-                row += '<th>' + val.date + '</th>';
+                row += '<th >' + val.date + '</th>';
                 row += '<th>' + val.salesman + '</th>';
                 row += '<th>' + val.howFoundName + '</th>';
                 row += '<th>' + val.numberLead + '</th>';
-                row += '<th colspan="6">' + val.programName + '</th>';
+                row += '<th colspan="7">' + val.programName + '</th>';
                 row += '</tr>';
                 row += '</thead>';
                 row += '<tbody>';
-                row += '<tr>';
-                row += '<td colspan="4">' + val.company + '</td>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
+                row += '<td colspan="3">' + val.company + '</td>';
+                row += '<td>' + val.phoneNumber + '</td>';
                 //row += '</tr>';
                // row += '<tr>';
                 row += '<td>' + val.vrfd1 + '</td>';
@@ -412,7 +413,48 @@ $(document).ready(function () {
                 row += '<td>' + val.vrfd3 + '</td>';
                 row += '<td>' + val.vrfd4 + '</td>';
                 row += '<td>' + val.vrfd5 + '</td>';
-                row += '<td></td>';
+                row += '<td>R</td>';
+                row += '</tr>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
+                row += '<td colspan="3">' + val.email + '</td>';
+                row += '<td>' + val.date + '</td>';
+
+                if (val.vrfd1 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                }
+                if (val.vrfd2 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                }
+                else {
+                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                }
+                if (val.vrfd3 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                }
+                if (val.vrfd4 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                }
+                if (val.vrfd5 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                }
+                
+                if (val.rating == "Cold") {
+                    row += '<td><img  src="../images/Cold.png" width="15" height="15"/></td>';
+                }
+                if (val.rating == "Warm") {
+                    row += '<td><img  src="../images/Warm.png" width="15" height="15"/></td>';
+                }
+                 row += '</tr>';
+                 row += '<tr>';
+                row += '<td colspan="10">' + val.lastFollowup + '</td>';
                 row += '</tr>';
                 row += '</tbody>';
                 row += '</table>';
@@ -432,3 +474,100 @@ $(document).ready(function () {
 
 
 });
+
+function filtropiechart() {
+    var x = document.getElementById("Select").value;
+
+    filtrar(x);
+    filtrardos(x);
+
+    
+
+
+    
+}
+
+function filtrar(x) {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getconsulta/' + x + '',
+        success: function (result) {
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                drawChart(result);
+            });
+        }
+    });
+
+    function drawChart(result) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'HowFoung');
+
+        data.addColumn('number', 'cases');
+
+
+        var dataArray = [];
+        $.each(result, function (i, obj) {
+            dataArray.push([obj.howFoung, obj.cases]);
+        });
+
+        data.addRows(dataArray);
+
+        var piechart_options = {
+            // title: 'HOW FOUND',
+            width: 350,
+            height: 250,
+            pieHole: 0.4,
+        };
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+        piechart.draw(data, piechart_options);
+
+
+    }
+}
+function filtrardos(x) {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getdataset/' + x + '',
+        success: function (result) {
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                drawChart(result);
+            });
+        }
+    });
+
+    function drawChart(result) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Category');
+
+        data.addColumn('number', 'Cases');
+
+
+        var dataArray = [];
+        $.each(result, function (i, obj) {
+            dataArray.push([obj.category, obj.cases]);
+        });
+
+        data.addRows(dataArray);
+
+        var piechart_options = {
+            //  title: 'CATEGORY',
+            width: 350,
+            height: 250,
+            pieHole: 0.4,
+        };
+        var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
+        piechart.draw(data, piechart_options);
+
+
+    }
+}
