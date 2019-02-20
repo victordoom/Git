@@ -18,6 +18,7 @@ namespace WebAdmin.Controllers
         private List<consulta> Consulta = new List<consulta>();
         private List<Goal> ConsulGoal = new List<Goal>();
         private List<ByCurrentMonth> ConsulBy = new List<ByCurrentMonth>();
+        private List<OpportunitiesOnline> OpportunitiesOnline = new List<OpportunitiesOnline>();
 
         [HttpGet("getconsulta")]
         public List<consulta> GetConsulta()
@@ -130,7 +131,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("SELECT       ltrim(rtrim(substring(H.keyDate,1,5))) date, isnull(D.cases,0) cases FROM    vw_last7days AS H LEFT OUTER JOIN vw_SalesLast7day AS D ON H.keyDate = D.date order by h.keydate", sqlConnection);
+                SqlCommand query = new SqlCommand("SELECT      ltrim(rtrim(substring(H.keyDate,1,5))) date, isnull(D.cases,0) cases FROM    vw_last7days AS H LEFT OUTER JOIN vw_SalesLast7day AS D ON H.keyDate = D.date order by h.keydate", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -142,7 +143,7 @@ namespace WebAdmin.Controllers
                         // Usuario
                         var consul = new consulta
                         {
-                            date = Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy"),
+                            date = (reader["date"]).ToString(),
                             
                             //HowFoung = reader["HowFound"].ToString(),
                             //category = reader["category"].ToString(),
@@ -317,6 +318,54 @@ namespace WebAdmin.Controllers
 
         }
 
+        [HttpGet("GetOpportunitiesOnline")]
+        public List<OpportunitiesOnline> GetOpportunitiesOnline()
+        {
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand("select top 20 id, dbo.seg_nomUsuario(userID) salesman, VisitedDate date, NumberLeadToFollowUp, PhoneNumber, EmailAddress, rating, dbo.prg_getProgramName(programID) ProgramName," + 
+                    " CompanyName company, ltrim(rtrim(address)) + '. ' + ltrim(rtrim(city)) + ' ' + ltrim(rtrim(state)) + ' ' + isnull(ltrim(rtrim(zipcode)), '') nlocation, 1 cases, dbo.Opp_getHowFoundName(howfoundid) HowFoundName," + 
+                    " dbo.Opp_verifyLeadOnlinetmp(id, 1) vrfd1, dbo.Opp_verifyLeadOnlinetmp(id, 2) vrfd2, dbo.Opp_verifyLeadOnlinetmp(id, 3) vrfd3, dbo.Opp_verifyLeadOnlinetmp(id, 4) vrfd4, dbo.Opp_verifyLeadOnlinetmp(id, 5) vrfd5, dbo.Opp_GetLastUpdate(id) LastFollowup from " + 
+                    " opportunities where (VisitedDate >= DATEADD(dd, -7, GETDATE())   AND VisitedDate <= GETDATE()) and howfoundid in (10) order by VisitedDate DESC, CompanyName", sqlConnection);
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Usuario
+                        var consul = new OpportunitiesOnline
+                        {
+                            salesman = (reader["salesman"]).ToString(),
+                            date = (reader["date"]).ToString(),
+                            rating = (reader["rating"]).ToString(),
+                            ProgramName = (reader["ProgramName"]).ToString(),
+                            company = (reader["company"]).ToString(),
+                            HowFoundName = (reader["HowFoundName"]).ToString(),
+                            vrfd1 = (reader["vrfd1"]).ToString(),
+                            vrfd2 = (reader["vrfd2"]).ToString(),
+                            vrfd3 = (reader["vrfd3"]).ToString(),
+                            vrfd4 = (reader["vrfd4"]).ToString(),
+                            vrfd5 = (reader["vrfd5"]).ToString(),
+                            LastFollowup = (reader["LastFollowup"]).ToString(),
+                            NumberLead = (reader["NumberLeadToFollowUp"]).ToString(),
+                            PhoneNumber = (reader["PhoneNumber"]).ToString(),
+
+
+
+                        };
+
+                        OpportunitiesOnline.Add(consul);
+
+                    }
+                }
+            }
+            return OpportunitiesOnline;
+        }
+
     }
 
     public class consulta
@@ -341,6 +390,24 @@ namespace WebAdmin.Controllers
     {
         public string SalesMan { get; set; }
         public int cases { get; set; }
+    }
+
+    public class OpportunitiesOnline
+    {
+        public string salesman { get; set; }
+        public string date { get; set; }
+        public string rating { get; set; }
+        public string ProgramName { get; set; }
+        public string company { get; set; }
+        public string HowFoundName { get; set; }
+        public string vrfd1 { get; set; }
+        public string vrfd2 { get; set; }
+        public string vrfd3 { get; set; }
+        public string vrfd4 { get; set; }
+        public string vrfd5 { get; set; }
+        public string LastFollowup { get; set; }
+        public string NumberLead { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
 

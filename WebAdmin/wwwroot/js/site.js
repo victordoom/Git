@@ -376,3 +376,59 @@ $(document).ready(function () {
 
 
 });
+
+$(document).ready(function () {
+    var row = '';
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getopportunitiesonline',
+        success: function (response) {
+            
+            var result = response;
+
+            $.each(result, function (index, val) {
+
+                row += '<tr>';
+                row += '<td colspan="9">';
+                row += '<table class="table-bordered">';
+                row += '<thead style="background: blue; ">';
+                row += '<tr>';
+                row += '<th>' + val.date + '</th>';
+                row += '<th>' + val.salesman + '</th>';
+                row += '<th>' + val.howFoundName + '</th>';
+                row += '<th>' + val.numberLead + '</th>';
+                row += '<th colspan="6">' + val.programName + '</th>';
+                row += '</tr>';
+                row += '</thead>';
+                row += '<tbody>';
+                row += '<tr>';
+                row += '<td colspan="4">' + val.company + '</td>';
+                //row += '</tr>';
+               // row += '<tr>';
+                row += '<td>' + val.vrfd1 + '</td>';
+                row += '<td>' + val.vrfd2 + '</td>';
+                row += '<td>' + val.vrfd3 + '</td>';
+                row += '<td>' + val.vrfd4 + '</td>';
+                row += '<td>' + val.vrfd5 + '</td>';
+                row += '<td></td>';
+                row += '</tr>';
+                row += '</tbody>';
+                row += '</table>';
+                row += '</td>';
+                row += '</tr>';
+                
+            });
+
+
+            $('#opponline').html(row);
+
+
+        }
+    });
+
+    
+
+
+});
