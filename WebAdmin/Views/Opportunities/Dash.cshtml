@@ -16,12 +16,12 @@
 
 <input type="hidden" id="Email" name="Email" value="@ViewBag.Email" />
 
-@if (ViewBag.Adminsales == 1)
-{
+@*@if (ViewBag.Adminsales == 1)
+{*@
     <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" onclick="getAdministra('../Opportunities/GetSales')" style="width:20%;">
         <option value="0">All</option>
     </select>
-}
+@*}*@
 
 <br />
 
@@ -31,7 +31,7 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3>1</h3>
+                <h3 id="visited">1</h3>
                 <p>Visited</p>
             </div>
             <div class="icon" style="top: 5px;">
@@ -45,7 +45,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3>1<sup style="font-size: 20px"></sup></h3>
+                <h3 id="contract">1<sup style="font-size: 20px"></sup></h3>
                 <p>Contract Closed</p>
             </div>
             <div class="icon" style="top: 5px;">

@@ -103,6 +103,16 @@ $(document).ready(function () {
 
             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
+
+                var suma = 0;
+                for (var i = 0; i < result.length; i++) {
+
+                    suma += result[i].cases;
+
+                }
+                //const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
+
+                document.getElementById("visited").innerText = suma;
             });
         }
     });
@@ -237,6 +247,8 @@ $(document).ready(function () {
             var calcu;
             calcu = result[0].goalNewContracts - result[0].quantityReal;
             document.getElementById("Calcu").innerText = calcu;
+
+            document.getElementById("contract").innerText = result[0].quantityReal;
 
 
             var monthby = result[0].goalMonth;
