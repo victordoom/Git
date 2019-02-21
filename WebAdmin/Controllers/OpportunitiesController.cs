@@ -42,7 +42,18 @@ namespace WebAdmin.Controllers
                                       x.CodigoSistema == 3 && x.CodigoPerfil == 1
                                     select x;
 
+           
+
             ViewBag.Adminsales = segsistemausuario.Count();
+
+            if (ViewBag.Adminsales == 1)
+            {
+                ViewBag.Esadmin = 0;
+            }
+            else
+            {
+                ViewBag.Esadmin = IDUser;
+            }
             // le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;

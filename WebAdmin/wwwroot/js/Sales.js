@@ -112,7 +112,14 @@ function mostrarComments(response) {
    
     
     $('#modalcomment').html(row);
-    document.getElementById('final').scrollIntoView(true);
+
+    var container = $('#modalcomment'),
+        scrollTo = $('#final');
+
+    container.animate({
+        scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+    });
+    //document.getElementById('final').scrollIntoView(true);
 }
 
 function getAdministra(action) {

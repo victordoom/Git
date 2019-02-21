@@ -62,7 +62,7 @@ function mostrarComments(response) {
 
             row += '<div class="direct-chat-msg">';
             row += '<div class="direct-chat-info clearfix">';
-            row += '<button class="direct-chat-name pull-left btn btn-success">' + val.nombre + '</button>';
+            row += '<span class="direct-chat-name pull-left  btn-success">' + val.nombre + '</span>';
             row += '<span class="direct-chat-timestamp pull-right">' + val.commentDatetime + '</span>';
             row += '</div>';
 
@@ -91,7 +91,7 @@ function mostrarComments(response) {
 
             row += '<div class="direct-chat-msg right">';
             row += '<div class="direct-chat-info clearfix">';
-            row += '<button class="direct-chat-name pull-right btn btn-info">' + val.nombre + '</button>';
+            row += '<span class="direct-chat-name pull-right  btn-info">' + val.nombre + '</span>';
             row += '<span class="direct-chat-timestamp pull-left">' + val.commentDatetime + '</span>';
             row += '</div>';
 
@@ -118,6 +118,13 @@ function mostrarComments(response) {
 
 
     $('#opporcomment').html(row);
+    var container = $('#opporcomment'),
+        scrollTo = $('#final');
+
+    container.animate({
+        scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+    });
+
     //document.getElementById('final').scrollIntoView(true);
 }
 

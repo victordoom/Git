@@ -12,16 +12,22 @@
         text-align: center;
         color: white;
     }
+
+   .col-md-3 {
+        margin-right: 0px;
+        padding-right: 0px;
+    }
 </style>
 
 <input type="hidden" id="Email" name="Email" value="@ViewBag.Email" />
+<input type="hidden" id="Esadmin" name="Esadmin" value="@ViewBag.Esadmin" />
 
-@*@if (ViewBag.Adminsales == 1)
-{*@
+@if (ViewBag.Adminsales == 1)
+{
     <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" onclick="getAdministra('../Opportunities/GetSales')" style="width:20%;">
         <option value="0">All</option>
     </select>
-@*}*@
+}
 
 <br />
 
@@ -31,7 +37,7 @@
         <!-- small box -->
         <div class="small-box bg-aqua">
             <div class="inner">
-                <h3 id="visited">1</h3>
+                <h3 id="visited">0</h3>
                 <p>Visited</p>
             </div>
             <div class="icon" style="top: 5px;">
@@ -45,7 +51,7 @@
         <!-- small box -->
         <div class="small-box bg-green">
             <div class="inner">
-                <h3 id="contract">1<sup style="font-size: 20px"></sup></h3>
+                <h3 id="contract">0<sup style="font-size: 20px"></sup></h3>
                 <p>Contract Closed</p>
             </div>
             <div class="icon" style="top: 5px;">
@@ -59,7 +65,7 @@
         <!-- small box -->
         <div class="small-box bg-yellow">
             <div class="inner">
-                <h3>1</h3>
+                <h3 id="casesopened">0</h3>
                 <p>Cases Opened</p>
             </div>
             <div class="icon" style="top: 5px;">
@@ -73,7 +79,7 @@
         <!-- small box -->
         <div class="small-box bg-red">
             <div class="inner">
-                <h3>65</h3>
+                <h3 id="mostcategory">0</h3>
                 <p>Most visited category</p>
             </div>
             <div class="icon" style="top: 5px;">
@@ -109,7 +115,7 @@
 <div class="row">
 
     <!-- Graficos de Pastel -->
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">How Found</h3>
@@ -134,7 +140,7 @@
     </div>
 
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Category</h3>
@@ -157,7 +163,7 @@
 
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
             <thead style="background: blue;">
                 <tr>
@@ -194,7 +200,8 @@
                                 <tr>
                                     <th>Goal</th>
                                     <th>Archived</th>
-                                    <th></th>
+                                    <th colspan="2"></th>
+                                    
                                 </tr>
 
                             </thead>
@@ -203,6 +210,9 @@
                                     <td id="GoalNew" name="GoalNew">meta</td>
                                     <td id="Quantity" name="Quantity">archivado</td>
                                     <td id="Calcu" name="Calcu" style="color: red;"></td>
+                                    <td >
+                                        <progress id="porcentcurrent"  max="100" style="width: 25px;"></progress>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -230,6 +240,44 @@
         </table>
 
     </div>
+
+    <div class="col-md-3">
+        <div class="box box-danger direct-chat direct-chat-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Direct Chat</h3>
+                <div class="box-tools pull-right">
+
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <!-- In box-tools add this button if you intend to use the contacts pane -->
+
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" id="opporcomment" style="overflow-y: scroll; height: 200px">
+
+            </div>
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <div>
+                    <form>
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                        <input type="hidden" name="Idto" id="Idto" value="7" />
+
+                        <input type="hidden" name="Idby" id="Idby" />
+
+                        <input name="Title" id="Title" value="chat" type="hidden" />
+                        <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30px; width: 70% "></textarea>
+
+                        <button type="button" class="btn btn-warning pull-right" onclick="agregarComment('../Opportunities/CrearComments')">Send</button>
+                    </form>
+                </div>
+            </div>
+            <!-- /.box-footer-->
+        </div>
+    </div>
 </div>
 
 
@@ -237,7 +285,7 @@
 <div class="row">
 
     <!-- Graficos de barra -->
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Visited by date</h3>
@@ -262,7 +310,7 @@
     </div>
 
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Visited by saler</h3>
@@ -287,8 +335,8 @@
     </div>
 
 
-    <div class="col-md-4">
-        <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
+    <div class="col-md-3">
+        <table class="table-bordered table-responsive " style="width: 100%; text-align: center;">
             <thead style="background: #585858;">
                 <tr>
                     <th>Last Month</th>
@@ -324,7 +372,7 @@
                                 <tr>
                                     <th>Goal</th>
                                     <th>Archived</th>
-                                    <th></th>
+                                    <th colspan="2"></th>
                                 </tr>
 
                             </thead>
@@ -333,6 +381,9 @@
                                     <td id="GoalNewLast" name="GoalNew">meta</td>
                                     <td id="QuantityLast" name="Quantity">archivado</td>
                                     <td id="CalcuLast" name="CalcuLast" style="color: red;"></td>
+                                    <td>
+                                        <progress id="porcentlast"  max="100" style="width: 25px;"></progress>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -360,6 +411,8 @@
         </table>
 
     </div>
+
+    
 </div>
 
 <div class="row">
@@ -414,43 +467,7 @@
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="box box-danger direct-chat direct-chat-danger">
-            <div class="box-header with-border">
-                <h3 class="box-title">Direct Chat</h3>
-                <div class="box-tools pull-right">
-
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <!-- In box-tools add this button if you intend to use the contacts pane -->
-
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                </div>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body" id="opporcomment" style="overflow-y: scroll; height: 300px">
-
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                <div>
-                    <form>
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
-                        <input type="hidden" name="Idto" id="Idto" value="7" />
-
-                        <input type="hidden" name="Idby" id="Idby" />
-
-                        <input name="Title" id="Title" value="chat" type="hidden" />
-                        <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30%; width: 80% "></textarea>
-
-                        <button type="button" class="btn btn-warning pull-right" onclick="agregarComment('../Opportunities/CrearComments')">Send</button>
-                    </form>
-                </div>
-            </div>
-            <!-- /.box-footer-->
-        </div>
-    </div>
+    
 </div>
 
 <script src="~/js/site.js" asp-append-version="true"></script>

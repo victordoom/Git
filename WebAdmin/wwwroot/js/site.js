@@ -6,11 +6,12 @@
 
 $(document).ready(function () {
 
+    var x = $('input[name=Esadmin]')[0].value;
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getconsulta/0',
+        url: '/api/Dashboard/getconsulta/' + x + '',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
@@ -36,8 +37,8 @@ $(document).ready(function () {
 
         var piechart_options = {
            // title: 'HOW FOUND',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
             pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
@@ -48,12 +49,12 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-
+    var x = $('input[name=Esadmin]')[0].value;
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getdataset/0',
+        url: '/api/Dashboard/getdataset/' + x + '',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
@@ -79,8 +80,8 @@ $(document).ready(function () {
 
         var piechart_options = {
           //  title: 'CATEGORY',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
             pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
@@ -133,8 +134,8 @@ $(document).ready(function () {
 
         var piechart_options = {
            // title: 'VISITED BY SALER',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
             
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visited_div'));
@@ -176,8 +177,8 @@ $(document).ready(function () {
 
         var piechart_options = {
             //title: 'VISITED BY DATE',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
 
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visiteddate_div'));
@@ -247,9 +248,13 @@ $(document).ready(function () {
             var calcu;
             calcu = result[0].goalNewContracts - result[0].quantityReal;
             document.getElementById("Calcu").innerText = calcu;
+            var porcent;
+            var calpor;
+            porcent = (result[0].quantityReal) / (result[0].goalNewContracts);
+            calpor = porcent * 100;
 
             document.getElementById("contract").innerText = result[0].quantityReal;
-
+            document.getElementById("porcentcurrent").value = calpor;
 
             var monthby = result[0].goalMonth;
             var yearby = result[0].goalYear;
@@ -350,6 +355,13 @@ $(document).ready(function () {
             calcu = result[0].goalNewContracts - result[0].quantityReal;
             document.getElementById("CalcuLast").innerText = calcu;
 
+            var porcent;
+            var calpor;
+            porcent = (result[0].quantityReal) / (result[0].goalNewContracts);
+            calpor = porcent * 100;
+
+            
+            document.getElementById("porcentlast").value = calpor;
 
             var monthby = result[0].goalMonth;
             var yearby = result[0].goalYear;
@@ -492,6 +504,8 @@ function filtropiechart() {
 
     filtrar(x);
     filtrardos(x);
+    filtrocasesopened(x);
+    filtromostcategory(x);
 
     
 
@@ -531,8 +545,8 @@ function filtrar(x) {
 
         var piechart_options = {
             // title: 'HOW FOUND',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
             pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
@@ -573,8 +587,8 @@ function filtrardos(x) {
 
         var piechart_options = {
             //  title: 'CATEGORY',
-            width: 350,
-            height: 250,
+            width: 275,
+            height: 175,
             pieHole: 0.4,
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
@@ -582,4 +596,69 @@ function filtrardos(x) {
 
 
     }
+}
+
+
+$(document).ready(function () {
+
+    var x = $('input[name=Esadmin]')[0].value;
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/casesopened/' + x + '',
+        success: function (result) {
+
+            document.getElementById("casesopened").innerText = result;
+            
+        }
+    });
+
+    
+});
+
+$(document).ready(function () {
+    var x = $('input[name=Esadmin]')[0].value;
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/mostcategory/' + x + '',
+        success: function (result) {
+
+            document.getElementById("mostcategory").innerText = result;
+
+        }
+    });
+
+
+});
+
+function filtrocasesopened(x) {
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/casesopened/' + x + '',
+        success: function (result) {
+
+            document.getElementById("casesopened").innerText = result;
+
+        }
+    });
+}
+
+function filtromostcategory(x) {
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/mostcategory/' + x + '',
+        success: function (result) {
+
+            document.getElementById("mostcategory").innerText = result;
+
+        }
+    });
 }

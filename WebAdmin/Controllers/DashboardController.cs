@@ -397,6 +397,89 @@ namespace WebAdmin.Controllers
             return OpportunitiesOnline;
         }
 
+        //cases opened
+        [HttpGet("casesopened/{user}")]
+        public int CasesOpened(int user)
+        {
+            int CasesOpened = 0;
+            string Command;
+            if (user == 0)
+            {
+                Command = "select count(*) as Casesopened from cases where  Status='Active'";
+            }
+            else
+            {
+                Command = "select count(*) as Casesopened from cases where  Status='Active' and AssignedTo = @User";
+            }
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                if (user != 0)
+                {
+                    query.Parameters.AddWithValue("@User", user);
+                }
+
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CasesOpened = Convert.ToInt32(reader["Casesopened"]);
+
+                    }
+                }
+            }
+            return CasesOpened;
+        }
+
+
+        //cases opened
+        [HttpGet("mostcategory/{user}")]
+        public int MostCategory(int user)
+        {
+            int MostCategory = 0;
+            string Command;
+            if (user == 0)
+            {
+                Command = "select count(*) as most from [dbo].[Opportunities] where HowFoundID=10 and closed=0";
+            }
+            else
+            {
+                Command = "select count(*) as most from [dbo].[Opportunities] where HowFoundID=10 and closed=0 and userid= @User";
+            }
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                if (user != 0)
+                {
+                    query.Parameters.AddWithValue("@User", user);
+                }
+
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        MostCategory = Convert.ToInt32(reader["most"]);
+
+                    }
+                }
+            }
+            return MostCategory;
+        }
+
     }
 
     public class consulta
