@@ -42,7 +42,35 @@ namespace WebAdmin.Controllers
                                       x.CodigoSistema == 3 && x.CodigoPerfil == 1
                                     select x;
 
+
+
            
+
+
+
+            List<SelectListItem> admins = new List<SelectListItem>();
+            var consul = from x in _context.SegSistemaUsuario
+                         join y in _context.SegUsuarios on x.IdUsuario equals y.UserID
+                         where x.CodigoSistema == 3
+                         select new Administradores { Admin = y.NombreUsuario + " " + y.ApellidoUsuario, AdminID = y.UserID };
+
+            var sales = new List<SelectListItem>();
+
+            sales.Add( new SelectListItem {
+                Value = "0",
+                Text = "All"
+            });
+
+            foreach (var item in consul)
+            {
+                sales.Add(new SelectListItem
+                {
+                    Value = item.AdminID.ToString(),
+                    Text = item.Admin
+                });
+            }
+
+            ViewData["Sales"] = sales;
 
             ViewBag.Adminsales = segsistemausuario.Count();
 

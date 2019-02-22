@@ -499,6 +499,8 @@ $(document).ready(function () {
 
 });
 
+
+
 function filtropiechart() {
     var x = document.getElementById("Select").value;
 
