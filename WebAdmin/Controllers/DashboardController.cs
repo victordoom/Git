@@ -502,6 +502,7 @@ namespace WebAdmin.Controllers
 
     public class ByCurrentMonth
     {
+        public int SalesID { get; set; }
         public string SalesMan { get; set; }
         public int cases { get; set; }
     }

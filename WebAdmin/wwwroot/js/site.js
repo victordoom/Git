@@ -253,6 +253,8 @@ $(document).ready(function () {
             porcent = (result[0].quantityReal) / (result[0].goalNewContracts);
             calpor = porcent * 100;
 
+
+
             document.getElementById("contract").innerText = result[0].quantityReal;
             document.getElementById("porcentcurrent").value = calpor;
 
@@ -278,13 +280,20 @@ $(document).ready(function () {
             success: function (response) {
                 var result = response;
 
+
+                
                 $.each(result, function (index, val) {
                     row += '<tr>';
                     row += '<td>' + val.salesMan + '</td>';
                     row += '<td>' + val.cases + '</td>'
                     row += '</tr>';
+
+
+                   
                 });
 
+
+               
 
                 $('#bycurrent').html(row);
             }

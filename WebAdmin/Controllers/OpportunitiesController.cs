@@ -71,7 +71,7 @@ namespace WebAdmin.Controllers
             }
 
             ViewData["Sales"] = sales;
-
+            ViewBag.UserID = User.UserID;
             ViewBag.Adminsales = segsistemausuario.Count();
 
             if (ViewBag.Adminsales == 1)
