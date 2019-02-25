@@ -134,6 +134,7 @@ $(document).ready(function () {
 
         var piechart_options = {
            // title: 'VISITED BY SALER',
+            legend: { position: 'none' },
             width: 275,
             height: 175,
             
@@ -177,6 +178,7 @@ $(document).ready(function () {
 
         var piechart_options = {
             //title: 'VISITED BY DATE',
+            legend: { position: 'none' },
             width: 275,
             height: 175,
 
@@ -253,9 +255,11 @@ $(document).ready(function () {
             porcent = (result[0].quantityReal) / (result[0].goalNewContracts);
             calpor = porcent * 100;
 
-
-
-            document.getElementById("contract").innerText = result[0].quantityReal;
+            var admin = $('input[name=Esadmin]')[0].value;
+            if (admin == 1) {
+                document.getElementById("contract").innerText = result[0].quantityReal;
+            }
+           
             document.getElementById("porcentcurrent").value = calpor;
 
             var monthby = result[0].goalMonth;
@@ -281,14 +285,30 @@ $(document).ready(function () {
                 var result = response;
 
 
-                
+
                 $.each(result, function (index, val) {
-                    row += '<tr>';
-                    row += '<td>' + val.salesMan + '</td>';
-                    row += '<td>' + val.cases + '</td>'
-                    row += '</tr>';
 
+                    if (val.cases == 0) {
+                        row += '<tr>';
+                        row += '<td style="text-align:left">' + val.salesMan + '</td>';
+                        row += '<td>' + val.cases + '</td>'
+                        row += '</tr>';
+                    } else {
+                        row += '<tr style="background:#AECAF9;">';
+                        row += '<td style="text-align:left">' + val.salesMan + '</td>';
+                        row += '<td>' + val.cases + '</td>'
+                        row += '</tr>';
+                    }
+                    
 
+                    var admin = $('input[name=Esadmin]')[0].value;
+                    if (admin >= 1) {
+                        var user = $('input[name=UserID]')[0].value;
+                        if (val.salesID == user) {
+                            document.getElementById("contract").innerText = val.cases;
+                        }
+                    }
+                    
                    
                 });
 
@@ -395,10 +415,17 @@ $(document).ready(function () {
                 var result = response;
 
                 $.each(result, function (index, val) {
-                    row += '<tr>';
-                    row += '<td>' + val.salesMan + '</td>';
-                    row += '<td>' + val.cases + '</td>'
-                    row += '</tr>';
+                    if (val.cases == 0) {
+                        row += '<tr>';
+                        row += '<td style="text-align:left">' + val.salesMan + '</td>';
+                        row += '<td>' + val.cases + '</td>'
+                        row += '</tr>';
+                    } else {
+                        row += '<tr style="background:#C0C0C0;">';
+                        row += '<td style="text-align:left">' + val.salesMan + '</td>';
+                        row += '<td>' + val.cases + '</td>'
+                        row += '</tr>';
+                    }
                 });
 
 
@@ -424,23 +451,38 @@ $(document).ready(function () {
             $.each(result, function (index, val) {
 
                 row += '<tr>';
-                row += '<td colspan="9">';
-                row += '<table  width="100%">';
-                row += '<thead style="background: blue; ">';
+                row += '<td colspan="2">';
+                row += '<table  width="100%" class="table-bordered">';
+                row += '<thead style="background: #4C8BF5; ">';
+
                 row += '<tr>';
-                row += '<th >' + val.date + '</th>';
+                row += '<th>' + val.date + '</th>';
+               
                 row += '<th>' + val.salesman + '</th>';
-                row += '<th>' + val.howFoundName + '</th>';
-                row += '<th>' + val.numberLead + '</th>';
-                row += '<th colspan="7">' + val.programName + '</th>';
+               
+                row += '<th >' + val.howFoundName + '</th>';
+                row += '<th colspan="7">' + val.numberLead + '</th>';
                 row += '</tr>';
+               
+
                 row += '</thead>';
                 row += '<tbody>';
+
                 row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td colspan="3">' + val.company + '</td>';
-                row += '<td>' + val.phoneNumber + '</td>';
-                //row += '</tr>';
-               // row += '<tr>';
+                row += '<td colspan="4">' + val.company + '</td>';
+                row += '<td colspan="6">' + val.programName + '</td>';
+                row += '</tr>';
+
+                row += '<tr>';
+                row += '<td colspan="4">' + val.email + '</td>';
+                row += '</tr>';
+
+                row += '<tr>';
+                row += '<td  colspan="4">' + val.lastFollowup + '</td>';
+                row += '</tr>';
+
+                row += '<tr>';
+                row += '<td colspan="4">' + val.phoneNumber + '</td>';
                 row += '<td>' + val.vrfd1 + '</td>';
                 row += '<td>' + val.vrfd2 + '</td>';
                 row += '<td>' + val.vrfd3 + '</td>';
@@ -448,10 +490,9 @@ $(document).ready(function () {
                 row += '<td>' + val.vrfd5 + '</td>';
                 row += '<td>R</td>';
                 row += '</tr>';
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td colspan="3">' + val.email + '</td>';
-                row += '<td>' + val.date + '</td>';
 
+                row += '<tr>';
+                row += '<td colspan="3">' + val.date + '</td>';
                 if (val.vrfd1 > 1) {
                     row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
                 } else {
@@ -478,17 +519,23 @@ $(document).ready(function () {
                 } else {
                     row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
                 }
-                
+
                 if (val.rating == "Cold") {
-                    row += '<td><img  src="../images/Cold.png" width="15" height="15"/></td>';
+                   row += '<td><img  src="../images/Cold.png" width="15" height="15"/></td>';
                 }
                 if (val.rating == "Warm") {
                     row += '<td><img  src="../images/Warm.png" width="15" height="15"/></td>';
                 }
-                 row += '</tr>';
-                 row += '<tr>';
-                row += '<td colspan="10">' + val.lastFollowup + '</td>';
                 row += '</tr>';
+
+
+                row += '<tr>';
+              
+                row += '</tr>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
+              
+                 row += '</tr>';
+                
                 row += '</tbody>';
                 row += '</table>';
                 row += '</td>';
@@ -517,7 +564,7 @@ function filtropiechart() {
     filtrardos(x);
     filtrocasesopened(x);
     filtromostcategory(x);
-
+    filtrocasesclosed(x);
     
 
 
@@ -670,6 +717,57 @@ function filtromostcategory(x) {
 
             document.getElementById("mostcategory").innerText = result;
 
+        }
+    });
+}
+
+function filtrocasesclosed(x) {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getcurrentmonth',
+        success: function (result) {
+
+            $.each(result, function (index, val) {
+
+                if (x == 0) {
+                    document.getElementById("contract").innerText = result[0].quantityReal;
+                } else {
+                    var monthby = result[0].goalMonth;
+                    var yearby = result[0].goalYear;
+
+                    CasesClosed(monthby, yearby, x);
+
+                }
+
+            });
+
+
+        }
+    });
+}
+function CasesClosed(month, year, x) {
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getbycurrentmonth/' + month + '/' + year + '',
+
+        success: function (response) {
+            var result = response;
+
+            for (var i = 0; i < result.length; i++) {
+                if (result[i].salesID == x) {
+                    document.getElementById("contract").innerText = result[i].cases;
+                    break;
+                } else {
+                    document.getElementById("contract").innerText = 0;
+                }
+            }
+
+            
         }
     });
 }

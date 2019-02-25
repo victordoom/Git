@@ -181,7 +181,11 @@ namespace WebAdmin.Controllers
                             cases = Convert.ToInt32(reader["cases"])
                         };
 
-                        Consulta.Add(consul);
+                        if (consul.cases != 0)
+                        {
+                            Consulta.Add(consul);
+
+                        }
 
                     }
                 }
@@ -233,7 +237,7 @@ namespace WebAdmin.Controllers
             {
                 sqlConnection.Open();
                 SqlCommand query = new SqlCommand("declare @CurrentYear int, @CurrentMonth int set @CurrentYear = @year set  @CurrentMonth = @month"+
-                     " select NOMBRE_USUARIO + ' ' + APELLIDO_USUARIO SalesMan, (select count(*) from ContractHeader"+
+                     " select UserID id, NOMBRE_USUARIO + ' ' + APELLIDO_USUARIO SalesMan, (select count(*) from ContractHeader" +
                      " where month(CreationDate) = @CurrentMonth AND YEAR(CreationDate) = @CurrentYear and userid = SEG_USUARIOS.ID_USUARIO) cases "+
                      "from SEG_USUARIOS where ID_PERSONA in (select id from Employees where DepartmentID = 2 ) and ESTADO_USUARIO = 'A' order by SalesMan", sqlConnection);
 
@@ -252,7 +256,8 @@ namespace WebAdmin.Controllers
                         var consul = new ByCurrentMonth
                         {
                             SalesMan = (reader["SalesMan"]).ToString(),
-                            cases = Convert.ToInt32(reader["cases"])
+                            cases = Convert.ToInt32(reader["cases"]),
+                            SalesID = Convert.ToInt32(reader["id"])
                             
 
 
@@ -447,7 +452,7 @@ namespace WebAdmin.Controllers
             string Command;
             if (user == 0)
             {
-                Command = "select count(*) as most from [dbo].[Opportunities] where HowFoundID=10 and closed=0";
+                Command = "select count(*) as most from [dbo].[Opportunities] where HowFoundID=10 and closed=1";
             }
             else
             {
