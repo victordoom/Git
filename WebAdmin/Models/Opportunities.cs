@@ -93,6 +93,15 @@ namespace WebAdmin.Models
         public string Web { get; set; }
 
         public string LastComment { get; set; }
+
+
+        //closed opportunities
+        public DateTime? ClosedDate { get; set; }
+        public int? ClosedBy { get; set; }
+        public string ClosedComment { get; set; }
+        public bool Closed { get; set; }
+
+
         public virtual Collection<OpportunitiesDetails> OpportunitiesDetails { get; set; }
 
         //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]

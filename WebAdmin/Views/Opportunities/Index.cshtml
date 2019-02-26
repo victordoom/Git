@@ -162,7 +162,7 @@
                 <td width="5%">
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
                     <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
-                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="CerrarOppor('@item.ID','@ViewBag.User')"><span class="zmdi zmdi-square-right"></span></a>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed('@item.ID','@ViewBag.UserID')"><span class="zmdi zmdi-square-right"></span></a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -243,14 +243,22 @@
                 <label>Are you sure to close?</label>
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" id="IdUser" name="IdUser" />
+                    <input type="hidden" id="Id" name="Id" />
+
+
                     <textarea name="ClosedComment" id="ClosedComment" class="form-control" style="height: 30%; "></textarea>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary btn-info" onclick="">OK</button>
+                <button type="button" class="btn btn-primary btn-info" onclick=" CerrarOppor('Opportunities/ClosedOpportunities')">OK</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<script type="text/javascript" src="~/js/Opportunities.js"></script>

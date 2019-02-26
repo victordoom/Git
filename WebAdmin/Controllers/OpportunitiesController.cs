@@ -109,7 +109,7 @@ namespace WebAdmin.Controllers
             }
             Int64 IDUser = User.UserID;
 
-            ViewBag.User = User.UserID;
+            ViewBag.UserID = User.UserID;
 
 
 
@@ -443,6 +443,57 @@ namespace WebAdmin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+       
+        public async Task<IActionResult> ClosedOpportunities(int? id, int iduser, string closedcomment)
+        {
+            bool close = true;
+            if (id == null)
+            {
+                
+            }
+
+            var opportunities = await _context.Opportunities.FindAsync(id);
+            if (opportunities == null)
+            {
+                //return NotFound();
+            }
+
+            opportunities.ClosedBy = iduser;
+            opportunities.ClosedComment = closedcomment;
+            opportunities.ClosedDate = DateTime.Now;
+            opportunities.Closed = close;
+
+            //_context.Update(opportunities);
+            // _context.SaveChanges();
+            try
+            {
+                _context.Update(opportunities);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+
+            return View(opportunities);
+
+        }
+        
+        //public async Task<IActionResult> ClosedOpportunities(Opportunities opportunities)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Update(opportunities);
+        //        await _context.SaveChangesAsync();
+        //    }
+
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private bool OpportunitiesExists(int id)
         {

@@ -438,12 +438,14 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    var x = $('input[name=Esadmin]')[0].value;
+
     var row = '';
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getopportunitiesonline',
+        url: '/api/Dashboard/getopportunitiesonline/' + x + '',
         success: function (response) {
             
             var result = response;
@@ -461,7 +463,8 @@ $(document).ready(function () {
                 row += '<th>' + val.salesman + '</th>';
                
                 row += '<th >' + val.howFoundName + '</th>';
-                row += '<th colspan="7">' + val.numberLead + '</th>';
+                row += '<th>' + val.numberLead + '</th>';
+                row += '<th colspan="6">' + val.programName + '</th>';
                 row += '</tr>';
                
 
@@ -470,7 +473,7 @@ $(document).ready(function () {
 
                 row += '<tr style="border: #E6E6E6 3px solid;">';
                 row += '<td colspan="4">' + val.company + '</td>';
-                row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
+               // row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
                 row += '</tr>';
 
                 row += '<tr style="border: #E6E6E6 3px solid;">';
