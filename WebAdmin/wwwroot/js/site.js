@@ -452,7 +452,7 @@ $(document).ready(function () {
 
                 row += '<tr>';
                 row += '<td colspan="2">';
-                row += '<table  width="100%" class="table-bordered">';
+                row += '<table  width="100%">';
                 row += '<thead style="background: #4C8BF5; ">';
 
                 row += '<tr>';
@@ -470,18 +470,18 @@ $(document).ready(function () {
 
                 row += '<tr style="border: #E6E6E6 3px solid;">';
                 row += '<td colspan="4">' + val.company + '</td>';
-                row += '<td colspan="6">' + val.programName + '</td>';
+                row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
                 row += '</tr>';
 
-                row += '<tr>';
-                row += '<td colspan="4">' + val.email + '</td>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
+                row += '<td colspan="10">' + val.email + '</td>';
                 row += '</tr>';
 
-                row += '<tr>';
-                row += '<td  colspan="4">' + val.lastFollowup + '</td>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
+                row += '<td  colspan="10">' + val.lastFollowup + '</td>';
                 row += '</tr>';
 
-                row += '<tr>';
+                row += '<tr style="border: #E6E6E6 3px solid;">';
                 row += '<td colspan="4">' + val.phoneNumber + '</td>';
                 row += '<td>' + val.vrfd1 + '</td>';
                 row += '<td>' + val.vrfd2 + '</td>';
@@ -492,7 +492,7 @@ $(document).ready(function () {
                 row += '</tr>';
 
                 row += '<tr>';
-                row += '<td colspan="3">' + val.date + '</td>';
+                row += '<td colspan="4">' + val.date + '</td>';
                 if (val.vrfd1 > 1) {
                     row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
                 } else {

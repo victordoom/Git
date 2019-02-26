@@ -107,120 +107,150 @@
     </p>
 </div>
 
-    <table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
-        <thead>
+<table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
+
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+                @*@Html.DisplayNameFor(model => model.PhoneNumber)
+                    @Html.DisplayNameFor(model => model.City)/State*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerName)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.City)/State
+                </th>*@
+
+            <th>
+                @Html.DisplayNameFor(model => model.VisitedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HowFoundID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                FollowUp
+            </th>
+            @*<th></th>*@
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
+                <td width="5%">
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="CerrarOppor('@item.ID','@ViewBag.User')"><span class="zmdi zmdi-square-right"></span></a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                    <br />
+                    Phone: @Html.DisplayFor(modelItem => item.PhoneNumber).
+                    <br />
+                    Address: @Html.DisplayFor(modelItem => item.City).
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OwnerName)
+                </td>
+                @*<td>
 
-                <th></th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CompanyName)
-                    @*@Html.DisplayNameFor(model => model.PhoneNumber)
-                        @Html.DisplayNameFor(model => model.City)/State*@
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.OwnerName)
-                </th>
-                @*<th>
-                        @Html.DisplayNameFor(model => model.PhoneNumber)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.City)/State
-                    </th>*@
+                    </td>
+                    <td>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.VisitedDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UserID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CategoryID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.HowFoundID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rating)
-                </th>
-                <th>
-                    FollowUp
-                </th>
-                @*<th></th>*@
-                
+                    </td>*@
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.VisitedDate)
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => item.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                </td>
+                <td>
+                    @if (item.HowFoundID == 10)
+                    {
+                        <span class="label label-success">
+                            @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                        </span>
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberLeadToFollowUp)
+                </td>
+                <td>
+                    <img src="@Url.Content("./images/" + item.Rating +".png")" alt="Image" />
+                </td>
+                <td width="25%">
+                    @Html.Raw(item.LastComment)
+                </td>
+
+                @*<td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>*@
+                @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                @*</td>*@
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td width="5%">
-                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
-                        <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CreatedDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompanyName)
-                        <br />
-                        Phone: @Html.DisplayFor(modelItem => item.PhoneNumber).
-                        <br />
-                        Address: @Html.DisplayFor(modelItem => item.City).
-                        @Html.DisplayFor(modelItem => item.State)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OwnerName)
-                    </td>
-                    @*<td>
+        }
+    </tbody>
+</table>
 
-                        </td>
-                        <td>
 
-                        </td>*@
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VisitedDate)
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                    </td>
-                    <td>
-                        @Html.DropDownListFor(model => item.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                    </td>
-                    <td>
-                        @if (item.HowFoundID == 10)
-                        {
-                            <span class="label label-success">
-                                @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                            </span>
-                        }
-                          else
-                                {
-                                   @Html.DropDownListFor(model => item.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                }
-                        </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumberLeadToFollowUp)
-                    </td>
-                    <td>
-                        <img src="@Url.Content("./images/" + item.Rating +".png")" alt="Image" />
-                    </td>
-                    <td width="25%">
-                        @Html.Raw(item.LastComment)
-                    </td>
 
-                    @*<td>
-                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.ID">Details</a>*@
-                    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-                    @*</td>*@
-                </tr>
-            }
-        </tbody>
-    </table>
+<!-- Modal -->
+<div class="modal fade" id="opportunitiesclosed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #01DF3A; color: white;">
+                <h5 class="modal-title" id="exampleModalLabel">Opportunity Close</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label>Are you sure to close?</label>
+                <form>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <textarea name="ClosedComment" id="ClosedComment" class="form-control" style="height: 30%; "></textarea>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-info" onclick="">OK</button>
+            </div>
+        </div>
+    </div>
+</div>

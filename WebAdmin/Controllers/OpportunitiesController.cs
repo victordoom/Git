@@ -109,6 +109,8 @@ namespace WebAdmin.Controllers
             }
             Int64 IDUser = User.UserID;
 
+            ViewBag.User = User.UserID;
+
 
 
             ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
