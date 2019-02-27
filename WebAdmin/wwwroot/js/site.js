@@ -24,7 +24,6 @@ $(document).ready(function () {
     function drawChart(result) {
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'HowFoung');
-
         data.addColumn('number', 'cases');
 
 
@@ -37,10 +36,18 @@ $(document).ready(function () {
 
         var piechart_options = {
            // title: 'HOW FOUND',
-            width: 275,
-            height: 175,
-            pieHole: 0.4,
+            height: 240,
+            chartArea: { width: '98%', height: '80%' },
+            hAxis: { showTextEvery: 7, textStyle: { fontSize: '10' } },
+            legend: { position: 'top', textStyle: { color: 'blue', fontSize: 12 } },
+            lineWidth: 4,
+            pointShape: 'circle',
+            pointSize: 6,
+            vAxis: { textPosition: 'in', gridlines: { count: 3 }, minorGridlines: { count: 2 }, textStyle: { fontSize: 12 } },
+            is3D: true,
+            slices: { 0: { color: '#578CCF' }, 1: { color: '#85BF51' }, 2: { color: '#FFA219' }, 3: { color: '#1CB1F5' }, 4: { color: '#C5D2DF' }, 5: { color: '#9D96D1' }, 6: { color: '#C9C9C9' }, 7: { color: '#2B7BE4' } },
         };
+
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
         piechart.draw(data, piechart_options);
 
@@ -80,9 +87,18 @@ $(document).ready(function () {
 
         var piechart_options = {
           //  title: 'CATEGORY',
-            width: 275,
-            height: 175,
-            pieHole: 0.4,
+            height: 240,
+            chartArea: { width: '98%', height: '80%' },
+            hAxis: { showTextEvery: 7, textStyle: { fontSize: '10' } },
+            legend: { position: 'top', textStyle: { color: 'blue', fontSize: 12 } },
+            lineWidth: 4,
+            pointShape: 'circle',
+            pointSize: 6,
+            vAxis: { textPosition: 'in', gridlines: { count: 3 }, minorGridlines: { count: 2 }, textStyle: { fontSize: 12 } },
+            is3D: true,
+            slices: { 0: { color: '#578CCF' }, 1: { color: '#85BF51' }, 2: { color: '#FFA219' }, 3: { color: '#1CB1F5' }, 4: { color: '#C5D2DF' }, 5: { color: '#9D96D1' }, 6: { color: '#C9C9C9' }, 7: { color: '#2B7BE4' } },
+        
+
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
         piechart.draw(data, piechart_options);
@@ -123,20 +139,21 @@ $(document).ready(function () {
         data.addColumn('string', 'assignedTo');
 
         data.addColumn('number', 'cases');
+        data.addColumn({ type: 'string', role: 'style' });
 
 
         var dataArray = [];
         $.each(result, function (i, obj) {
-            dataArray.push([obj.assignedTo, obj.cases]);
+            dataArray.push([obj.assignedTo, obj.cases, 'color: #1CB1F5']);
         });
 
         data.addRows(dataArray);
 
         var piechart_options = {
            // title: 'VISITED BY SALER',
-            legend: { position: 'none' },
-            width: 275,
-            height: 175,
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+
             
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visited_div'));
@@ -167,20 +184,20 @@ $(document).ready(function () {
         data.addColumn('string','date');
 
         data.addColumn('number', 'cases');
-
+        data.addColumn({ type: 'string', role: 'style' });
 
         var dataArray = [];
         $.each(result, function (i, obj) {
-            dataArray.push([obj.date, obj.cases]);
+            dataArray.push([obj.date, obj.cases, 'color: #1CB1F5']);
         });
 
         data.addRows(dataArray);
 
         var piechart_options = {
             //title: 'VISITED BY DATE',
-            legend: { position: 'none' },
-            width: 275,
-            height: 175,
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+
 
         };
         var piechart = new google.visualization.ColumnChart(document.getElementById('visiteddate_div'));
@@ -454,10 +471,11 @@ $(document).ready(function () {
 
                 row += '<tr>';
                 row += '<td colspan="2">';
-                row += '<table  width="100%">';
+                row += '<table  width="100%" class="table-bordered">';
                 row += '<thead style="background: #4C8BF5; ">';
 
                 row += '<tr>';
+                row += '<th>#</th>';
                 row += '<th>' + val.date + '</th>';
                
                 row += '<th>' + val.salesman + '</th>';
@@ -471,21 +489,9 @@ $(document).ready(function () {
                 row += '</thead>';
                 row += '<tbody>';
 
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td colspan="4">' + val.company + '</td>';
-               // row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
-                row += '</tr>';
-
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td colspan="10">' + val.email + '</td>';
-                row += '</tr>';
-
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td  colspan="10">' + val.lastFollowup + '</td>';
-                row += '</tr>';
-
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-                row += '<td colspan="4">' + val.phoneNumber + '</td>';
+                row += '<tr >';
+                row += '<td colspan="4"><b>' + val.company + '</b></td>';
+                row += '<td style="text-align:center">' + val.phoneNumber + '</td>';
                 row += '<td>' + val.vrfd1 + '</td>';
                 row += '<td>' + val.vrfd2 + '</td>';
                 row += '<td>' + val.vrfd3 + '</td>';
@@ -493,51 +499,51 @@ $(document).ready(function () {
                 row += '<td>' + val.vrfd5 + '</td>';
                 row += '<td>R</td>';
                 row += '</tr>';
+               // row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
+                row += '</tr>';
 
                 row += '<tr>';
-                row += '<td colspan="4">' + val.date + '</td>';
+                row += '<td colspan="4" style="text-align:center">' + val.email + '</td>';
+                row += '<td style="text-align:center">' + val.date + '</td>';
                 if (val.vrfd1 > 1) {
-                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
                 } else {
-                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
                 }
                 if (val.vrfd2 > 1) {
-                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
                 }
                 else {
-                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
                 }
                 if (val.vrfd3 > 1) {
-                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
                 } else {
-                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
                 }
                 if (val.vrfd4 > 1) {
-                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
                 } else {
-                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
                 }
                 if (val.vrfd5 > 1) {
-                    row += '<td><img  src="../images/che.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
                 } else {
-                    row += '<td><img  src="../images/close.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
                 }
 
                 if (val.rating == "Cold") {
-                   row += '<td><img  src="../images/Cold.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/Cold.png" width="15" height="20"/></td>';
                 }
                 if (val.rating == "Warm") {
-                    row += '<td><img  src="../images/Warm.png" width="15" height="15"/></td>';
+                    row += '<td><img  src="../images/Warm.png" width="15" height="20"/></td>';
                 }
-                row += '</tr>';
-
 
                 row += '<tr>';
-              
+                row += '<td  colspan="11">' + val.lastFollowup + '</td>';
                 row += '</tr>';
-                row += '<tr style="border: #E6E6E6 3px solid;">';
-              
-                 row += '</tr>';
+
+               
                 
                 row += '</tbody>';
                 row += '</table>';
@@ -772,5 +778,16 @@ function CasesClosed(month, year, x) {
 
             
         }
+    });
+}
+
+
+function Current() {
+    
+    var container = $('html, body'),
+        scrollTo = $('#current');
+
+    container.animate({
+        scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
     });
 }

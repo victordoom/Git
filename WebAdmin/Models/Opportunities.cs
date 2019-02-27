@@ -99,8 +99,8 @@ namespace WebAdmin.Models
         public DateTime? ClosedDate { get; set; }
         public int? ClosedBy { get; set; }
         public string ClosedComment { get; set; }
-        public Boolean Closed { get; set; }
-        public bool Si { get; set; }
+        public bool Closed { get; set; }
+       
 
 
         public virtual Collection<OpportunitiesDetails> OpportunitiesDetails { get; set; }

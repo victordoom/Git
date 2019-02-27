@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -43,16 +44,19 @@ namespace WebAdmin.Controllers
                                     select x;
 
 
+            var usersales = from s in _context.SegUsuarios
+                            from a in _context.Employees
+                            where s.IdPersona == a.Id.ToString() where a.DepartmentId == 2 &&  a.Status == true
+                            select new Administradores { Admin = s.NombreUsuario + " " + s.ApellidoUsuario, AdminID = s.UserID };
 
-           
 
 
 
             List<SelectListItem> admins = new List<SelectListItem>();
-            var consul = from x in _context.SegSistemaUsuario
-                         join y in _context.SegUsuarios on x.IdUsuario equals y.UserID
-                         where x.CodigoSistema == 3
-                         select new Administradores { Admin = y.NombreUsuario + " " + y.ApellidoUsuario, AdminID = y.UserID };
+            //var consul = from x in _context.SegSistemaUsuario
+            //             join y in _context.SegUsuarios on x.IdUsuario equals y.UserID
+            //             where x.CodigoSistema == 3
+            //             select new Administradores { Admin = y.NombreUsuario + " " + y.ApellidoUsuario, AdminID = y.UserID };
 
             var sales = new List<SelectListItem>();
 
@@ -61,7 +65,7 @@ namespace WebAdmin.Controllers
                 Text = "All"
             });
 
-            foreach (var item in consul)
+            foreach (var item in usersales)
             {
                 sales.Add(new SelectListItem
                 {
@@ -449,6 +453,7 @@ namespace WebAdmin.Controllers
         public async Task<IActionResult> ClosedOpportunities(int? id, int iduser, string closedcomment)
         {
             Boolean close = Convert.ToBoolean(1);
+            
             if (id == null)
             {
                 
@@ -463,7 +468,7 @@ namespace WebAdmin.Controllers
             opportunities.ClosedBy = iduser;
             opportunities.ClosedComment = closedcomment;
             opportunities.ClosedDate = DateTime.Now;
-            opportunities.Closed = close;
+          //  opportunities.Closed = close;
 
             //_context.Update(opportunities);
             // _context.SaveChanges();
@@ -472,10 +477,9 @@ namespace WebAdmin.Controllers
                 _context.Update(opportunities);
                 await _context.SaveChangesAsync();
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                Debug.WriteLine("***********Error: " + e.Message);
             }
 
 
