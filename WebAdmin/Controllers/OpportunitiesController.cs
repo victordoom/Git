@@ -448,7 +448,7 @@ namespace WebAdmin.Controllers
        
         public async Task<IActionResult> ClosedOpportunities(int? id, int iduser, string closedcomment)
         {
-            bool close = true;
+            Boolean close = Convert.ToBoolean(1);
             if (id == null)
             {
                 
