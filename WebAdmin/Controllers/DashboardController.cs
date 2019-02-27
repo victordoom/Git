@@ -370,7 +370,7 @@ namespace WebAdmin.Controllers
                 Command = "select top 10 id, dbo.seg_nomUsuario(userID) salesman, VisitedDate date, NumberLeadToFollowUp, PhoneNumber, EmailAddress, rating, dbo.prg_getProgramName(programID) ProgramName," +
                     " CompanyName company, ltrim(rtrim(address)) + '. ' + ltrim(rtrim(city)) + ' ' + ltrim(rtrim(state)) + ' ' + isnull(ltrim(rtrim(zipcode)), '') nlocation, 1 cases, dbo.Opp_getHowFoundName(howfoundid) HowFoundName," +
                     " dbo.Opp_verifyLeadOnlinetmp(id, 1) vrfd1, dbo.Opp_verifyLeadOnlinetmp(id, 2) vrfd2, dbo.Opp_verifyLeadOnlinetmp(id, 3) vrfd3, dbo.Opp_verifyLeadOnlinetmp(id, 4) vrfd4, dbo.Opp_verifyLeadOnlinetmp(id, 5) vrfd5, dbo.Opp_GetLastUpdate(id) LastFollowup from " +
-                    " opportunities where (VisitedDate >= DATEADD(dd, -30, GETDATE())   AND VisitedDate <= GETDATE()) and howfoundid in (10) and UserID = @User order by VisitedDate DESC, CompanyName";
+                    " opportunities where (VisitedDate >= DATEADD(dd, -7, GETDATE())   AND VisitedDate <= GETDATE()) and howfoundid in (10) and UserID = @User order by VisitedDate DESC, CompanyName";
             }
 
             using (var sqlConnection = new SqlConnection(connectionString))
