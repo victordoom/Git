@@ -7,6 +7,7 @@
 function OpporDataByClosed(id, iduser) {
     $('input[name=Id]').val(id);
     $('input[name=IdUser]').val(iduser);
+    document.getElementById("titleid").innerText = "#" + id + "";
 }
 function CerrarOppor(action) {
     var closedcomment = $('textarea[name=ClosedComment]')[0].value;
@@ -29,8 +30,12 @@ function CerrarOppor(action) {
                     data: { id, iduser, closedcomment },
                     success: function (result) {
 
-                        if (result != null) {
-                            var re = "exito";
+                        if (result == "Exito") {
+                            //window.location.href = "Opportunities";
+                            location.reload(true);
+                            //alert("Closed Opportunities");
+                        } else {
+                            alert("Error Closed");
                         }
 
                     }

@@ -154,30 +154,69 @@ namespace WebAdmin.Controllers
         }
 
 
-        [HttpGet("getdatasetvisitedday")]
-        public List<consulta> GetDatasetvisitedday()
+        [HttpGet("getdatasetvisitedday/{user}")]
+        public List<consulta> GetDatasetvisitedday(int user)
         {
+            string Command;
+            if (user == 0)
+            {
+                Command = "SELECT   ltrim(rtrim(substring(H.keyDate,1,5))) date, sum(isnull(D.cases, 0)) cases FROM  vw_last7days AS H LEFT OUTER JOIN  vw_SalesLast7day AS D ON H.keyDate = D.date group by  h.keydate order by h.keydate";
+            }
+            else
+            {
+                Command = "select dbo.seg_nomUsuario(UserID) AssignedTo, count(*) cases, VisitedDate as date from opportunities where (VisitedDate>= DATEADD (dd ,  - 7 , GETDATE() )   AND VisitedDate <= GETDATE()) and UserID = @User group by VisitedDate, UserID";
+            }
 
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("SELECT   ltrim(rtrim(substring(H.keyDate,1,5))) date, sum(isnull(D.cases, 0)) cases FROM  vw_last7days AS H LEFT OUTER JOIN  vw_SalesLast7day AS D ON H.keyDate = D.date group by  h.keydate order by h.keydate", sqlConnection);
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
+
+                if (user != 0)
+                {
+                    query.Parameters.AddWithValue("@User", user);
+                }
                 int result = query.ExecuteNonQuery();
 
 
                 using (SqlDataReader reader = query.ExecuteReader())
                 {
+                    if (user != 0)
+                    {
+                        while (reader.Read())
+                        {
+
+                            // Usuario
+                            var consul = new consulta
+                            {
+                                date = Convert.ToDateTime(reader["date"]).ToString("dd/MM"),
+
+                                cases = Convert.ToInt32(reader["cases"])
+                            };
+
+                            if (consul.cases != 0)
+                            {
+                                Consulta.Add(consul);
+
+                            }
+
+                        }
+                    }
+                   
+                   if(user == 0) {
+
+                     
+
+
                     while (reader.Read())
                     {
+
                         // Usuario
                         var consul = new consulta
                         {
                             date = (reader["date"]).ToString(),
                             
-                            //HowFoung = reader["HowFound"].ToString(),
-                            //category = reader["category"].ToString(),
-                            //AssignedTo = reader["AssignedTo"].ToString(),
                             cases = Convert.ToInt32(reader["cases"])
                         };
 
@@ -186,6 +225,8 @@ namespace WebAdmin.Controllers
                             Consulta.Add(consul);
 
                         }
+
+                    }
 
                     }
                 }

@@ -5,6 +5,8 @@ var j = 0;
 var userLogeado;
 $(document).ready(function () {
 
+
+    
     var email = $('input[name=Email]')[0].value;
     //var action = "Opportunities/mostarCommentsOppor";
 
@@ -25,6 +27,7 @@ function getComments(email) {
                 nohaycomments()
 
             } else {
+
                 //los datos que obtenemos con nuestra funcion se las vamos a pasar a la funcion mostarUsuario
                 $('input[name=Idby]').val(response[0].userLogeado);
                 $('input[name=User]').val(response[0].userLogeadoNombre);
@@ -150,9 +153,25 @@ function agregarComment(action) {
     var idby = $('input[name=Idby]')[0].value;
     var idto;
 
+    var x = document.getElementById("Select").value;
+    if (x != 0) {
+        $('input[name=Idto]').val(x);
+        var siadmin = $('input[name=Idto]')[0].value;
+        idto = siadmin
 
-    var siadmin = $('input[name=Idto]')[0].value;
-    idto = siadmin
+        
+    }
+    
+   
+    if (x == 0) {
+        var admin = $('input[name=Idto]')[0].value;
+        idto = admin
+    }
+   
+
+    
+
+   
 
     var comment = $('textarea[name=Comment]')[0].value;
     var title = $('input[name=Title]')[0].value;

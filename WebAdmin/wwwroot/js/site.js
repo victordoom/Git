@@ -121,15 +121,15 @@ $(document).ready(function () {
             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
 
-                var suma = 0;
-                for (var i = 0; i < result.length; i++) {
+                //var suma = 0;
+                //for (var i = 0; i < result.length; i++) {
 
-                    suma += result[i].cases;
+                //    suma += result[i].cases;
 
-                }
-                //const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
+                //}
+                ////const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
 
-                document.getElementById("visited").innerText = suma;
+                //document.getElementById("visited").innerText = suma;
             });
         }
     });
@@ -164,17 +164,29 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    var x = $('input[name=Esadmin]')[0].value;
 
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/getdatasetvisitedday',
+        url: '/api/Dashboard/getdatasetvisitedday/'+ x +'',
         success: function (result) {
             google.charts.load('current', { 'packages': ['corechart'] });
 
             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
+
+                var suma = 0;
+                for (var i = 0; i < result.length; i++) {
+
+                    suma += result[i].cases;
+
+                }
+                //const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
+
+                document.getElementById("visited").innerText = suma;
+
             });
         }
     });
@@ -574,6 +586,7 @@ function filtropiechart() {
     filtrocasesopened(x);
     filtromostcategory(x);
     filtrocasesclosed(x);
+    filtrovisited(x);
     
 
 
@@ -612,9 +625,16 @@ function filtrar(x) {
 
         var piechart_options = {
             // title: 'HOW FOUND',
-            width: 275,
-            height: 175,
-            pieHole: 0.4,
+            height: 240,
+            chartArea: { width: '98%', height: '80%' },
+            hAxis: { showTextEvery: 7, textStyle: { fontSize: '10' } },
+            legend: { position: 'top', textStyle: { color: 'blue', fontSize: 12 } },
+            lineWidth: 4,
+            pointShape: 'circle',
+            pointSize: 6,
+            vAxis: { textPosition: 'in', gridlines: { count: 3 }, minorGridlines: { count: 2 }, textStyle: { fontSize: 12 } },
+            is3D: true,
+            slices: { 0: { color: '#578CCF' }, 1: { color: '#85BF51' }, 2: { color: '#FFA219' }, 3: { color: '#1CB1F5' }, 4: { color: '#C5D2DF' }, 5: { color: '#9D96D1' }, 6: { color: '#C9C9C9' }, 7: { color: '#2B7BE4' } },
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
         piechart.draw(data, piechart_options);
@@ -654,9 +674,16 @@ function filtrardos(x) {
 
         var piechart_options = {
             //  title: 'CATEGORY',
-            width: 275,
-            height: 175,
-            pieHole: 0.4,
+            height: 240,
+            chartArea: { width: '98%', height: '80%' },
+            hAxis: { showTextEvery: 7, textStyle: { fontSize: '10' } },
+            legend: { position: 'top', textStyle: { color: 'blue', fontSize: 12 } },
+            lineWidth: 4,
+            pointShape: 'circle',
+            pointSize: 6,
+            vAxis: { textPosition: 'in', gridlines: { count: 3 }, minorGridlines: { count: 2 }, textStyle: { fontSize: 12 } },
+            is3D: true,
+            slices: { 0: { color: '#578CCF' }, 1: { color: '#85BF51' }, 2: { color: '#FFA219' }, 3: { color: '#1CB1F5' }, 4: { color: '#C5D2DF' }, 5: { color: '#9D96D1' }, 6: { color: '#C9C9C9' }, 7: { color: '#2B7BE4' } },
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_divcate'));
         piechart.draw(data, piechart_options);
@@ -701,6 +728,65 @@ $(document).ready(function () {
 
 
 });
+
+function filtrovisited(x) {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getdatasetvisitedday/' + x + '',
+        success: function (result) {
+
+            google.charts.load('current', { 'packages': ['corechart'] });
+
+            google.charts.setOnLoadCallback(function () {
+                drawChart(result);
+
+            var suma = 0;
+            for (var i = 0; i < result.length; i++) {
+
+                suma += result[i].cases;
+
+            }
+            //const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
+
+                document.getElementById("visited").innerText = suma;
+            });
+        }
+
+    });
+
+
+    function drawChart(result) {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'date');
+
+        data.addColumn('number', 'cases');
+        data.addColumn({ type: 'string', role: 'style' });
+
+        var dataArray = [];
+        $.each(result, function (i, obj) {
+            dataArray.push([obj.date, obj.cases, 'color: #1CB1F5']);
+        });
+
+        data.addRows(dataArray);
+
+        var piechart_options = {
+            //title: 'VISITED BY DATE',
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+
+
+        };
+        var piechart = new google.visualization.ColumnChart(document.getElementById('visiteddate_div'));
+        piechart.draw(data, piechart_options);
+
+
+    }
+}
+ 
+
 
 function filtrocasesopened(x) {
     $.ajax({
@@ -791,3 +877,27 @@ function Current() {
         scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
     });
 }
+
+$(document).ready(function () {
+    var x = $('input[name=Esadmin]')[0].value;
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getcurrentmonth',
+        success: function (result) {
+
+            $.each(result, function (index, val) {
+
+                if (x == 0) {
+                    document.getElementById("contract").innerText = result[0].quantityReal;
+                } 
+
+            });
+
+
+        }
+    });
+
+
+});

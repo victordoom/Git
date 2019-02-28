@@ -162,7 +162,12 @@
                 <td width="5%">
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
                     <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
-                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed('@item.ID','@ViewBag.UserID')"><span class="zmdi zmdi-square-right"></span></a>
+
+                    @if (item.Closed == false)
+                    {
+                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed('@item.ID','@ViewBag.UserID')"><span class="zmdi zmdi-square-right"></span></a>   
+                    }
+                   
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedDate)
@@ -234,7 +239,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background: #01DF3A; color: white;">
-                <h5 class="modal-title" id="exampleModalLabel">Opportunity Close</h5>
+                <h5 class="modal-title" style="display: inline">
+                    Opportunity Close &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </h5>
+                <h5 id="titleid" style="display: inline; text-align: right;"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

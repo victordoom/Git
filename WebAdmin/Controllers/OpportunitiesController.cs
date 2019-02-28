@@ -454,9 +454,10 @@ namespace WebAdmin.Controllers
 
         [HttpPost]
        
-        public async Task<IActionResult> ClosedOpportunities(int? id, int iduser, string closedcomment)
+        public string ClosedOpportunities(int? id, int iduser, string closedcomment)
         {
-            bool close = Convert.ToBoolean(1);
+            string response = "";
+            DateTime date = DateTime.Now;
             
             if (id == null)
             {
@@ -469,16 +470,18 @@ namespace WebAdmin.Controllers
                                .ConfigurationExtensions
                                .GetConnectionString(this.Configuration, "dbAdminDatabase");
 
-            string Command = "update Opportunities set Closed = 1 where ID = 3642";
+            string Command = "update Opportunities set Closed = 1, ClosedDate = @Date, ClosedBy = @User, ClosedComment = @Comment where ID = @Id";
 
             using (var sqlConnection = new SqlConnection(conString))
             {
                 sqlConnection.Open();
                 SqlCommand query = new SqlCommand(Command, sqlConnection);
 
-               
-                 //   query.Parameters.AddWithValue("@User", user);
-               
+               query.Parameters.AddWithValue("@Id", id);
+               query.Parameters.AddWithValue("@User", iduser);
+               query.Parameters.AddWithValue("@Comment", closedcomment);
+               query.Parameters.AddWithValue("@Date", date);
+
 
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
@@ -486,51 +489,37 @@ namespace WebAdmin.Controllers
                 sqlConnection.Close();
 
 
+                if (result == 1)
+                {
+                    response = "Exito";
+                } else
+                {
+                    response = "Facasamos";
+                }
                
             }
 
+           // await Task.Delay(10000);
+            return response;
 
-
-            var opportunities = await _context.Opportunities.FindAsync(id);
-            if (opportunities == null)
-            {
-                //return NotFound();
-            }
-
-            opportunities.ClosedBy = iduser;
-            opportunities.ClosedComment = closedcomment;
-            opportunities.Closed = close;
-            opportunities.ClosedDate = DateTime.Now;
-           // opportunities.Closed = close;
-
-            //_context.Update(opportunities);
-            // _context.SaveChanges();
-            try
-            {
-                _context.Update(opportunities);
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine("***********Error: " + e.Message);
-            }
+           
+            //try
+            //{
+            //    _context.Update(opportunities);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    Debug.WriteLine("***********Error: " + e.Message);
+            //}
 
 
 
-            return View(opportunities);
+           // return View(opportunities);
 
         }
         
-        //public async Task<IActionResult> ClosedOpportunities(Opportunities opportunities)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Update(opportunities);
-        //        await _context.SaveChangesAsync();
-        //    }
-
-        //    return RedirectToAction(nameof(Index));
-        //}
+       
 
         private bool OpportunitiesExists(int id)
         {
