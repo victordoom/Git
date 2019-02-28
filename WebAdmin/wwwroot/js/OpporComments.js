@@ -31,7 +31,7 @@ function getComments(email) {
                 //los datos que obtenemos con nuestra funcion se las vamos a pasar a la funcion mostarUsuario
                 $('input[name=Idby]').val(response[0].userLogeado);
                 $('input[name=User]').val(response[0].userLogeadoNombre);
-                $('input[name=Idto]').val(response[0].userSelect);
+               // $('input[name=Idto]').val(response[0].userSelect);
                 $('input[name=UserSelect]').val(response[0].userSelectNombre);
                 mostrarComments(response);
                 enmemoria = email;
