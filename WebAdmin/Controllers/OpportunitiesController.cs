@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebAdmin.Models;
 
 namespace WebAdmin.Controllers
@@ -14,11 +16,13 @@ namespace WebAdmin.Controllers
     public class OpportunitiesController : Controller
     {
         private readonly DBAdminContext _context;
-        
 
-        public OpportunitiesController(DBAdminContext context)
+        public IConfiguration Configuration { get; private set; }
+
+        public OpportunitiesController(DBAdminContext context, IConfiguration con)
         {
             _context = context;
+            Configuration = con;
         }
         #region Opportunities
 
@@ -452,12 +456,40 @@ namespace WebAdmin.Controllers
        
         public async Task<IActionResult> ClosedOpportunities(int? id, int iduser, string closedcomment)
         {
-            Boolean close = Convert.ToBoolean(1);
+            bool close = Convert.ToBoolean(1);
             
             if (id == null)
             {
                 
             }
+
+            string conString =  Microsoft
+                               .Extensions
+                               .Configuration
+                               .ConfigurationExtensions
+                               .GetConnectionString(this.Configuration, "dbAdminDatabase");
+
+            string Command = "update Opportunities set Closed = 1 where ID = 3642";
+
+            using (var sqlConnection = new SqlConnection(conString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+               
+                 //   query.Parameters.AddWithValue("@User", user);
+               
+
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+                sqlConnection.Close();
+
+
+               
+            }
+
+
 
             var opportunities = await _context.Opportunities.FindAsync(id);
             if (opportunities == null)
@@ -467,8 +499,9 @@ namespace WebAdmin.Controllers
 
             opportunities.ClosedBy = iduser;
             opportunities.ClosedComment = closedcomment;
+            opportunities.Closed = close;
             opportunities.ClosedDate = DateTime.Now;
-          //  opportunities.Closed = close;
+           // opportunities.Closed = close;
 
             //_context.Update(opportunities);
             // _context.SaveChanges();
