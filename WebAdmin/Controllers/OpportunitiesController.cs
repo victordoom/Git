@@ -120,6 +120,29 @@ namespace WebAdmin.Controllers
             ViewBag.UserID = User.UserID;
 
 
+            //Oppor Clopsing Reason
+            var reason = from x in _context.OpportunitiesClosingReason
+                         select x;
+
+            var closingReason = new List<SelectListItem>();
+
+            closingReason.Add(new SelectListItem
+            {
+                Value = "0",
+                Text = "Select Closing Reason"
+            });
+
+            foreach (var item in reason)
+            {
+                closingReason.Add(new SelectListItem
+                {
+                    Value = item.ClosingReasonID.ToString(),
+                    Text = item.ClosingReasonDescription
+                });
+            }
+
+            ViewData["ClosingReason"] = closingReason;
+
 
             ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
@@ -454,7 +477,7 @@ namespace WebAdmin.Controllers
 
         [HttpPost]
        
-        public string ClosedOpportunities(int? id, int iduser, string closedcomment)
+        public string ClosedOpportunities(int? id, int iduser, string closedcomment, int reason)
         {
             string response = "";
             DateTime date = DateTime.Now;
@@ -464,13 +487,13 @@ namespace WebAdmin.Controllers
                 
             }
 
-            string conString =  Microsoft
+            string  conString =  Microsoft
                                .Extensions
                                .Configuration
                                .ConfigurationExtensions
                                .GetConnectionString(this.Configuration, "dbAdminDatabase");
 
-            string Command = "update Opportunities set Closed = 1, ClosedDate = @Date, ClosedBy = @User, ClosedComment = @Comment where ID = @Id";
+            string Command = "update Opportunities set Closed = 1, ClosedDate = @Date, ClosedBy = @User, ClosedComment = @Comment, ClosingReasonID = @Reason where ID = @Id";
 
             using (var sqlConnection = new SqlConnection(conString))
             {
@@ -481,6 +504,7 @@ namespace WebAdmin.Controllers
                query.Parameters.AddWithValue("@User", iduser);
                query.Parameters.AddWithValue("@Comment", closedcomment);
                query.Parameters.AddWithValue("@Date", date);
+                query.Parameters.AddWithValue("@Reason", reason);
 
 
                 query.CommandType = System.Data.CommandType.Text;
@@ -503,19 +527,7 @@ namespace WebAdmin.Controllers
             return response;
 
            
-            //try
-            //{
-            //    _context.Update(opportunities);
-            //    await _context.SaveChangesAsync();
-            //}
-            //catch (Exception e)
-            //{
-            //    Debug.WriteLine("***********Error: " + e.Message);
-            //}
-
-
-
-           // return View(opportunities);
+           
 
         }
         

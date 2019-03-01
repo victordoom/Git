@@ -13,28 +13,33 @@ function CerrarOppor(action) {
     var closedcomment = $('textarea[name=ClosedComment]')[0].value;
     var id = $('input[name=Id]')[0].value;
     var iduser = $('input[name=IdUser]')[0].value;
+    var reason = document.getElementById("SelectReason").value;
 
-    if (closedcomment == "") {
-        $('#ClosedComment').focus();
+    if (reason == 0) {
+        $('#SelectReason').focus();
     } else {
-        if (id == "") {
-            alert("There was a problem getting the ID");
+        
+       if (closedcomment == "") {
+            $('#ClosedComment').focus();
         } else {
-            if (iduser == "") {
-                alert("There was a problem in obtaining the User");
+           if (id == "") {
+               alert("There was a problem getting the ID");
             } else {
+                 if (iduser == "") {
+                     alert("There was a problem in obtaining the User");
+                   } else {
 
-                $.ajax({
-                    type: 'POST',
-                    url: action,
-                    data: { id, iduser, closedcomment },
-                    success: function (result) {
+                    $.ajax({
+                        type: 'POST',
+                        url: action,
+                        data: { id, iduser, closedcomment, reason },
+                        success: function (result) {
 
-                        if (result == "Exito") {
+                           if (result == "Exito") {
                             //window.location.href = "Opportunities";
                             location.reload(true);
                             //alert("Closed Opportunities");
-                        } else {
+                             } else {
                             alert("Error Closed");
                         }
 
@@ -44,6 +49,8 @@ function CerrarOppor(action) {
             }
         }
         
+      }
+
     }
 
 }

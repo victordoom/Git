@@ -259,6 +259,8 @@
             </div>
             <div class="modal-body">
                 <label>Are you sure to close?</label>
+                <select id="SelectReason" name="SelectReason" class="form-control" asp-items="ViewBag.ClosingReason" style="width:50%;"></select>
+                <label>Comment</label>
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" id="IdUser" name="IdUser" />

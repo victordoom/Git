@@ -40,6 +40,7 @@ namespace WebAdmin.Models
         public virtual DbSet<Opciones> Opciones { get; set; }
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<SalesComments> SalesComments { get; set; }
+        public virtual DbSet<OpportunitiesClosingReason> OpportunitiesClosingReason { get; set; }
 
 
 
@@ -785,6 +786,17 @@ namespace WebAdmin.Models
                 entity.Property(e => e.Title)
                     .HasMaxLength(250)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<OpportunitiesClosingReason>(entity =>
+            {
+                entity.HasKey(e => e.ClosingReasonID);
+                entity.Property(e => e.ClosingReasonID).HasColumnName("ClosingReasonID");
+
+                entity.Property(e => e.ClosingReasonDescription)
+                .HasColumnName("ClosingReasonDescription")
+                .HasMaxLength(250)
+                .IsUnicode(false);
             });
         }
     }
