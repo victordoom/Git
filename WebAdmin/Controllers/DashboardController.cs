@@ -431,11 +431,14 @@ namespace WebAdmin.Controllers
 
                 using (SqlDataReader reader = query.ExecuteReader())
                 {
+                    int numero = 0;
                     while (reader.Read())
                     {
                         // Usuario
+                        numero++;
                         var consul = new OpportunitiesOnline
                         {
+                            correlativo = numero,
                             salesman = (reader["salesman"]).ToString(),
                             date = Convert.ToDateTime(reader["date"]).ToString("dd/MM/yyyy"),
                             rating = (reader["rating"]).ToString(),
@@ -576,6 +579,7 @@ namespace WebAdmin.Controllers
 
     public class OpportunitiesOnline
     {
+        public int correlativo { get; set; }
         public string salesman { get; set; }
         public string date { get; set; }
         public string rating { get; set; }

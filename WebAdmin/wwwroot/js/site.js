@@ -487,7 +487,7 @@ $(document).ready(function () {
                 row += '<thead style="background: #4C8BF5; ">';
 
                 row += '<tr>';
-                row += '<th>#</th>';
+                row += '<th>' + val.correlativo + '</th>';
                 row += '<th>' + val.date + '</th>';
                
                 row += '<th>' + val.salesman + '</th>';
@@ -504,11 +504,31 @@ $(document).ready(function () {
                 row += '<tr >';
                 row += '<td colspan="4"><b>' + val.company + '</b></td>';
                 row += '<td style="text-align:center">' + val.phoneNumber + '</td>';
-                row += '<td>' + val.vrfd1 + '</td>';
-                row += '<td>' + val.vrfd2 + '</td>';
-                row += '<td>' + val.vrfd3 + '</td>';
-                row += '<td>' + val.vrfd4 + '</td>';
-                row += '<td>' + val.vrfd5 + '</td>';
+                if (val.vrfd1 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd1 + '</td>';
+                }
+                if (val.vrfd2 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd2 + '</td>';
+                }
+                if (val.vrfd3 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd3 + '</td>';
+                }
+                if (val.vrfd4 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd4 + '</td>';
+                }
+                if (val.vrfd5 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd5 + '</td>';
+                }
                 row += '<td>R</td>';
                 row += '</tr>';
                // row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
@@ -587,6 +607,7 @@ function filtropiechart() {
     filtromostcategory(x);
     filtrocasesclosed(x);
     filtrovisited(x);
+    filtroopportunitiesonline(x);
     
 
 
@@ -901,3 +922,127 @@ $(document).ready(function () {
 
 
 });
+
+function filtroopportunitiesonline(x) {
+    var row = '';
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/getopportunitiesonline/' + x + '',
+        success: function (response) {
+
+            var result = response;
+
+            $.each(result, function (index, val) {
+
+                row += '<tr>';
+                row += '<td colspan="2">';
+                row += '<table  width="100%" class="table-bordered">';
+                row += '<thead style="background: #4C8BF5; ">';
+
+                row += '<tr>';
+                row += '<th>' + val.correlativo + '</th>';
+                row += '<th>' + val.date + '</th>';
+
+                row += '<th>' + val.salesman + '</th>';
+
+                row += '<th >' + val.howFoundName + '</th>';
+                row += '<th>' + val.numberLead + '</th>';
+                row += '<th colspan="6">' + val.programName + '</th>';
+                row += '</tr>';
+
+
+                row += '</thead>';
+                row += '<tbody>';
+
+                row += '<tr >';
+                row += '<td colspan="4"><b>' + val.company + '</b></td>';
+                row += '<td style="text-align:center">' + val.phoneNumber + '</td>';
+                if (val.vrfd1 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd1 + '</td>';
+                }
+                if (val.vrfd2 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd2 + '</td>';
+                }
+                if (val.vrfd3 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd3 + '</td>';
+                }
+                if (val.vrfd4 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd4 + '</td>';
+                }
+                if (val.vrfd5 == 00) {
+                    row += '<td></td>';
+                } else {
+                    row += '<td>' + val.vrfd5 + '</td>';
+                }
+                row += '<td>R</td>';
+                row += '</tr>';
+                // row += '<td colspan="6" style="text-align:right; background: #4C8BF5; color: white;">' + val.programName + '</td>';
+                row += '</tr>';
+
+                row += '<tr>';
+                row += '<td colspan="4" style="text-align:center">' + val.email + '</td>';
+                row += '<td style="text-align:center">' + val.date + '</td>';
+                if (val.vrfd1 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
+                }
+                if (val.vrfd2 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
+                }
+                else {
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
+                }
+                if (val.vrfd3 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
+                }
+                if (val.vrfd4 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
+                }
+                if (val.vrfd5 > 1) {
+                    row += '<td><img  src="../images/che.png" width="15" height="20"/></td>';
+                } else {
+                    row += '<td><img  src="../images/close.png" width="15" height="20"/></td>';
+                }
+
+                if (val.rating == "Cold") {
+                    row += '<td><img  src="../images/Cold.png" width="15" height="20"/></td>';
+                }
+                if (val.rating == "Warm") {
+                    row += '<td><img  src="../images/Warm.png" width="15" height="20"/></td>';
+                }
+
+                row += '<tr>';
+                row += '<td  colspan="11">' + val.lastFollowup + '</td>';
+                row += '</tr>';
+
+
+
+                row += '</tbody>';
+                row += '</table>';
+                row += '</td>';
+                row += '</tr>';
+
+            });
+
+
+            $('#opponline').html(row);
+
+
+        }
+    });
+}
