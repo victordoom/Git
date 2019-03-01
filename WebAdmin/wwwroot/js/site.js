@@ -608,6 +608,7 @@ function filtropiechart() {
     filtrocasesclosed(x);
     filtrovisited(x);
     filtroopportunitiesonline(x);
+    ocultarchat(x);
     
 
 
@@ -1046,3 +1047,28 @@ function filtroopportunitiesonline(x) {
         }
     });
 }
+
+function ocultarchat(x) {
+    var y = $('input[name=Esadmin]')[0].value;
+    if (x == 0 && y == 0) {
+        $('#chat').hide();
+    } else {
+        $('#chat').show();
+    }
+    
+
+    
+}
+
+$(document).ready(function () {
+    var x = $('input[name=Esadmin]')[0].value;
+    var y = document.getElementById("Select").value;
+
+    if (x == 0 && y == 0) {
+        $('#chat').hide();
+    } else {
+        $('#chat').show();
+    }
+
+
+});

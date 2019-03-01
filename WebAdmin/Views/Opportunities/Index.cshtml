@@ -160,14 +160,22 @@
         {
             <tr>
                 <td width="5%">
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
+                    @if (item.Closed == false)
+                    {
+                        <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.ID"><span class="zmdi zmdi-edit"></span></a>
+                    }
+                    else
+                    {
+                        <a  class="btn btn-warning" disabled ><span class="zmdi zmdi-edit"></span></a>
+                    }
+                    
                     <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
 
                     @if (item.Closed == false)
                     {
-                    <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed('@item.ID','@ViewBag.UserID')"><span class="zmdi zmdi-square-right"></span></a>   
+                        <a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed('@item.ID','@ViewBag.UserID')"><span class="zmdi zmdi-square-right"></span></a>
                     }
-                   
+
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CreatedDate)
