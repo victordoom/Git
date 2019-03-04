@@ -244,6 +244,16 @@ namespace WebAdmin.Controllers
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
 
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+            var User = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == Email);
+            if (User == null)
+            {
+                return NotFound();
+            }
+            Int64 IDUser = User.UserID;
+
+            ViewBag.UserID = User.UserID;
+
 
             return View(opportunities);
         }
@@ -530,8 +540,61 @@ namespace WebAdmin.Controllers
            
 
         }
-        
-       
+
+        //Reopen Opportunities
+        [HttpPost]
+
+        public async Task<string> ReOpenOpportunities(int? id, int iduser, string reopencomment)
+        {
+            string response = "";
+            DateTime date = DateTime.Now;
+
+            if (id == null)
+            {
+
+            }
+
+            OpportunitiesReopenDetails opportunitiesReopen = new OpportunitiesReopenDetails();
+            var opportunities = await _context.Opportunities.FindAsync(id);
+            if (opportunities == null)
+            {
+
+            }
+
+            opportunitiesReopen.ReOpenBy = iduser;
+            opportunitiesReopen.ReOpenComment = reopencomment;
+            opportunitiesReopen.ReOpenDate = date;
+
+            opportunitiesReopen.OpportunitiesID = opportunities.ID;
+            opportunitiesReopen.ClosedComment = opportunities.ClosedComment;
+            opportunitiesReopen.ClosedDate = Convert.ToDateTime(opportunities.ClosedDate);
+            opportunitiesReopen.ClosedBy = Convert.ToInt32( opportunities.ClosedBy);
+
+            _context.Add(opportunitiesReopen);
+            var result =  await _context.SaveChangesAsync();
+
+            if (result > 0)
+            {
+                bool status = false;
+                opportunities.Closed = status;
+                opportunities.ClosedBy = null;
+                opportunities.ClosedComment = null;
+                opportunities.ClosedDate = null;
+
+                _context.Update(opportunities);
+                var resultado = await _context.SaveChangesAsync();
+                if (resultado > 0)
+                {
+                    response = "Exito";
+                }
+            } else
+            {
+                response = "Facasamos";
+            }
+
+            return response;
+
+        }
 
         private bool OpportunitiesExists(int id)
         {
@@ -797,22 +860,56 @@ namespace WebAdmin.Controllers
 
             var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
 
-            //var consulta = await _context.SalesComments.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).ToListAsync();
+            
 
-            ////Usuarios con perfil de administrador
-            //var segsistemausuario = from x in _context.SegSistemaUsuario
-            //                        where  x.CodigoSistema == 3 && x.CodigoPerfil == 1
-            //                        select x;
-            //List<string> Administradores = new List<string>();
-            //foreach (var item in segsistemausuario)
-            //{
-            //    var nombreadmin = _context.SegUsuarios.Where(x => x.UserID == item.IdUsuario);
-            //    foreach (var nom in nombreadmin)
-            //    {
-            //        Administradores.Add(nom.NombreUsuario + nom.ApellidoUsuario);
-            //    }
 
-            //}
+            List<InfoSalesComments> Comments = new List<InfoSalesComments>();
+
+            // var consul = await _context.SalesComments.ToListAsync();
+            Comments.AddRange(con);
+
+
+            return Comments;
+        }
+
+
+        public async Task<List<InfoSalesComments>> filtromostarCommentsOppor(string email, int usuarionormal)
+        {
+            //identificar el usuario seleccionado (aqui el del select)
+            var User = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.UserID == usuarionormal);
+
+            //identificar usuario logeado
+            var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
+            var UserLog = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == lEmail);
+
+
+
+            var NombreUserLog = _context.SegUsuarios.SingleOrDefault(x => x.UserID == UserLog.UserID);
+            
+            //nombre del usuaio del select
+            var NombreSelect = _context.SegUsuarios.SingleOrDefault(y => y.UserID == User.UserID);
+            //join
+            var join = from comments in _context.SalesComments
+                       join usu in _context.SegUsuarios on comments.CommentBy equals usu.UserID
+                       select new InfoSalesComments
+                       {
+                           CommentId = comments.CommentId,
+                           SalesId = comments.SalesId,
+                           CommentBy = comments.CommentBy,
+                           CommentDatetime = comments.CommentDatetime,
+                           Title = comments.Title,
+                           Comment = comments.Comment,
+                           Nombre = usu.NombreUsuario + " " + usu.ApellidoUsuario,
+                           UserLogeado = UserLog.UserID,
+                           UserLogeadoNombre = NombreUserLog.NombreUsuario + " " + NombreUserLog.ApellidoUsuario,
+                           UserSelect = NombreSelect.UserID,
+                           UserSelectNombre = NombreSelect.NombreUsuario + " " + NombreSelect.ApellidoUsuario
+                       };
+
+
+            var con = await join.Where(x => x.SalesId == User.UserID && x.CommentBy == UserLog.UserID ||  x.SalesId == UserLog.UserID && x.CommentBy == User.UserID).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
+
+
 
 
             List<InfoSalesComments> Comments = new List<InfoSalesComments>();

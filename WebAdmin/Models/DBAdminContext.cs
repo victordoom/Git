@@ -41,6 +41,7 @@ namespace WebAdmin.Models
         public virtual DbSet<Employees> Employees { get; set; }
         public virtual DbSet<SalesComments> SalesComments { get; set; }
         public virtual DbSet<OpportunitiesClosingReason> OpportunitiesClosingReason { get; set; }
+        public virtual DbSet<OpportunitiesReopenDetails> OpportunitiesReopenDetails { get; set; }
 
 
 
@@ -797,6 +798,38 @@ namespace WebAdmin.Models
                 .HasColumnName("ClosingReasonDescription")
                 .HasMaxLength(250)
                 .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<OpportunitiesReopenDetails>(entity =>
+            {
+                entity.HasKey(e => e.ReOpenID);
+                entity.Property(e => e.ReOpenID).HasColumnName("ReOpenID");
+
+                entity.Property(e => e.ReOpenBy)
+                .HasColumnName("ReOpenBy");
+
+                entity.Property(e => e.ReOpenComment)
+                .HasColumnName("ReOpenComment")
+                .HasMaxLength(250)
+                .IsUnicode(false);
+
+                entity.Property(e => e.ReOpenDate)
+                .HasColumnType("datetime");
+
+                entity.Property(e => e.OpportunitiesID)
+                .HasColumnName("OpportunitiesID");
+
+                entity.Property(e => e.ClosedComment)
+                .HasColumnName("ClosedComment");
+                
+                entity.Property(e => e.ClosedDate)
+                .HasColumnType("datetime");
+
+                entity.Property(e => e.ClosedBy)
+                .HasColumnName("ClosedBy");
+
+                entity.Property(e => e.ClosingReasonID)
+                .HasColumnName("ClosingReasonID");
             });
         }
     }

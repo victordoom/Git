@@ -609,6 +609,11 @@ function filtropiechart() {
     filtrovisited(x);
     filtroopportunitiesonline(x);
     ocultarchat(x);
+
+    if (x != 0) {
+        filtrochat(x);
+    }
+    
     
 
 
@@ -1072,3 +1077,128 @@ $(document).ready(function () {
 
 
 });
+
+
+function filtrochat(x) {
+    var email = $('input[name=Email]')[0].value;
+
+    getCommentsfiltro(email, x);
+
+}
+
+function getCommentsfiltro(email, x) {
+    var usuarionormal = x
+
+    $.ajax({
+        type: "POST",
+        url: '../Opportunities/filtromostarCommentsOppor',
+        data: { email, usuarionormal },
+        success: function (response) {
+
+            if (response.length == 0) {
+                nohaycomments()
+
+            } else {
+
+                //los datos que obtenemos con nuestra funcion se las vamos a pasar a la funcion mostarUsuario
+                $('input[name=Idby]').val(response[0].userLogeado);
+                $('input[name=User]').val(response[0].userLogeadoNombre);
+                // $('input[name=Idto]').val(response[0].userSelect);
+                $('input[name=UserSelect]').val(response[0].userSelectNombre);
+                mostrarComments(response);
+                enmemoria = email;
+                enmemo = action;
+            }
+
+        }
+    });
+}
+
+function nohaycomments() {
+    var row = '';
+
+
+    $('#opporcomment').html(row);
+}
+function mostrarComments(response) {
+    j = 0;
+
+    var row = '';
+
+    items = response;
+
+
+    $.each(items, function (index, val) {
+
+        if (val.userLogeado == val.commentBy) {
+            // row += '<div class="box-body">';
+
+            // row += '<div class="direct-chat-messages">';
+
+            row += '<div class="direct-chat-msg">';
+            row += '<div class="direct-chat-info clearfix">';
+            row += '<span class="direct-chat-name pull-left  btn-success">' + val.nombre + '</span>';
+            row += '<span class="direct-chat-timestamp pull-right">' + val.commentDatetime + '</span>';
+            row += '</div>';
+
+
+
+
+            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
+
+            row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+            row += '</div>';
+
+
+
+
+            row += '</div>';
+
+            // row += '</div>';
+
+            //  row +=        '</div>'
+
+
+
+
+        } else {
+
+            row += '<div class="direct-chat-msg right">';
+            row += '<div class="direct-chat-info clearfix">';
+            row += '<span class="direct-chat-name pull-right  btn-info">' + val.nombre + '</span>';
+            row += '<span class="direct-chat-timestamp pull-left">' + val.commentDatetime + '</span>';
+            row += '</div>';
+
+
+
+
+            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
+
+            row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+            row += '</div>';
+
+
+
+
+            row += '</div>';
+        }
+
+    });
+
+
+    row += '<div><span id="final"></span></div>';
+
+
+
+    $('#opporcomment').html(row);
+    var container = $('#opporcomment'),
+        scrollTo = $('#final');
+
+    container.animate({
+        scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+    });
+
+    //document.getElementById('final').scrollIntoView(true);
+}

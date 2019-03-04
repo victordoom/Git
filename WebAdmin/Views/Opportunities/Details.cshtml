@@ -21,250 +21,291 @@
 }
 
 
-        <style>
-            .customDrowDown {
-                -webkit-appearance: none;
-                -moz-appearance: none;
-                border: 0px;
-                background: transparent;
-            }
+<style>
+    .customDrowDown {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0px;
+        background: transparent;
+    }
 
-            .uppercase {
-                text-transform: uppercase;
-            }
-        </style>
-        @*<h2>Details</h2>*@
+    .uppercase {
+        text-transform: uppercase;
+    }
+</style>
+@*<h2>Details</h2>*@
 
-        <div>
-            @*<h4>Opportunities</h4>
-                <hr />*@
+<div>
+    @*<h4>Opportunities</h4>
+        <hr />*@
 
-            <div>
-                <div class="row">
-                    <div class="panel panel-info">
-                        <div class="panel-heading"> <h3 class="panel-title">Details  Opportunities</h3></div>
-                        <div class="panel-body">
-                            <div class="col-md-4">
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.CreatedDate)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.CreatedDate)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.UserID)
-                                    </dt>
-                                    <dd>
-                                        @Html.DropDownListFor(model => model.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.VisitedDate)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.VisitedDate)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.HowFoundID)
-                                    </dt>
-                                    <dd>
-                                        @Html.DropDownListFor(model => model.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.NumberLeadToFollowUp)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.ProgramID)
-                                    </dt>
-                                    <dd>
-                                        @Html.DropDownListFor(model => model.ProgramID, (SelectList)ViewBag.DDLPrograms, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.CategoryID)
-                                    </dt>
-                                    <dd>
-                                        @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.CompanyName)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.CompanyName)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.OwnerName)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.OwnerName)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.PhoneNumber)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.PhoneNumber)
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div class="col-md-4">
-                                <dl class="dl-horizontal">
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.Address)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Address)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.City)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.City)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.ZipCode)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.ZipCode)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.State)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.State)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.EmailAddress)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.EmailAddress)
-                                    </dd>
-
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.Description)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Description)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.OpenDate)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.OpenDate)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.EstClosedDate)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.EstClosedDate)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.EstRevenue)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.EstRevenue)
-                                    </dd>
-                                    <dt>
-                                        @Html.DisplayNameFor(model => model.Rating)
-                                    </dt>
-                                    <dd>
-                                        @Html.DisplayFor(model => model.Rating)
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-
-                        <div class="panel-footer">
-                            <div>
-                                @*<a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.CasesID">Edit</a> |*@
-                                <a class="btn btn-success" asp-action="CreateOpportunitiesDetails" asp-route-id="@Model.ID">Add Follow up</a> |
-                                @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
-                                <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
-                            </div>
-                        </div>
-
-
-                        @*<div class="panel-footer">
-                                <div>
-                                    <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.ID"> <span class="glyphicon glyphicon-edit"></span> Edit</a>
-                                    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
-                                </div>
-                            </div>*@
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-
+    <div>
         <div class="row">
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Segumiento</h3>
-                </div>
+                <div class="panel-heading"> <h3 class="panel-title">Details  Opportunities</h3></div>
                 <div class="panel-body">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="example">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().CreatedDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().UserID)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().Comment)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().Status)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().NextVisitDate)
-                                    </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().EmailNotification)
-                                    </th>
+                    <div class="col-md-4">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.CreatedDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.UserID)
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(model => model.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.VisitedDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.VisitedDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.HowFoundID)
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(model => model.HowFoundID, (SelectList)ViewBag.DDLHowFound, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.NumberLeadToFollowUp)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ProgramID)
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(model => model.ProgramID, (SelectList)ViewBag.DDLPrograms, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CategoryID)
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(model => model.CategoryID, (SelectList)ViewBag.DDLCategories, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.CompanyName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.CompanyName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OwnerName)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.OwnerName)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="col-md-4">
+                        <dl class="dl-horizontal">
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Address)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Address)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.City)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.City)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.ZipCode)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.ZipCode)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.State)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.State)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.EmailAddress)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.EmailAddress)
+                            </dd>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model.OpportunitiesDetails.OrderByDescending(g => g.DetailID))
-                                {
-                                    <tr>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.DetailDatetime)
-                                        </td>
-                                        <td>
-                                            @Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Comment)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.Status)
-                                        </td>
-                                        <td>
-                                            @Html.DisplayFor(modelItem => item.NextVisitDate)
-                                        </td>
-                                        <td>
-                                            
-
-                                            @Html.DropDownListFor(modelItem => item.EmailNotification, listItems2, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                                        </td>
-
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Description)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Description)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.OpenDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.OpenDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.EstClosedDate)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.EstClosedDate)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.EstRevenue)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.EstRevenue)
+                            </dd>
+                            <dt>
+                                @Html.DisplayNameFor(model => model.Rating)
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.Rating)
+                            </dd>
+                        </dl>
                     </div>
                 </div>
 
+                <div class="panel-footer">
+                    <div>
+                        @*<a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.CasesID">Edit</a> |*@
+                        <a class="btn btn-success" asp-action="CreateOpportunitiesDetails" asp-route-id="@Model.ID">Add Follow up</a> |
+                        @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
+                        <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a> | |
+                        <a class="btn btn-info" data-toggle="modal" data-target="#opportunitiesreopen" onclick="OpporDataReOpen(' @Html.DisplayFor(model => model.ID)', '@ViewBag.UserID')"> ReOpen</a>
+                    </div>
+                </div>
+
+
+                @*<div class="panel-footer">
+                        <div>
+                            <a asp-action="Edit" class="btn btn-success" asp-route-id="@Model.ID"> <span class="glyphicon glyphicon-edit"></span> Edit</a>
+                            <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+                        </div>
+                    </div>*@
             </div>
+
 
         </div>
 
+    </div>
+</div>
 
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Segumiento</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="example">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().CreatedDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().UserID)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().Comment)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().Status)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().NextVisitDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OpportunitiesDetails.FirstOrDefault().EmailNotification)
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.OpportunitiesDetails.OrderByDescending(g => g.DetailID))
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DetailDatetime)
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Comment)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NextVisitDate)
+                                </td>
+                                <td>
+
+
+                                    @Html.DropDownListFor(modelItem => item.EmailNotification, listItems2, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+@*modal reopen*@
+<div class="modal fade" id="opportunitiesreopen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header" style="background: #01DF3A; color: white;">
+            <h5 class="modal-title" style="display: inline">
+                ReOpen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </h5>
+            <h5 id="titleid" style="display: inline; text-align: right;"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <label>Are you sure to Reopen?</label>
+            <br />
+            <label>Comment </label>
+            <form>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" id="IdUser" name="IdUser" />
+                <input type="hidden" id="Id" name="Id" />
+
+
+                <textarea name="ReopenComment" id="ReopenComment" class="form-control" style="height: 30%; "></textarea>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary btn-info" onclick=" ReOpenOppor('../Opportunities/ReOpenOpportunities')">OK</button>
+        </div>
+    </div>
+</div>
+</div>
+
+
+
+<script type="text/javascript" src="~/js/Opportunities.js"></script>

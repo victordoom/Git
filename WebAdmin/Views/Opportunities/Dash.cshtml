@@ -34,12 +34,11 @@
 <input type="hidden" id="Ocultarchat" name="Ocultarchat" runat="server"/>
 
 
-@if (ViewBag.Adminsales == 1)
-{
-    <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" asp-items="ViewBag.Sales" style="width:20%;">
-        
-    </select>
-}
+
+<div id="lista">
+    <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" asp-items="ViewBag.Sales" style="width:20%;"></select>
+</div>
+
 
 <br />
 
@@ -414,7 +413,7 @@
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
-                                <input type="hidden" name="Idto" id="Idto" value="7" />
+                                <input type="hidden" name="Idto" id="Idto" value="23" />
 
                                 <input type="hidden" name="Idby" id="Idby" />
 

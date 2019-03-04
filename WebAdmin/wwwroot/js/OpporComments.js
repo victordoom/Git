@@ -5,7 +5,12 @@ var j = 0;
 var userLogeado;
 $(document).ready(function () {
 
-
+    var x = $('input[name=Esadmin]')[0].value;
+    if (x != 0) {
+        $('#lista').hide();
+    } else {
+        $('#lista').show();
+    }
     
     var email = $('input[name=Email]')[0].value;
     //var action = "Opportunities/mostarCommentsOppor";
@@ -152,8 +157,9 @@ function getAdministra(action) {
 function agregarComment(action) {
     var idby = $('input[name=Idby]')[0].value;
     var idto;
-
+   
     var x = document.getElementById("Select").value;
+
     if (x != 0) {
         $('input[name=Idto]').val(x);
         var siadmin = $('input[name=Idto]')[0].value;
@@ -221,3 +227,6 @@ function agregarComment(action) {
 
 
 }
+
+
+
