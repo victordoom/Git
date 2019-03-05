@@ -254,6 +254,18 @@ namespace WebAdmin.Controllers
 
             ViewBag.UserID = User.UserID;
 
+            // si es de Sales y Admin
+            var segsistemausuario = from x in _context.SegSistemaUsuario
+                                    where x.IdUsuario == IDUser &&
+                                      x.CodigoSistema == 3 && x.CodigoPerfil == 1
+                                    select x;
+
+            var Admin = segsistemausuario.Count();
+            if (Admin >= 1)
+            {
+                ViewBag.Admin = "Administrador";
+            }
+            
 
             return View(opportunities);
         }
@@ -392,7 +404,7 @@ namespace WebAdmin.Controllers
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
-
+            
 
             return View(opportunities);
         }
@@ -542,7 +554,7 @@ namespace WebAdmin.Controllers
         }
 
         //Reopen Opportunities
-        [HttpPost]
+        [HttpPost, ActionName("ReOpenOpportunities")]
 
         public async Task<string> ReOpenOpportunities(int? id, int iduser, string reopencomment)
         {
@@ -907,7 +919,7 @@ namespace WebAdmin.Controllers
                        };
 
 
-            var con = await join.Where(x => x.SalesId == User.UserID && x.CommentBy == UserLog.UserID ||  x.SalesId == UserLog.UserID && x.CommentBy == User.UserID).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
+            var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID ).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
 
 
 

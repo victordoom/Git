@@ -209,7 +209,12 @@ function agregarComment(action) {
                             if (response = true) {
                                 //$('#modalComments').modal('show');
                                 $('textarea[name=Comment]').val('');
-                                getComments(enmemoria, enmemo);
+                                var x = document.getElementById("Select").value;
+                                if (x != 0) {
+                                    getCommentsfiltro(enmemoria, x)
+                                } else {
+                                    getComments(enmemoria);
+                                }
                             } else {
                                 alert("The comment could not be saved");
                             }

@@ -181,7 +181,9 @@
                         <a class="btn btn-success" asp-action="CreateOpportunitiesDetails" asp-route-id="@Model.ID">Add Follow up</a> |
                         @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
                         <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a> | |
+                       @if(ViewBag.Admin == "Administrador" && Model.Closed == true) { 
                         <a class="btn btn-info" data-toggle="modal" data-target="#opportunitiesreopen" onclick="OpporDataReOpen(' @Html.DisplayFor(model => model.ID)', '@ViewBag.UserID')"> ReOpen</a>
+                       }
                     </div>
                 </div>
 
@@ -273,13 +275,10 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header" style="background: #01DF3A; color: white;">
-            <h5 class="modal-title" style="display: inline">
-                ReOpen &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <h5 class="modal-title">
+                ReOpen <span id="titleid" style="float:right;" ></span>
             </h5>
-            <h5 id="titleid" style="display: inline; text-align: right;"></h5>
+            
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -300,7 +299,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-primary btn-info" onclick=" ReOpenOppor('../Opportunities/ReOpenOpportunities')">OK</button>
+            <button type="button" class="btn btn-primary btn-info" onclick=" ReOpenOppor('../../Opportunities/ReOpenOpportunities')">OK</button>
         </div>
     </div>
 </div>

@@ -118,17 +118,17 @@
             <th>
                 @Html.DisplayNameFor(model => model.CompanyName)
                 @*@Html.DisplayNameFor(model => model.PhoneNumber)
-                    @Html.DisplayNameFor(model => model.City)/State*@
+            @Html.DisplayNameFor(model => model.City)/State*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.OwnerName)
             </th>
             @*<th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.City)/State
-                </th>*@
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)/State
+        </th>*@
 
             <th>
                 @Html.DisplayNameFor(model => model.VisitedDate)
@@ -141,6 +141,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HowFoundID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Closed)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.NumberLeadToFollowUp)
@@ -166,9 +169,8 @@
                     }
                     else
                     {
-                        <a  class="btn btn-warning" disabled ><span class="zmdi zmdi-edit"></span></a>
+                        <a  class="btn btn-warning" disabled ="true" ><span class="zmdi zmdi-edit"></span></a>
                     }
-                    
                     <a asp-action="Details" class="btn btn-info" asp-route-id="@item.ID"><span class="zmdi zmdi-square-right"></span></a>
 
                     @if (item.Closed == false)
@@ -220,6 +222,16 @@
                     }
                 </td>
                 <td>
+                    @if(item.Closed == false)
+                    {
+                        <span class="label label-success">Open</span>
+                    }
+                    else
+                    {
+                        <span class="label label-danger">Closed</span>
+                    }
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.NumberLeadToFollowUp)
                 </td>
                 <td>
@@ -247,12 +259,11 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header" style="background: #01DF3A; color: white;">
-                <h5 class="modal-title" style="display: inline">
-                    Opportunity Close &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <h5 class="modal-title">
+                    Opportunity Close
+                    <span id="titleid" style="float:right;"></span>
                 </h5>
-                <h5 id="titleid" style="display: inline; text-align: right;"></h5>
+                
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -19,6 +19,7 @@ namespace WebAdmin.Controllers
         private List<Goal> ConsulGoal = new List<Goal>();
         private List<ByCurrentMonth> ConsulBy = new List<ByCurrentMonth>();
         private List<OpportunitiesOnline> OpportunitiesOnline = new List<OpportunitiesOnline>();
+        private List<OpporStatusQuantity> StatusQuantity = new List<OpporStatusQuantity>();
 
         [HttpGet("getconsulta/{user}")]
         public List<consulta> GetConsulta(int user)
@@ -550,6 +551,114 @@ namespace WebAdmin.Controllers
             return MostCategory;
         }
 
+
+        [HttpGet("opporstatusquantity")]
+        public List<object> OpporStatusQuantity()
+        {
+            List<object> array = new List<object>();
+            string Command;
+            
+                Command = "select follows,status,count( *) QOpportunities from vw_sales_OnlineFollows group by follows ,status";
+            
+            
+
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                //if (user != 0)
+                //{
+                //    query.Parameters.AddWithValue("@User", user);
+                //}
+
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string foll = reader["follows"].ToString();
+                        string status = reader["status"].ToString();
+                        string qoppor = reader["QOpportunities"].ToString();
+
+                        //array = new string[][] { new string[] { foll, status, qoppor } };
+                        // Usuario
+                        object si = new string[] { foll, status, qoppor };
+                        //var Status = new OpporStatusQuantity
+                        //{
+                        //    Follows = Convert.ToInt32(reader["follows"]),
+                        //    Status = reader["status"].ToString(),
+                        //    QOpportunities = Convert.ToInt32(reader["QOpportunities"])
+
+                        //};
+
+                        //StatusQuantity.Add(Status);
+                        array.Add(si);
+
+                    }
+                }
+            }
+            //array = StatusQuantity.ToArray(typeof(string));
+           // var igual = array;
+            return array;
+        }
+
+        [HttpGet("opporonlinesaler")]
+        public List<consulta> OpporOnlineSaler()
+        {
+            List<object> array = new List<object>();
+            string Command;
+
+            Command = "select substring([dbo].[seg_nomUsuario2](userID) ,1,20) AssignedTo ,count(*) cases from opportunities where HowFoundID = 10 AND(VisitedDate >= DATEADD(dd, -30, GETDATE())   AND VisitedDate <= GETDATE()) and Closed = 0 group by userID order by AssignedTo";
+
+
+
+
+            using (var sqlConnection = new SqlConnection(connectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand query = new SqlCommand(Command, sqlConnection);
+
+                //if (user != 0)
+                //{
+                //    query.Parameters.AddWithValue("@User", user);
+                //}
+
+                query.CommandType = System.Data.CommandType.Text;
+                int result = query.ExecuteNonQuery();
+
+
+                using (SqlDataReader reader = query.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        // Usuario
+
+                        var consul= new consulta
+                        {
+                            AssignedTo= reader["AssignedTo"].ToString(),
+                           cases = Convert.ToInt32(reader["cases"]),
+                            
+
+                        };
+
+                            //StatusQuantity.Add(Status);
+                           Consulta.Add(consul);
+
+                    }
+                }
+            }
+            //array = StatusQuantity.ToArray(typeof(string));
+            // var igual = array;
+            return Consulta;
+        }
+
+
     }
 
     public class consulta
@@ -597,5 +706,10 @@ namespace WebAdmin.Controllers
         public string email { get; set; }
     }
 
-
+    public class OpporStatusQuantity
+    {
+        public int Follows { get; set; }
+        public string Status { get; set; }
+        public int QOpportunities { get; set; }
+    }
 }
