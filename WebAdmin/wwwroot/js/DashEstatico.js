@@ -115,15 +115,7 @@ $(document).ready(function () {
             google.charts.setOnLoadCallback(function () {
                 drawChart(result);
 
-                //var suma = 0;
-                //for (var i = 0; i < result.length; i++) {
-
-                //    suma += result[i].cases;
-
-                //}
-                ////const sumValues = result => Object.values(result).reduce((result.cases) => result.cases + result.cases);
-
-                //document.getElementById("visited").innerText = suma;
+                
             });
         }
     });
@@ -611,24 +603,10 @@ $(document).ready(function () {
 
     function drawChart(result) {
         var data = new google.visualization.arrayToDataTable(result);
-        //data.addColumn('number', 'Follows');
-        //data.addColumn('string', 'Status');
-        //data.addColumn('number', 'QOpportunities');
-
-
-
-        //var dataArray = [];
-        //$.each(result, function (i, obj) {
-        //    dataArray.push([obj.follows, obj.status, obj.qOpportunities]);
-        //});
-
-        //data.addRows(dataArray);
+        
 
         var piechart_options = {
-            // title: 'HOW FOUND',
-          //  bars: 'vertical',
-          //  vAxis: { format: 'decimal' },
-           // height: 100,
+           
            
             legend: { position: 'top', maxLines: 2 },
             colors: ['#1b9e77', '#d95f02'],

@@ -497,19 +497,52 @@ namespace WebAdmin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
        
+
+        private bool OpportunitiesExists(int id)
+        {
+            return _context.Opportunities.Any(e => e.ID == id);
+        }
+
+        public JsonResult LlenarText(int? userid)
+        {
+            object consulta;
+
+            consulta = from su in _context.SegUsuarios
+                       where su.UserID == userid
+                       select su;
+
+
+            //var list = consulta.ToArray();
+            return Json(consulta);
+        }
+        public JsonResult GetDatosPrograma(int? programid)
+        {
+            object consulta;
+
+            consulta = from su in _context.Programs
+                       where su.ProgramID == programid
+                       select su;
+
+
+            //var list = consulta.ToArray();
+            return Json(consulta);
+        }
+        #endregion
+
+        #region Closed and Reopen Opportunities
+        [HttpPost]
         public string ClosedOpportunities(int? id, int iduser, string closedcomment, int reason)
         {
             string response = "";
             DateTime date = DateTime.Now;
-            
+
             if (id == null)
             {
-                
+
             }
 
-            string  conString =  Microsoft
+            string conString = Microsoft
                                .Extensions
                                .Configuration
                                .ConfigurationExtensions
@@ -522,10 +555,10 @@ namespace WebAdmin.Controllers
                 sqlConnection.Open();
                 SqlCommand query = new SqlCommand(Command, sqlConnection);
 
-               query.Parameters.AddWithValue("@Id", id);
-               query.Parameters.AddWithValue("@User", iduser);
-               query.Parameters.AddWithValue("@Comment", closedcomment);
-               query.Parameters.AddWithValue("@Date", date);
+                query.Parameters.AddWithValue("@Id", id);
+                query.Parameters.AddWithValue("@User", iduser);
+                query.Parameters.AddWithValue("@Comment", closedcomment);
+                query.Parameters.AddWithValue("@Date", date);
                 query.Parameters.AddWithValue("@Reason", reason);
 
 
@@ -538,18 +571,19 @@ namespace WebAdmin.Controllers
                 if (result == 1)
                 {
                     response = "Exito";
-                } else
+                }
+                else
                 {
                     response = "Facasamos";
                 }
-               
+
             }
 
-           // await Task.Delay(10000);
+
             return response;
 
-           
-           
+
+
 
         }
 
@@ -580,10 +614,10 @@ namespace WebAdmin.Controllers
             opportunitiesReopen.OpportunitiesID = opportunities.ID;
             opportunitiesReopen.ClosedComment = opportunities.ClosedComment;
             opportunitiesReopen.ClosedDate = Convert.ToDateTime(opportunities.ClosedDate);
-            opportunitiesReopen.ClosedBy = Convert.ToInt32( opportunities.ClosedBy);
+            opportunitiesReopen.ClosedBy = Convert.ToInt32(opportunities.ClosedBy);
 
             _context.Add(opportunitiesReopen);
-            var result =  await _context.SaveChangesAsync();
+            var result = await _context.SaveChangesAsync();
 
             if (result > 0)
             {
@@ -599,43 +633,14 @@ namespace WebAdmin.Controllers
                 {
                     response = "Exito";
                 }
-            } else
+            }
+            else
             {
                 response = "Facasamos";
             }
 
             return response;
 
-        }
-
-        private bool OpportunitiesExists(int id)
-        {
-            return _context.Opportunities.Any(e => e.ID == id);
-        }
-
-        public JsonResult LlenarText(int? userid)
-        {
-            object consulta;
-
-            consulta = from su in _context.SegUsuarios
-                       where su.UserID == userid
-                       select su;
-
-
-            //var list = consulta.ToArray();
-            return Json(consulta);
-        }
-        public JsonResult GetDatosPrograma(int? programid)
-        {
-            object consulta;
-
-            consulta = from su in _context.Programs
-                       where su.ProgramID == programid
-                       select su;
-
-
-            //var list = consulta.ToArray();
-            return Json(consulta);
         }
         #endregion
 
