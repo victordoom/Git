@@ -1,0 +1,89 @@
+﻿@model IEnumerable<WebAdmin.Controllers.ContractsController.Contracts>
+@{
+    ViewData["Title"] = "Contracts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="block-header">
+    <h3> <img src="~/images/contract.png" class="user-image" alt="User Image" width="90"> Contracts </h3>    <small class="text-muted">The Contracts are shown here.</small>
+</div>
+<table id="example1" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Creation
+            </th>
+            <th>
+                ContratID
+            </th>
+            <th>
+                Company Name
+            </th>
+            <th>
+                Dba Name
+            </th>
+            <th>
+                SaleMan
+            </th>
+            <th>
+                OwerName
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Contract Date
+            </th>
+            <th>
+                SoftwarePos
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.creationdate
+            </td>
+            <td>
+                @item.contractid
+            </td>
+            <td>
+                @item.companyname
+            </td>
+            <td>
+                <p style="color:Highlight;">@item.dbaname </p>
+            </td>
+            <td>
+                @item.nomSaleMan
+            </td>
+            <td>
+                @item.OnwerName
+            </td>
+            <td>
+                <p style="color:dimgrey;"> @item.dbaAddress </p>
+             </td>
+            <td>
+                @item.Phone
+            </td>
+            <td>
+                @item.contractdate
+            </td>
+            <td>
+                @item.SoftwarePos
+            </td>
+            <td>
+                @item.statusdescription
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

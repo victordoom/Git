@@ -15,6 +15,6 @@ namespace WebAdmin.Models
         public string ClosedComment { get; set; }
         public DateTime ClosedDate { get; set; }
         public int ClosedBy { get; set; }
-        public int ClosingReasonID { get; set; }
+       
     }
 }

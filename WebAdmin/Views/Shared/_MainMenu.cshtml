@@ -98,7 +98,7 @@
     </li>
 }*@
 
-@*@if (@ViewBag.RolSystem.Contains("Administration"))
+@if (@ViewBag.RolSystem.Contains("Administration"))
 {
     <li class=" treeview">
         <a>
@@ -108,27 +108,13 @@
             </span>
         </a>
         <ul class="treeview-menu">
-            <li class="active"><a asp-action="" asp-controller=""><i class="fa fa-circle-o"></i> Contracts</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Companies/Locations</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Owners</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Employes</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Constracts-Approve</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Register Invoice</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Programs</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Licences</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Producs</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Info</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Cases -Technical</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Sales</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>DSHB -Contracts</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts Enable Editions</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Contracts -Payments</a></li>
-            <li><a href="index2.html"><i class="fa fa-circle-o"></i>Cases -Administrative</a></li>
+            <li class="active"><a asp-action="Index" asp-controller="Contracts"><i class="fa fa-circle-o"></i> Contracts</a></li>
+            
         </ul>
 
     </li>
 
-}*@
+}
 
 @*@if (@ViewBag.RolSystem.Contains("User Permission"))
 {

@@ -583,13 +583,13 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-
+    var x = $('input[name=Esadmin]')[0].value;
     
     $.ajax({
         type: 'GET',
         dataType: "json",
         contentType: "application/json",
-        url: '/api/Dashboard/opporstatusquantity',
+        url: '/api/Dashboard/opporstatusquantity/' + x + '',
         success: function (result) {
             google.charts.load('current', { packages: ['corechart', 'bar'] });
 
@@ -609,7 +609,7 @@ $(document).ready(function () {
            
            
             legend: { position: 'top', maxLines: 2 },
-            colors: ['#1b9e77', '#d95f02'],
+            colors: ['#32CD32', '#87CEEB'],
             bar: { groupWidth: '75%' },
 
             

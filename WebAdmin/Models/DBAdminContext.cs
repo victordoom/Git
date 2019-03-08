@@ -828,8 +828,7 @@ namespace WebAdmin.Models
                 entity.Property(e => e.ClosedBy)
                 .HasColumnName("ClosedBy");
 
-                entity.Property(e => e.ClosingReasonID)
-                .HasColumnName("ClosingReasonID");
+                
             });
         }
     }

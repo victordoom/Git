@@ -19,6 +19,11 @@
         padding-left: 0px;
 
     }
+    .col-md-6 {
+        margin-right: 0px;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
     .box.box-danger {
         border-top-color: #DDDDDD;
     }
@@ -37,7 +42,10 @@
 <input type="hidden" id="UserID" name="UserID" value="@ViewBag.UserID" />
 <input type="hidden" id="Ocultarchat" name="Ocultarchat" runat="server"/>
 
-
+<div class="block-header">
+    <h3><a class="list-group-item" href="#"><i class="fa fa-tachometer fa-fw" aria-hidden="true"></i>&nbsp; DASHBOARD - SALES</a></h3>
+    <small class="text-muted"></small>
+</div>
 
 <div id="lista">
     <select id="Select" name="Select" class="form-control" onchange="filtropiechart()" asp-items="ViewBag.Sales" style="width:20%;"></select>
@@ -282,203 +290,209 @@
     </div>
     
 
-    <div class="col-md-6">
+    <div class="col-md-3">
+        <div class="col-xs-12">
+            <!-- /. current month -->
+            <div id="columnacurrent">
+                <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
+                    <thead style="background: #4C8BF5; font-size: large;">
+                        <tr>
+                            <th height="35px" style="font-weight: normal">CURRENT MONTH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background:#4C8BF5;">
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                        </tr>
 
-        <!-- /. current month -->
-        <div class="col-xs-6 " id="columnacurrent">
-            <table class="table-bordered table-responsive" style="width: 100%; text-align: center;">
-                <thead style="background: #4C8BF5; font-size: large;">
-                    <tr>
-                        <th height="35px" style="font-weight: normal">CURRENT MONTH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background:#4C8BF5;">
-                                    <tr>
-                                        <th>Year</th>
-                                        <th>Month</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="Goal" name="Goal">Año</td>
-                                        <td id="Month" name="Month">Mes</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background: #4C8BF5;">
-                                    <tr>
-                                        <th>Goal</th>
-                                        <th>Archived</th>
-                                        <th colspan="2"></th>
-
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="GoalNew" name="GoalNew">meta</td>
-                                        <td id="Quantity" name="Quantity">archivado</td>
-                                        <td id="Calcu" name="Calcu" style="color: red;"></td>
-                                        <td>
-                                            <progress id="porcentcurrent" max="100" style="width: 25px;"></progress>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background: #4C8BF5;">
-                                    <tr>
-                                        <th>By</th>
-                                        <th>Q</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bycurrent">
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <!-- /. last month -->
-            <table class="table-bordered table-responsive " style="width: 100%; text-align: center;">
-                <thead style="background: #808080; font-size:large;">
-                    <tr>
-                        <th height="35px" style="font-weight: normal">LAST MONTH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background:#808080;">
-                                    <tr>
-                                        <th>Year</th>
-                                        <th>Month</th>
-                                    </tr>
-
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="GoalLast" name="Goal">Año</td>
-                                        <td id="MonthLast" name="Month">Mes</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="Goal" name="Goal">Año</td>
+                                            <td id="Month" name="Month">Mes</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
 
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background: #808080;">
-                                    <tr>
-                                        <th>Goal</th>
-                                        <th>Archived</th>
-                                        <th colspan="2"></th>
-                                    </tr>
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background: #4C8BF5;">
+                                        <tr>
+                                            <th>Goal</th>
+                                            <th>Archived</th>
+                                            <th colspan="2"></th>
 
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td id="GoalNewLast" name="GoalNew">meta</td>
-                                        <td id="QuantityLast" name="Quantity">archivado</td>
-                                        <td id="CalcuLast" name="CalcuLast" style="color: red;"></td>
-                                        <td>
-                                            <progress id="porcentlast" max="100" style="width: 25px;"></progress>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </tr>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table style="width: 100%;" class="table-bordered">
-                                <thead style="background: #808080;">
-                                    <tr>
-                                        <th>By</th>
-                                        <th>Q</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="bycurrentlast">
-                                    <tr>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="GoalNew" name="GoalNew">meta</td>
+                                            <td id="Quantity" name="Quantity">archivado</td>
+                                            <td id="Calcu" name="Calcu" style="color: red;"></td>
+                                            <td>
+                                                <progress id="porcentcurrent" max="100" style="width: 25px;"></progress>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-        <div class="col-xs-6" id="columnachat">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background: #4C8BF5;">
+                                        <tr>
+                                            <th>By</th>
+                                            <th>Q</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bycurrent">
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <div class="box box-danger direct-chat direct-chat-danger" id="chat">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Direct Chat</h3>
-                    <div class="box-tools pull-right">
+                <!-- /. last month -->
+                <table class="table-bordered table-responsive " style="width: 100%; text-align: center;">
+                    <thead style="background: #808080; font-size:large;">
+                        <tr>
+                            <th height="35px" style="font-weight: normal">LAST MONTH</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background:#808080;">
+                                        <tr>
+                                            <th>Year</th>
+                                            <th>Month</th>
+                                        </tr>
 
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        <!-- In box-tools add this button if you intend to use the contacts pane -->
-
-                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" id="opporcomment" style="overflow-y: scroll; height: 575px">
-
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <div>
-                        <form>
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="GoalLast" name="Goal">Año</td>
+                                            <td id="MonthLast" name="Month">Mes</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
 
-                            <input type="hidden" name="Idto" id="Idto" value="23" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
 
-                            <input type="hidden" name="Idby" id="Idby" />
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background: #808080;">
+                                        <tr>
+                                            <th>Goal</th>
+                                            <th>Archived</th>
+                                            <th colspan="2"></th>
+                                        </tr>
 
-                            <input name="Title" id="Title" value="chat" type="hidden" />
-                            <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30px; width: 70% "></textarea>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td id="GoalNewLast" name="GoalNew">meta</td>
+                                            <td id="QuantityLast" name="Quantity">archivado</td>
+                                            <td id="CalcuLast" name="CalcuLast" style="color: red;"></td>
+                                            <td>
+                                                <progress id="porcentlast" max="100" style="width: 25px;"></progress>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                            <button type="button" class="btn btn-warning pull-right" onclick="agregarComment('../Opportunities/CrearComments')">Send</button>
-                        </form>
-                    </div>
-                </div>
-                <!-- /.box-footer-->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table style="width: 100%;" class="table-bordered">
+                                    <thead style="background: #808080;">
+                                        <tr>
+                                            <th>By</th>
+                                            <th>Q</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bycurrentlast">
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-
         </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="col-xs-12">
+            <div id="columnachat">
+
+                <div class="box box-danger direct-chat direct-chat-danger" id="chat">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Direct Chat</h3>
+                        <div class="box-tools pull-right">
+
+                            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                            <!-- In box-tools add this button if you intend to use the contacts pane -->
+
+                            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body" id="opporcomment" style="overflow-y: scroll; height: 575px">
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        <div>
+                            <form>
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
+                                <input type="hidden" name="Idto" id="Idto" value="23" />
+
+                                <input type="hidden" name="Idby" id="Idby" />
+
+                                <input name="Title" id="Title" value="chat" type="hidden" />
+                                <textarea name="Comment" id="Comment" class="form-control pull-left" style="height: 30px; width: 70% "></textarea>
+
+                                <button type="button" class="btn btn-warning pull-right" onclick="agregarComment('../Opportunities/CrearComments')">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.box-footer-->
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <!-- Opportunities Online -->
 
 

@@ -15,6 +15,7 @@ function filtropiechart() {
     filtrovisited(x);
     filtroopportunitiesonline(x);
     ocultarchat(x);
+    filtrostatusandquantity(x);
 
     if (x != 0) {
         filtrochat(x);
@@ -490,6 +491,47 @@ function filtrochat(x) {
 
     getCommentsfiltro(email, x);
 
+}
+
+function filtrostatusandquantity(x) {
+
+    $.ajax({
+        type: 'GET',
+        dataType: "json",
+        contentType: "application/json",
+        url: '/api/Dashboard/opporstatusquantity/' + x + '',
+        success: function (result) {
+            google.charts.load('current', { packages: ['corechart', 'bar'] });
+
+
+            var Resultado = GetArray(result, 0, 1, 2);
+            google.charts.setOnLoadCallback(function () {
+                drawChart(Resultado);
+            });
+        }
+    });
+
+    function drawChart(result) {
+        var data = new google.visualization.arrayToDataTable(result);
+
+
+        var piechart_options = {
+
+
+            legend: { position: 'top', maxLines: 2 },
+            colors: ['#32CD32', '#87CEEB'],
+            bar: { groupWidth: '75%' },
+
+
+
+
+        };
+
+        var barchart = new google.visualization.ColumnChart(document.getElementById('barstatus_div'));
+        barchart.draw(data, google.charts.Bar.convertOptions(piechart_options));
+
+
+    }
 }
 
 function getCommentsfiltro(email, x) {
