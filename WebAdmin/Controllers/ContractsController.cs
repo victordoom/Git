@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,11 @@ namespace WebAdmin.Controllers
 
         public IActionResult Index()
         {
+            var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
+
+            ViewBag.User = lEmail; // HttpContext.Session.GetString("Email");
+            ViewBag.Email = lEmail;
+
             string conString = Microsoft
                               .Extensions
                               .Configuration
@@ -50,7 +56,7 @@ namespace WebAdmin.Controllers
                         // Usuario
                         var consul = new Contracts
                         {
-                            creationdate = reader["creationdate"] is DBNull ? "" : Convert.ToDateTime(reader["creationdate"]).ToString("dd/MM/yyyy"),
+                            creationdate = reader["creationdate"] is DBNull ? "" : Convert.ToDateTime(reader["creationdate"]).ToString("MM/dd/yyyy"),
                             contractid = reader["contractid"].ToString(),
                             companyname = reader["companyname"].ToString(),
                             dbaname = reader["dba_name"].ToString(),
@@ -58,7 +64,7 @@ namespace WebAdmin.Controllers
                             OnwerName = reader["ownerName"].ToString(),
                             dbaAddress = reader["dba_Address"].ToString(),
                             Phone = reader["Phone"] is DBNull ? "" : reader["Phone"].ToString(),
-                            contractdate = reader["contractdate"] is DBNull ? "" : Convert.ToDateTime(reader["contractdate"]).ToString("dd/MM/YYYY"),
+                            contractdate = reader["contractdate"] is DBNull ? "" : Convert.ToDateTime(reader["contractdate"]).ToString("MM/dd/yyyy"),
                             SoftwarePos = reader["SoftwarePos"].ToString(),
                             statusdescription = reader["statusdescription"].ToString()                           
                         };

@@ -198,6 +198,7 @@ namespace WebAdmin.Controllers
 
             if (admin == 1)
             {
+                ViewBag.Esadmin = 0;
                 ViewBag.Rol = "Administrador";
                 return View(await dBAdminContext.ToListAsync());
             }
@@ -1050,6 +1051,193 @@ namespace WebAdmin.Controllers
             public string UserLogeadoNombre { get; set; }
             public int UserSelect { get; set; }
             public string UserSelectNombre { get; set; }
+        }
+        #endregion
+
+
+        #region ServerSide Proccessing
+
+        public IActionResult Oppor()
+        {
+            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
+            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
+
+
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
+            return View();
+        }
+        public async Task<IActionResult> GetList()
+        {
+            try
+            {
+                var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+                // Skiping number of Rows count  
+                var start = Request.Form["start"].FirstOrDefault();
+                // Paging Length 10,20  
+                var length = Request.Form["length"].FirstOrDefault();
+                // Sort Column Name  
+                var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+                // Sort Column Direction ( asc ,desc)  
+                var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+                // Search Value from (Search box)  
+                  var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+                //Paging Size (10,20,50,100)  
+                int pageSize = length != null ? Convert.ToInt32(length) : 0;
+                int skip = start != null ? Convert.ToInt32(start) : 0;
+                int recordsTotal = 0;
+
+
+                var today = DateTime.Today.AddMonths(-3);
+
+                string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
+                string Email = this.User.FindFirstValue(ClaimTypes.Name);
+                var User = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == Email);
+                if (User == null)
+                {
+                    return NotFound();
+                }
+                Int64 IDUser = User.UserID;
+
+                // si es de Sales y Admin
+                var segsistemausuario = from x in _context.SegSistemaUsuario
+                                        where x.IdUsuario == IDUser &&
+                                          x.CodigoSistema == 3 && x.CodigoPerfil == 1
+                                        select x;
+
+
+                // si es solo Sales
+                var segsistemausuarionormal = from x in _context.SegSistemaUsuario
+                                              where x.IdUsuario == IDUser &&
+                                                x.CodigoSistema == 3
+                                              select x;
+
+                var normal = segsistemausuarionormal.Count();
+
+                var admin = segsistemausuario.Count();
+
+                var customerData = from oppor in _context.Opportunities
+                                   where oppor.VisitedDate >= today
+                                   select oppor;
+                //Getting all Customer data
+                if (admin == 1)
+                {
+                     customerData = from oppor in _context.Opportunities
+                                       where oppor.VisitedDate >= today
+                                       orderby oppor.ID descending
+                                       select oppor;
+                } else
+                {
+                    if (normal == 1)
+                    {
+                        customerData = from oppor in _context.Opportunities
+                                       where (oppor.VisitedDate >= today && oppor.UserID == IDUser)
+                                       orderby oppor.ID descending
+                                       select oppor;
+                    }
+                }
+                
+                
+
+
+                //recibiendo parametros
+                int user = 0;
+                var userid = Request.Form["columns[5][search][value]"].FirstOrDefault();
+                if (userid == "")
+                {
+
+                }
+                else
+                {
+                    user = int.Parse(userid);
+                }
+                int category = 0;
+                var categoryid = Request.Form["columns[6][search][value]"].FirstOrDefault();
+                if (categoryid == "")
+                {
+
+                }
+                else
+                {
+                    category = int.Parse(categoryid);
+                }
+                int howfound = 0;
+                var howfoundid = Request.Form["columns[7][search][value]"].FirstOrDefault();
+                if (howfoundid == "")
+                {
+
+                }
+                else
+                {
+                    howfound = int.Parse(howfoundid);
+                }
+
+                bool status = false;
+                var statusid = Request.Form["columns[8][search][value]"].FirstOrDefault();
+                if (statusid == "")
+                {
+
+                }
+                if (statusid == "0")
+                {
+                    status = false;
+                }
+                if (statusid == "1")
+                {
+                    status = true;
+                }
+                string rating = Request.Form["columns[10][search][value]"].FirstOrDefault();
+                
+
+                //Sorting  
+                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
+                //{
+                //    customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
+                //}
+                //Search
+                if (!string.IsNullOrEmpty(searchValue))
+                {
+                    customerData = customerData.Where(m => m.OwnerName.ToLower().Contains(searchValue.ToLower()) ||
+                    m.CompanyName.ToLower().Contains(searchValue.ToLower()));
+                }
+                if (!string.IsNullOrEmpty(Request.Form["columns[5][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.UserID == user);
+                }
+                if (!string.IsNullOrEmpty(Request.Form["columns[6][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.CategoryID == category);
+                }
+                if (!string.IsNullOrEmpty(Request.Form["columns[7][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.HowFoundID == howfound);
+                }
+                if (!string.IsNullOrEmpty(Request.Form["columns[8][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.Closed == status);
+                }
+                if (!string.IsNullOrEmpty(Request.Form["columns[10][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.Rating == rating);
+                }
+
+                //total number of rows count   
+                recordsTotal = customerData.Count();
+                //Paging   
+                var data = customerData.Skip(skip).Take(pageSize).ToList();
+                //Returning Json Data  
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
         }
         #endregion
 

@@ -16,6 +16,7 @@ function filtropiechart() {
     filtroopportunitiesonline(x);
     ocultarchat(x);
     filtrostatusandquantity(x);
+    
 
     if (x != 0) {
         filtrochat(x);
