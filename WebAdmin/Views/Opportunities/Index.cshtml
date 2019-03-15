@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<WebAdmin.Models.Opportunities>
 
+@{
+    int id = ViewBag.UserID;
+    string pru = id.ToString();
+ }
 
 @{
     ViewData["Title"] = "Index";
@@ -109,6 +113,8 @@
         vertical-align: middle !important;
 </style>
 
+<input type="hidden" name="memousu" id="memousu" value="@ViewBag.ListaUsu" />
+
 <div class="block-header">
     <h3> <img src="~/images/opportunities.png" class="user-image" alt="User Image" width="90"> Opportunities </h3>    <small class="text-muted">The opportunities registered in the last two months will be displayed here.</small>
 </div>
@@ -132,7 +138,8 @@
 </div>
 
 
-<table id="employeeTable" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
+<input type="hidden" id="tablaid" name="tablaid" value="@id"/> 
+<table id="user@(pru)" class="table  table-condensed  table-hover wrap dt-responsive cell-border compact stripe row-border" style="width:100%">
     <thead>
         <tr>
             <th>ID</th>

@@ -588,7 +588,7 @@ namespace WebAdmin.Controllers
             string Command;
             if (user == 0)
             {
-                Command = "select count(*) as Casesopened from cases where  Status='Active' and AssignedTo in ( select id from [dbo].[Employees] where DepartmentID=2 and status=1)";
+                Command = "select count(*) as Casesopened from cases where  Status='Active' and AssignedTo in ( select id_usuario from SEG_USUARIOS where id_persona in (select id from[dbo].[Employees] where DepartmentID = 2 and status = 1))";
             }
             else
             {

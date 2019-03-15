@@ -10,13 +10,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebAdmin.Models;
+using WebAdmin.UserRol;
 
 namespace WebAdmin.Controllers
 {
     public class OpportunitiesController : Controller
     {
         private readonly DBAdminContext _context;
-
+        
         public IConfiguration Configuration { get; private set; }
 
         public OpportunitiesController(DBAdminContext context, IConfiguration con)
@@ -41,6 +42,9 @@ namespace WebAdmin.Controllers
                 return NotFound();
             }
             Int64 IDUser = User.UserID;
+
+            //para almacenar sesion en la tabla oppor
+            ViewBag.Oppordata = IDUser;
             // si es de Sales y Admin
             var segsistemausuario = from x in _context.SegSistemaUsuario
                                     where x.IdUsuario == IDUser &&
@@ -194,6 +198,10 @@ namespace WebAdmin.Controllers
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
 
+            //memo busqueda
+            var memo = new MemoAdvancedSearch();
+            ViewBag.ListaUsu = memo.LBusuarios;
+
             //si encontro un usuario Significa que es de Sales por logica si tiene Acceso Sales
 
             if (admin == 1)
@@ -213,6 +221,7 @@ namespace WebAdmin.Controllers
                 // return NotFound();
             }
 
+            
 
 
         }
@@ -1057,19 +1066,7 @@ namespace WebAdmin.Controllers
 
         #region ServerSide Proccessing
 
-        public IActionResult Oppor()
-        {
-            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
-            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
-            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
-
-
-            var rol = new UserRol.UserRol();
-            ViewBag.RolSystem = rol.Rol;
-
-
-            return View();
-        }
+       
         public async Task<IActionResult> GetList()
         {
             try
@@ -1177,6 +1174,8 @@ namespace WebAdmin.Controllers
                 }
 
                 bool status = false;
+                //inicializar con un numero diferente de 0 y 1
+                int memostatus = 10;
                 var statusid = Request.Form["columns[8][search][value]"].FirstOrDefault();
                 if (statusid == "")
                 {
@@ -1184,10 +1183,12 @@ namespace WebAdmin.Controllers
                 }
                 if (statusid == "0")
                 {
+                    memostatus = 0;
                     status = false;
                 }
                 if (statusid == "1")
                 {
+                    memostatus = 1;
                     status = true;
                 }
                 string rating = Request.Form["columns[10][search][value]"].FirstOrDefault();
@@ -1202,7 +1203,7 @@ namespace WebAdmin.Controllers
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     customerData = customerData.Where(m => m.OwnerName.ToLower().Contains(searchValue.ToLower()) ||
-                    m.CompanyName.ToLower().Contains(searchValue.ToLower()));
+                    m.CompanyName.ToLower().Contains(searchValue.ToLower()) || m.NumberLeadToFollowUp.Contains(searchValue.ToLower()));
                 }
                 if (!string.IsNullOrEmpty(Request.Form["columns[5][search][value]"]))
                 {
@@ -1225,18 +1226,24 @@ namespace WebAdmin.Controllers
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
 
+                //memory Advanced Search
+                var Memo = new MemoAdvancedSearch(user, category, howfound, memostatus, rating);
+
                 //total number of rows count   
                 recordsTotal = customerData.Count();
                 //Paging   
                 var data = customerData.Skip(skip).Take(pageSize).ToList();
                 //Returning Json Data  
-                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+                return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data, us = user, ca = category, how = howfound,
+                sta = memostatus, ra = rating});
 
             }
             catch (Exception)
             {
                 throw;
             }
+
+
 
         }
         #endregion

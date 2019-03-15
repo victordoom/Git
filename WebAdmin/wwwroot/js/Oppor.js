@@ -1,5 +1,9 @@
 ﻿var memoria;
-
+var indexuser;
+var indexcate;
+var indexhow;
+var indexrating;
+var indexstatus;
 $('#advancedSearchModal').on('shown.bs.modal', function () {
 
 });
@@ -7,7 +11,10 @@ $('#advancedSearchModal').on('shown.bs.modal', function () {
 
 $(document).ready(function () {
 
+    
+    
     var y = $('input[name=Esadmin]')[0].value;
+    var idtabla = $('input[name=tablaid]')[0].value;
     if (y == "0") {
         $('#listausu').show();
     } else {
@@ -15,12 +22,15 @@ $(document).ready(function () {
         $('#listausu').hide();
     }
 
-    var empTable = $("#employeeTable").DataTable({
+
+
+    var empTable = $("#user" + idtabla + "").DataTable({
 
         "ajax": {
             "url": "/Opportunities/GetList",
             "type": "POST",
-            "datatype": "json"
+            "datatype": "json",
+            
         },
         "columnDefs":
             [{
@@ -82,8 +92,13 @@ $(document).ready(function () {
                 name: "CategoryID",
                 render: function (data, type, row) {
                     var category = document.getElementById("category");
-                    var categorytext = category.options[row.categoryID].text;
-
+                    var categorytext;
+                    for (var i = 0; i < category.length; i++) {
+                        var id = category[i].value;
+                        if (id == row.categoryID) {
+                            categorytext = category[i].text;
+                        }
+                    }
 
                     return categorytext;
                 },
@@ -93,10 +108,16 @@ $(document).ready(function () {
                 name: "HowFoundID",
                 render: function (data, type, row) {
                     var howfound = document.getElementById("howfound");
-                    var howfoundtext = howfound.options[row.howFoundID].text;
+                    var howfoundtext;
+                    for (var i = 0; i < howfound.length; i++) {
+                        var id = howfound[i].value;
+                        if (id == row.howFoundID) {
+                            howfoundtext = howfound[i].text;
+                        }
+                    }
 
                     if (row.howFoundID == 10) {
-                        return '<span class="label label-success">' + howfoundtext + '</span>';
+                        return '<span class="label label-primary">' + howfoundtext + '</span>';
                     }
 
                     return howfoundtext;
@@ -106,6 +127,7 @@ $(document).ready(function () {
                 data: "closed",
                 name: "Closed",
                 render: function (data, type, row) {
+                    
                     if (row.closed == false) {
                         return '<span class="label label-success">Open</span>';
                     }
@@ -138,24 +160,49 @@ $(document).ready(function () {
             "processing": "<div class='overlay custom-loader-background'><i class='fa fa-cog fa-spin custom-loader-color'></i></div>"
         },
         "serverSide": true, // for process server side  
-         stateSave: true
+        stateSave: true,
+        //"dom": '<"top"l>rt<"bottom"ip><"clear">',
+        //"fnInitComplete": function (oSettings, json) {
+        //    memobusqueda(json);
+        //}
+        "dataSrc": function (json) {
+            memobusqueda(json);
+            
+        }
+           
+                
+            
+        
+            
+        
 
-
-
+        
 
     });
 
     memoria = empTable;
+    
 });
+
+
+$(document).ready(function () {
+  //  memobusqueda();  
+});
+
 
 function SelectUsuario() {
     var x = document.getElementById("user").value;
+     indexuser = document.getElementById("user").selectedIndex;
     var y = document.getElementById("category").value;
+     indexcate = document.getElementById("category").selectedIndex;
     var z = document.getElementById("howfound").value;
+     indexhow = document.getElementById("howfound").selectedIndex;
     var a = document.getElementById("rating").value;
-    
+     indexrating = document.getElementById("rating").selectedIndex;
     var b = document.getElementById("status").value;
+     indexstatus = document.getElementById("status").selectedIndex;
 
+   
     memoria.columns(5).search(x);
     memoria.columns(6).search(y);
     memoria.columns(7).search(z);
@@ -178,3 +225,52 @@ function reset() {
     a.selectedIndex = 0;
     b.selectedIndex = 0;
 }
+
+function memobusqueda(json) {
+    var lx = document.getElementById("user");
+    //var us = document.getElementById("memousu").value;
+    for (var i = 0; i < lx.length; i++) {
+        var id = lx[i].value;
+        if (id == json.us) {
+            lx.selectedIndex = i;
+
+        }
+    }
+
+    var lb = document.getElementById("status");
+    for (var i = 0; i < lb.length; i++) {
+        var id = lb[i].value;
+        if (id == json.sta) {
+            lb.selectedIndex = i;
+
+        }
+    }
+
+    var ly = document.getElementById("category");
+    for (var i = 0; i < lb.length; i++) {
+        var id = ly[i].value;
+        if (id == json.ca) {
+            ly.selectedIndex = i;
+
+        }
+    }
+
+    var lz = document.getElementById("howfound");
+    for (var i = 0; i < lz.length; i++) {
+        var id = lz[i].value;
+        if (id == json.how) {
+            lz.selectedIndex = i;
+
+        }
+    }
+
+    var la = document.getElementById("rating");
+    for (var i = 0; i < lz.length; i++) {
+        var id = la[i].value;
+        if (id == json.ra) {
+            la.selectedIndex = i;
+
+        }
+    }
+}
+
