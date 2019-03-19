@@ -31,10 +31,7 @@ $(document).ready(function () {
             "type": "POST",
             "datatype": "json",
             //"data": function (data) {
-
-            //    memobusqueda(data);
-            //    return data;
-            //}
+            
         },
         "columnDefs":
             [{
@@ -170,10 +167,7 @@ $(document).ready(function () {
             memobusqueda(json);
            // alert("Datos cargados exitosamente");
         }
-        //"dataSrc": function (json) {
-        //    memobusqueda(json);
-            
-        //}
+        
            
                 
             
@@ -233,7 +227,7 @@ function reset() {
 
 function memobusqueda(json) {
     var lx = document.getElementById("user");
-    //var us = document.getElementById("memousu").value;
+    
     for (var i = 0; i < lx.length; i++) {
         var id = lx[i].value;
         if (id == json.us) {

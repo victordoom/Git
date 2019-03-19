@@ -147,8 +147,29 @@ namespace WebAdmin.Controllers
 
             ViewData["ClosingReason"] = closingReason;
 
+            //usuario opportunities sales
+            var usersales = from s in _context.SegUsuarios
+                            from a in _context.Employees
+                            where s.IdPersona == a.Id.ToString()
+                            where a.DepartmentId == 2 && a.Status == true
+                            select new Administradores { Admin = s.NombreUsuario + " " + s.ApellidoUsuario, AdminID = s.UserID };
 
-            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            var sales = new List<SelectListItem>();
+
+            
+
+            foreach (var item in usersales)
+            {
+                sales.Add(new SelectListItem
+                {
+                    Value = item.AdminID.ToString(),
+                    Text = item.Admin
+                });
+            }
+
+            
+
+            ViewBag.DDLUsers = sales;
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
 
@@ -198,9 +219,7 @@ namespace WebAdmin.Controllers
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
 
-            //memo busqueda
-            var memo = new MemoAdvancedSearch();
-            ViewBag.ListaUsu = memo.LBusuarios;
+           
 
             //si encontro un usuario Significa que es de Sales por logica si tiene Acceso Sales
 
@@ -1226,8 +1245,7 @@ namespace WebAdmin.Controllers
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
 
-                //memory Advanced Search
-                var Memo = new MemoAdvancedSearch(user, category, howfound, memostatus, rating);
+               
 
                 //total number of rows count   
                 recordsTotal = customerData.Count();
