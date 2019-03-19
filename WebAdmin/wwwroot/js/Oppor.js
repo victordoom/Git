@@ -30,7 +30,11 @@ $(document).ready(function () {
             "url": "/Opportunities/GetList",
             "type": "POST",
             "datatype": "json",
-            
+            //"data": function (data) {
+
+            //    memobusqueda(data);
+            //    return data;
+            //}
         },
         "columnDefs":
             [{
@@ -162,13 +166,14 @@ $(document).ready(function () {
         "serverSide": true, // for process server side  
         stateSave: true,
         //"dom": '<"top"l>rt<"bottom"ip><"clear">',
-        //"fnInitComplete": function (oSettings, json) {
-        //    memobusqueda(json);
-        //}
-        "dataSrc": function (json) {
+        "initComplete": function (oSettings, json) {
             memobusqueda(json);
-            
+           // alert("Datos cargados exitosamente");
         }
+        //"dataSrc": function (json) {
+        //    memobusqueda(json);
+            
+        //}
            
                 
             
@@ -247,7 +252,7 @@ function memobusqueda(json) {
     }
 
     var ly = document.getElementById("category");
-    for (var i = 0; i < lb.length; i++) {
+    for (var i = 0; i < ly.length; i++) {
         var id = ly[i].value;
         if (id == json.ca) {
             ly.selectedIndex = i;
@@ -265,12 +270,13 @@ function memobusqueda(json) {
     }
 
     var la = document.getElementById("rating");
-    for (var i = 0; i < lz.length; i++) {
+    for (var i = 0; i < la.length; i++) {
         var id = la[i].value;
         if (id == json.ra) {
             la.selectedIndex = i;
 
         }
     }
+    //alert("asta qui");
 }
 
