@@ -93,7 +93,11 @@ namespace WebAdmin.Models
         public string Web { get; set; }
 
         public string LastComment { get; set; }
+        [Display(Name = "Time Zone")]
+        [Required(ErrorMessage = "Time Zone is needed.")]
+        public string TimeZone { get; set; }
 
+        public int? ClosingReasonID { get; set; }
 
         //closed opportunities
         public DateTime? ClosedDate { get; set; }

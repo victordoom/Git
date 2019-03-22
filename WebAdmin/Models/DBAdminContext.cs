@@ -34,6 +34,7 @@ namespace WebAdmin.Models
         public virtual DbSet<Programs> Programs { get; set; }
         public virtual DbSet<OpportunitiesDetails> OpportunitiesDetails { get; set; }
         public DbQuery<Techfiles> Techfiles { get; set; }
+        public DbQuery<Attachments> Attachments { get; set; }
 
         public virtual DbSet<SegSistemaUsuario> SegSistemaUsuario { get; set; }
         public virtual DbSet<Sistema> Sistemas { get; set; }

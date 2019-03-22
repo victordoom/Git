@@ -173,17 +173,60 @@
                             </dd>
                         </dl>
                     </div>
+
+                    <div class="col-md-4">
+                        <dl class="dl-horizontal">
+                            <dt>
+                               Closed Information
+                            </dt>
+                            <dd>
+                               
+                            </dd>
+                            <dt>
+                                Date
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.ClosedDate)
+                            </dd>
+                            <dt>
+                                By
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.ClosedBy)
+                            </dd>
+                            <dt>
+                                Reason
+                            </dt>
+                            <dd>
+                                @Html.DropDownListFor(model => model.ClosingReasonID, (SelectList)ViewBag.DDLClosingreason, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            </dd>
+                            <dt>
+                               Comment
+                            </dt>
+                            <dd>
+                                @Html.DisplayFor(model => model.ClosedComment)
+                            </dd>
+
+                            
+                        </dl>
+                    </div>
                 </div>
 
                 <div class="panel-footer">
                     <div>
-                        @*<a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.CasesID">Edit</a> |*@
-                        <a class="btn btn-success" asp-action="CreateOpportunitiesDetails" asp-route-id="@Model.ID">Add Follow up</a> |
+                        @if (Model.Closed == false)
+                        {
+                            <a class="btn btn-success" asp-action="CreateOpportunitiesDetails" asp-route-id="@Model.ID">Add Follow up</a>
+                        }
+
+
+                        |
                         @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
                         <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a> | |
-                       @if(ViewBag.Admin == "Administrador" && Model.Closed == true) { 
-                        <a class="btn btn-info" data-toggle="modal" data-target="#opportunitiesreopen" onclick="OpporDataReOpen(' @Html.DisplayFor(model => model.ID)', '@ViewBag.UserID')"> ReOpen</a>
-                       }
+                        @if (ViewBag.Admin == "Administrador" && Model.Closed == true)
+                        {
+                            <a class="btn btn-info" data-toggle="modal" data-target="#opportunitiesreopen" onclick="OpporDataReOpen(' @Html.DisplayFor(model => model.ID)', '@ViewBag.UserID')"> ReOpen</a>
+                        }
                     </div>
                 </div>
 

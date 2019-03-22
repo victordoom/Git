@@ -45,6 +45,11 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.IdRow)
+               
+                <br />
+               
+               
+                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.IdRow"><span class="zmdi zmdi-square-right"></span></a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CompanyName)

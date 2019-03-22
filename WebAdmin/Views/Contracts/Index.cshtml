@@ -21,6 +21,9 @@
                 Company Name
             </th>
             <th>
+                Legal Name
+            </th>
+            <th>
                 Dba Name
             </th>
             <th>
@@ -28,6 +31,9 @@
             </th>
             <th>
                 OwerName
+            </th>
+            <th>
+                Email Merchant
             </th>
             <th>
                 Address
@@ -60,6 +66,9 @@
                 @item.companyname
             </td>
             <td>
+                @item.LegalName
+            </td>
+            <td>
                 <p style="color:Highlight;">@item.dbaname </p>
             </td>
             <td>
@@ -69,8 +78,11 @@
                 @item.OnwerName
             </td>
             <td>
+                @item.EmailMerchant
+            </td>
+            <td>
                 <p style="color:dimgrey;"> @item.dbaAddress </p>
-             </td>
+            </td>
             <td>
                 @item.Phone
             </td>
@@ -81,7 +93,31 @@
                 @item.SoftwarePos
             </td>
             <td>
-                @item.statusdescription
+                @if (item.statusdescription == "Approved\r\n")
+                {
+                    <span class="label label-success">
+                        @item.statusdescription
+                    </span>
+                }
+                else
+                {
+                    if (item.statusdescription == "Editing\r\n")
+                    {
+                        <span class="label label-warning">
+                           @item.statusdescription
+                        </span>
+                    }
+                    else
+                    {
+                        if (item.statusdescription == "Emited\r\n")
+                        {
+                            <span class="label label-info">
+                                @item.statusdescription
+                            </span>
+                        }
+                    }
+                }
+
             </td>
         </tr>
         }

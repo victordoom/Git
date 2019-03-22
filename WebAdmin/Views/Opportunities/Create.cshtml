@@ -34,6 +34,27 @@
         Value = "Closed"
     });
 
+    List<SelectListItem> listzone = new List<SelectListItem>();
+    listzone.Add(new SelectListItem
+    {
+        Text = "Central Time Zone",
+        Value = "Central Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Eastern Time Zone",
+        Value = "Eastern Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Mountain Time Zone",
+        Value = "Mountain Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Pacific Time Zone",
+        Value = "Pacific Time Zone"
+    });
 }
 
 <h2>Create</h2>
@@ -169,6 +190,7 @@
                                         <input asp-for="State" class="form-control" />
                                         <span asp-validation-for="State" class="text-danger"></span>
                                     </div>
+                                   
                                     <div class="form-group">
                                         <label asp-for="EmailAddress" class="control-label"></label>
                                         <input asp-for="EmailAddress" class="form-control" />
@@ -195,6 +217,12 @@
                                         <input asp-for="EstClosedDate" class="form-control" />
                                         <span asp-validation-for="EstClosedDate" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                        <label asp-for="TimeZone" class="control-label"></label>
+                                        <select class="form-control" name="TimeZone" asp-items="listzone"></select>
+                                        <span asp-validation-for="TimeZone" class="text-danger"></span>
+
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
 
@@ -208,8 +236,9 @@
                                         <label asp-for="Rating" class="control-label"></label>
                                         <select class="form-control" name="Rating" asp-items="listItems"></select>
                                         <span asp-validation-for="Rating" class="text-danger"></span>
-                                        <br />
+                                       
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>

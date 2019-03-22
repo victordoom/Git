@@ -61,7 +61,7 @@ $(document).ready(function () {
                 data: "companyName",
                 name: "CompanyName",
                 render: function (data, type, row) {
-                    return '' + row.companyName + ' Phone: ' + row.phoneNumber + ' Address: ' + row.city + ' ' + row.state + '';
+                    return '' + row.companyName + ' Phone: ' + row.phoneNumber + ' Address: ' + row.city + ' ' + row.state + ''+ row.timeZone + '';
                 },
             },
             { "data": "ownerName", "name": "OwnerName", "autoWidth": true },

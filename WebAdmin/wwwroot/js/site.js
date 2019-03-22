@@ -69,7 +69,7 @@ function filtrar(x) {
             pointSize: 6,
             vAxis: { textPosition: 'in', gridlines: { count: 3 }, minorGridlines: { count: 2 }, textStyle: { fontSize: 12 } },
             is3D: true,
-            slices: { 0: { color: '#578CCF' }, 1: { color: '#85BF51' }, 2: { color: '#FFA219' }, 3: { color: '#1CB1F5' }, 4: { color: '#C5D2DF' }, 5: { color: '#9D96D1' }, 6: { color: '#C9C9C9' }, 7: { color: '#2B7BE4' } },
+            slices: { 0: { color: '#FF0040' }, 1: { color: '#B40486' }, 2: { color: '#74DF00' }, 3: { color: '#0B614B' }, 4: { color: '#0040FF' }, 5: { color: '#81DAF5' }, 6: { color: '#DF0101' }, 7: { color: '#D7DF01' } },
         };
         var piechart = new google.visualization.PieChart(document.getElementById('piechart_div'));
         piechart.draw(data, piechart_options);

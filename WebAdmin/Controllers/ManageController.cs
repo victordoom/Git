@@ -301,6 +301,10 @@ namespace WebAdmin.Controllers
                 throw new ApplicationException($"Unexpected error occurred adding external login for user with ID '{user.Id}'.");
             }
 
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -545,6 +549,10 @@ namespace WebAdmin.Controllers
 
         private void AddErrors(IdentityResult result)
         {
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError(string.Empty, error.Description);

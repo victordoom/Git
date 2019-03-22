@@ -1,0 +1,138 @@
+﻿@model WebAdmin.Models.Techfiles
+
+@{
+    ViewData["Title"] = "Details";
+
+
+}
+
+@{ 
+    string idcontract = Model.ContractID;
+}
+<style>
+    .customDrowDown {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0px;
+    }
+</style>
+<br />
+
+<input type="hidden" id="contractid" name="contractid" value="@idcontract" />
+<div>
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading"> <h3 class="panel-title">Details  TechFiles</h3></div>
+            <div class="panel-body">
+                <div class="col-md-4">
+
+                    <dl class="dl-horizontal">
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IdRow)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.IdRow)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ContractID)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ContractID)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CompanyName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DBA_name)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(Model => Model.DBA_name)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CompanyAddress)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(Model => Model.CompanyAddress)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.StrFile)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(Model => Model.StrFile)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.StrFileExt)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(Model => Model.StrFileExt)
+                        </dd>
+
+                    </dl>
+
+                </div>
+                <div class="col-md-4">
+                    
+                        
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div>
+                   
+                    
+                    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+   
+
+</div>
+
+
+
+
+
+<div class="row">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">Segumiento</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-12">
+                <table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="techanexos">
+                    <thead>
+                        <tr>
+                            <th>
+                                IDAttachFile
+                            </th>
+                            <th>
+                                AttachDate
+                            </th>
+                            <th>
+                                FileName
+                            </th>
+                            <th>
+                                FileType
+                            </th>
+                            <th>
+                                File
+                            </th>
+                        </tr>
+                    </thead>
+                   
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+<script src="~/js/TechDetails.js"></script>

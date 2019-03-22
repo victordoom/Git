@@ -267,7 +267,7 @@ namespace WebAdmin.Controllers
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
             ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
-
+            ViewBag.DDLClosingreason = new SelectList(_context.OpportunitiesClosingReason, "ClosingReasonID", "ClosingReasonDescription");
 
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
