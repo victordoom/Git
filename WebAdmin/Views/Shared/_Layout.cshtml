@@ -98,6 +98,7 @@
                                 } else {
                                     $("#locationID").append('<option value="' + dato.locationId + '">' + dato.address + '</option>');
                                 }
+                                GetPhoneEmail(dato.locationId);
                             });
                         }
 
@@ -149,10 +150,64 @@
                                         $("#locationID").append('<option value="' + dato.locationId + '">' + dato.address + '</option>');
                                     }
 
+                                    GetFnContractBrand(dato.companyId);
+                                    GetPhoneEmail(dato.locationId, dato.companyId);
+
+                                   
                                 });
                             }
                         })
                     });
+                    //get phone, email
+                    function GetPhoneEmail(locationid, companyid) {
+
+                       
+                         $.ajax({
+                            Type: 'POST',
+                            url: '@Url.Action("GetPhoneEmail")',
+                            dataType: 'json',
+                            data: { locationid },
+                            success: function (Result) {
+                                $("#PhoneS").val(Result[0].phone);
+                                $("#EmailS").val(Result[0].email);
+
+                               
+                            }
+                        })
+
+                         $.ajax({
+                            Type: 'POST',
+                            url: '@Url.Action("GetContractBrandFn")',
+                            dataType: 'json',
+                            data: { locationid, companyid},
+                            success: function (Result) {
+                                $("#PhoneS").val(Result[0].phone);
+                               
+
+                               
+                            }
+                        })
+
+                        
+                    }
+
+                    
+                    function GetFnContractBrand(compan, location) {
+                     
+                        $.ajax({
+                            Type: 'POST',
+                            url: '@Url.Action("GetContractBrandFn")',
+                            dataType: 'json',
+                            data: { compan },
+                            success: function (Result) {
+                                $("#PhoneS").val(Result[0].phone);
+                               
+
+                               
+                            }
+                        })
+
+                    }
                      //change
                     $("#Select_ProgramID").change(function () {
                         id = $("#Select_ProgramID").val();

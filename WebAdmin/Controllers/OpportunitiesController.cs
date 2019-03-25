@@ -488,8 +488,17 @@ namespace WebAdmin.Controllers
                         throw;
                     }
                 }
+
+                
+                
+
                 return RedirectToAction(nameof(Index));
             }
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             return View(opportunities);
         }
 

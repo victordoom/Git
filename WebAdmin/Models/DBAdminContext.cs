@@ -33,8 +33,13 @@ namespace WebAdmin.Models
         public virtual DbSet<OpportunitiesCategories> OpportunitiesCategories { get; set; }
         public virtual DbSet<Programs> Programs { get; set; }
         public virtual DbSet<OpportunitiesDetails> OpportunitiesDetails { get; set; }
+
+        //solo vistas no se pueden editar datos
         public DbQuery<Techfiles> Techfiles { get; set; }
         public DbQuery<Attachments> Attachments { get; set; }
+
+        //funciones
+        public DbQuery<FnContractGetBrand> FnContractGetBrand { get; set; }
 
         public virtual DbSet<SegSistemaUsuario> SegSistemaUsuario { get; set; }
         public virtual DbSet<Sistema> Sistemas { get; set; }

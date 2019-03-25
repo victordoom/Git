@@ -139,6 +139,7 @@ $(document).ready(function () {
                 },
             },
             { "data": "numberLeadToFollowUp", "name": "NumberLeadToFollowUp", "autoWidth": true },
+            { "data": "timeZone", "name": "TimeZone", "autoWidth": true },
             {
                 data: "rating",
                 name: "Rating",

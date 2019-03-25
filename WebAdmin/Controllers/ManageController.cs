@@ -561,6 +561,9 @@ namespace WebAdmin.Controllers
 
         private string FormatKey(string unformattedKey)
         {
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
             var result = new StringBuilder();
             int currentPosition = 0;
             while (currentPosition + 4 < unformattedKey.Length)
@@ -578,6 +581,9 @@ namespace WebAdmin.Controllers
 
         private string GenerateQrCodeUri(string email, string unformattedKey)
         {
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
             return string.Format(
                 AuthenticatorUriFormat,
                 _urlEncoder.Encode("NetCoreAuthUsuario"),
@@ -587,6 +593,10 @@ namespace WebAdmin.Controllers
 
         private async Task LoadSharedKeyAndQrCodeUriAsync(WebAdminUser user, EnableAuthenticatorViewModel model)
         {
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
             if (string.IsNullOrEmpty(unformattedKey))
             {

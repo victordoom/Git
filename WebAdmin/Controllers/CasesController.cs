@@ -770,6 +770,40 @@ namespace WebAdmin.Controllers
             //var list = consulta.ToArray();
             return Json(consulta);
         }
+
+        public JsonResult GetPhoneEmail(int? locationid)
+        {
+            var consulta = from x in _context.SalesLocations
+                       where x.LocationId == locationid
+                       select x;
+
+            List<SalesLocations> Info = new List<SalesLocations>();
+            foreach (var item in consulta)
+            {
+                if (item.Phone != "          " || item.Phone != null)
+                {
+                    string formatphone = "";
+
+                    formatphone = String.Format("{0:(###)-###-####}", Convert.ToInt64(item.Phone));
+
+                    item.Phone = formatphone;
+                    Info.Add(item);
+                }
+                
+            }
+           
+
+            return Json(Info);
+        }
+
+        public JsonResult GetContractBrandFn( int? locationid, int? companyid )
+        {
+           // var locationid = 1192;
+           // var companyid = 190;
+            var Brand = _context.FnContractGetBrand.FromSql($"SELECT  [dbo].[CONTRACT_GetBrand] ({companyid}, {locationid}) AS softwarePos");
+
+            return Json(Brand);
+        }
         #endregion
         //public JsonResult FindDataUser2(int? UserID)
         //{
