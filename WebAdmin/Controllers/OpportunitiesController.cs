@@ -1095,7 +1095,7 @@ namespace WebAdmin.Controllers
         #region ServerSide Proccessing
 
        
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetList(int? param)
         {
             try
             {
@@ -1273,6 +1273,36 @@ namespace WebAdmin.Controllers
 
 
         }
+        #endregion
+
+        #region Funciones OppVerifyOnline
+        public JsonResult OppVerifyOnlineFn(int? oppid, int? rowid)
+        {
+            var LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql(""); ;
+            if (rowid == 1)
+            {
+                 LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F1");
+            }
+            if (rowid == 2)
+            {
+                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F2");
+            }
+            if (rowid == 3)
+            {
+                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F3");
+            }
+            if (rowid == 4)
+            {
+                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F4");
+            }
+            if (rowid == 5)
+            {
+                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F5");
+            }
+
+            return Json(LeadOnline);
+        }
+
         #endregion
 
     }

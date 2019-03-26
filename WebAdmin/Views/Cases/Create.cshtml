@@ -58,7 +58,7 @@
         <div class="row col-md-12">
 
             <div>
-                <form asp-action="Create" enctype="multipart/form-data"  method="post">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
                     <div class="row">
                         <div class="col-md-6">
 
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
+                    </div>
                     <br />
                     <div class="row col-sm-12">
                         <div class="col-md-6" style="background-color:gainsboro;">
@@ -238,20 +238,20 @@
                             </div>
 
                             @*<div class="form-group col-md-6">
-                                <label class="control-label"> Name</label>
-                                <input class="form-control" id="Name" disabled />
+                    <label class="control-label"> Name</label>
+                    <input class="form-control" id="Name" disabled />
 
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="control-label">Last Name</label>
-                                <input class="form-control" id="LastName" disabled />
-                            </div>*@
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label">Last Name</label>
+                    <input class="form-control" id="LastName" disabled />
+                </div>*@
 
                             @*<div class="form-group">
-            <label asp-for="DueDate" class="control-label"></label>
-            <input asp-for="DueDate" class="form-control" />
-            <span asp-validation-for="DueDate" class="text-danger"></span>
-        </div>*@
+                    <label asp-for="DueDate" class="control-label"></label>
+                    <input asp-for="DueDate" class="form-control" />
+                    <span asp-validation-for="DueDate" class="text-danger"></span>
+                </div>*@
                             <div class="form-group">
                                 <label asp-for="Priority" class="control-label"></label>
                                 <select asp-for="Priority" class="form-control" asp-items="ViewBag.Priority"></select>
@@ -298,17 +298,28 @@
                             </div>
                         </div>
 
-                        @*prueba subir archivos*@
-                        <div class="form-group">
-                            <label>Example file input</label>
-                            <input type="file" asp-for="FileName" />
 
-                        </div>
+
+
+
+                        @*prueba subir archivos*@
+                        @*<div class="form-group">
+                <label>Example file input</label>
+                <input type="file" asp-for="FileName" />
+
+            </div>*@
 
                     </div>
                     <div class="row col-lg-12 col-sm-12">
                         <br />
+                        <div class="alert alert-danger" id="TechDanger">
+                            <strong>Technical Support Disabled</strong> It does not have technical support, please get in touch to enable the service.
+                        </div>
+                        <div class="alert alert-success" id="TechSuccess">
+                            <strong>Technical Support Enabled</strong>The technical support service is enabled.
+                        </div>
                     </div>
+                   
                     <div class="form-group">
 
                         <input type="submit" value="Create" class="btn btn-success" />
@@ -321,6 +332,7 @@
 
 <div>
     <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+    
 </div>
 
 <input type="hidden" id="IDLocation" value="0" />
@@ -366,6 +378,13 @@
             </div>
     </div>*@
 
+<script src="~/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="~/bootstrap-notify/bootstrap-notify.min.js"></script>
+<script src="~/bootstrap-notify/Gruntfile.js"></script>
+<script src="~/bootstrap-notify/package.js"></script>
+<link rel="stylesheet" href="~/bootstrap-notify/Animate.css" />
+<link  rel="stylesheet" href="~/bootstrap-notify/typings/bootstrap-notify/notify.d.ts"/>
+<script src="~/js/Alerts.js"></script>
 
 
 @section Scripts {

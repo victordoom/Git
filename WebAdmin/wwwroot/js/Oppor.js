@@ -22,13 +22,14 @@ $(document).ready(function () {
         $('#listausu').hide();
     }
 
-
+   
 
     var empTable = $("#user" + idtabla + "").DataTable({
 
         "ajax": {
             "url": "/Opportunities/GetList",
             "type": "POST",
+            
             "datatype": "json",
             //"data": function (data) {
             
@@ -275,3 +276,29 @@ function memobusqueda(json) {
     //alert("asta qui");
 }
 
+
+$("#mif1").click(function () {
+    $(this).toggleClass("btn-danger btn-success");
+});
+$("#mif2").click(function () {
+    $(this).toggleClass("btn-danger btn-success");
+    $("#mif1").toggleClass("btn-success btn-danger");
+});
+$("#mif3").click(function () {
+    $(this).toggleClass("btn-danger btn-success");
+    $("#mif1").toggleClass("btn-success btn-danger");
+    $("#mif2").toggleClass("btn-success btn-danger");
+});
+$("#mif4").click(function () {
+    $(this).toggleClass("btn-danger btn-success");
+    $("#mif1").toggleClass("btn-success btn-danger");
+    $("#mif2").toggleClass("btn-success btn-danger");
+    $("#mif3").toggleClass("btn-success btn-danger");
+});
+$("#mif5").click(function () {
+    $(this).toggleClass("btn-danger btn-success");
+    $("#mif1").toggleClass("btn-success btn-danger");
+    $("#mif2").toggleClass("btn-success btn-danger");
+    $("#mif3").toggleClass("btn-success btn-danger");
+    $("#mif4").toggleClass("btn-success btn-danger");
+});

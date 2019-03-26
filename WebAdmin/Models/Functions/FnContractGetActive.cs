@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAdmin.Models
+namespace WebAdmin.Models.Functions
 {
     public class FnContractGetActive
     {

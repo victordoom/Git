@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using WebAdmin.Models.Functions;
 
 namespace WebAdmin.Models
 {
@@ -41,6 +42,8 @@ namespace WebAdmin.Models
         //funciones
         public DbQuery<FnContractGetBrand> FnContractGetBrand { get; set; }
         public DbQuery<FnContractGetActive> FnContractGetActive { get; set; }
+        public DbQuery<FnContractGetTechStatus> FnContractGetTechStatus { get; set; }
+        public DbQuery<OppVerfyLeadOnlineTmp> OppVerfyLeadOnlineTmp { get; set; }
 
         public virtual DbSet<SegSistemaUsuario> SegSistemaUsuario { get; set; }
         public virtual DbSet<Sistema> Sistemas { get; set; }

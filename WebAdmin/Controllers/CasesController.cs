@@ -780,37 +780,48 @@ namespace WebAdmin.Controllers
             List<SalesLocations> Info = new List<SalesLocations>();
             foreach (var item in consulta)
             {
-                if (item.Phone != "          " || item.Phone != null)
+                if (item.Phone != "          " && item.Phone != null && item.Phone != "Phone")
                 {
                     string formatphone = "";
 
                     formatphone = String.Format("{0:(###)-###-####}", Convert.ToInt64(item.Phone));
 
                     item.Phone = formatphone;
-                    Info.Add(item);
+                   
                 }
-                
+                Info.Add(item);
             }
            
 
             return Json(Info);
         }
 
-        public JsonResult GetContractBrandFn( int? locationid, int? companyid )
+
+        #endregion
+        #region Funciones SqlServer
+        public JsonResult GetContractBrandFn(int? locationid, int? companyid)
         {
-            var locationidp = 1192;
-            var companyidp = 190;
-            var Brand = _context.FnContractGetBrand.FromSql($"SELECT  [dbo].[CONTRACT_GetBrand] ({companyidp}, {locationidp}) AS softwarePos");
+           // var locationidp = 1192;
+          //  var companyidp = 190;
+            var Brand = _context.FnContractGetBrand.FromSql($"SELECT  [dbo].[CONTRACT_GetBrand] ({companyid}, {locationid}) AS softwarePos");
 
             return Json(Brand);
         }
         public JsonResult GetContractActiveFn(int? locationid, int? companyid)
         {
-            var locationidp = 1192;
-            var companyidp = 190;
-            var Active = _context.FnContractGetActive.FromSql($"SELECT  dbo.CONTRACT_GetSaleManName(dbo.CONTRACT_GetIDContractActive({companyidp}, {locationidp})) SaleManName");
+           // var locationidp = 1192;
+            //var companyidp = 190;
+            var Active = _context.FnContractGetActive.FromSql($"SELECT  dbo.CONTRACT_GetSaleManName(dbo.CONTRACT_GetIDContractActive({companyid}, {locationid})) SaleManName");
 
             return Json(Active);
+        }
+        public JsonResult GetContractTechStaFn(int? locationid, int? companyid)
+        {
+           // var locationidp = 1192;
+           // var companyidp = 190;
+            var Status = _context.FnContractGetTechStatus.FromSql($"SELECT  dbo.CONTRACT_GetTechnicalSupportStatus({companyid}, {locationid}) as HasTechnicalSpp");
+
+            return Json(Status);
         }
         #endregion
         //public JsonResult FindDataUser2(int? UserID)
