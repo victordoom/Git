@@ -99,6 +99,8 @@
                                     $("#locationID").append('<option value="' + dato.locationId + '">' + dato.address + '</option>');
                                 }
                                 GetPhoneEmail(dato.locationId);
+                                GetFnContractBrand(dato.companyId, dato.locationId);
+                                GetFnContractActive(dato.companyId, dato.locationId);
                             });
                         }
 
@@ -150,16 +152,17 @@
                                         $("#locationID").append('<option value="' + dato.locationId + '">' + dato.address + '</option>');
                                     }
 
-                                    GetFnContractBrand(dato.companyId);
-                                    GetPhoneEmail(dato.locationId, dato.companyId);
-
+                                    
+                                    GetPhoneEmail(dato.locationId);
+                                    GetFnContractBrand(dato.companyId, dato.locationId);
+                                    GetFnContractActive(dato.companyId, dato.locationId);
                                    
                                 });
                             }
                         })
                     });
                     //get phone, email
-                    function GetPhoneEmail(locationid, companyid) {
+                    function GetPhoneEmail(locationid) {
 
                        
                          $.ajax({
@@ -175,32 +178,37 @@
                             }
                         })
 
-                         $.ajax({
+                         
+
+                        
+                    }
+
+                    
+                    function GetFnContractBrand(companyid, locationid) {
+                     
+                        $.ajax({
                             Type: 'POST',
                             url: '@Url.Action("GetContractBrandFn")',
                             dataType: 'json',
-                            data: { locationid, companyid},
+                            data: { companyid, locationid },
                             success: function (Result) {
-                                $("#PhoneS").val(Result[0].phone);
+                                $("#SoftwarePos").val(Result[0].softwarePos);
                                
 
                                
                             }
                         })
 
-                        
                     }
-
-                    
-                    function GetFnContractBrand(compan, location) {
+                    function GetFnContractActive(companyid, locationid) {
                      
                         $.ajax({
                             Type: 'POST',
-                            url: '@Url.Action("GetContractBrandFn")',
+                            url: '@Url.Action("GetContractActiveFn")',
                             dataType: 'json',
-                            data: { compan },
+                            data: { companyid, locationid },
                             success: function (Result) {
-                                $("#PhoneS").val(Result[0].phone);
+                                $("#SalesManName").val(Result[0].saleManName);
                                
 
                                

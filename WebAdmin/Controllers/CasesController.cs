@@ -798,11 +798,19 @@ namespace WebAdmin.Controllers
 
         public JsonResult GetContractBrandFn( int? locationid, int? companyid )
         {
-           // var locationid = 1192;
-           // var companyid = 190;
-            var Brand = _context.FnContractGetBrand.FromSql($"SELECT  [dbo].[CONTRACT_GetBrand] ({companyid}, {locationid}) AS softwarePos");
+            var locationidp = 1192;
+            var companyidp = 190;
+            var Brand = _context.FnContractGetBrand.FromSql($"SELECT  [dbo].[CONTRACT_GetBrand] ({companyidp}, {locationidp}) AS softwarePos");
 
             return Json(Brand);
+        }
+        public JsonResult GetContractActiveFn(int? locationid, int? companyid)
+        {
+            var locationidp = 1192;
+            var companyidp = 190;
+            var Active = _context.FnContractGetActive.FromSql($"SELECT  dbo.CONTRACT_GetSaleManName(dbo.CONTRACT_GetIDContractActive({companyidp}, {locationidp})) SaleManName");
+
+            return Json(Active);
         }
         #endregion
         //public JsonResult FindDataUser2(int? UserID)
