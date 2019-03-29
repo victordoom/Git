@@ -6,14 +6,16 @@
         dataType: 'json',
         data: { companyid, locationid },
         success: function (Result) {
-            if (Result[0].hasTechnicalSpp == "0") {
+            if (Result[0].hasTechnicalSpp == "1") {
                 TechStatusSuccess();
                 $('#TechSuccess').show();
                 $('#TechDanger').hide();
+                $('#SaveTechnical').show();
             } else {
                 TechStatusDanger();
                 $('#TechDanger').show();
                 $('#TechSuccess').hide();
+                $('#SaveTechnical').hide();
             }
 
 

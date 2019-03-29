@@ -4,6 +4,8 @@ var indexcate;
 var indexhow;
 var indexrating;
 var indexstatus;
+
+var leadonline;
 $('#advancedSearchModal').on('shown.bs.modal', function () {
 
 });
@@ -11,7 +13,7 @@ $('#advancedSearchModal').on('shown.bs.modal', function () {
 
 $(document).ready(function () {
 
-    
+    leadonline = ""
     
     var y = $('input[name=Esadmin]')[0].value;
     var idtabla = $('input[name=tablaid]')[0].value;
@@ -29,7 +31,7 @@ $(document).ready(function () {
         "ajax": {
             "url": "/Opportunities/GetList",
             "type": "POST",
-            
+           // "data": { filtro: leadonline },
             "datatype": "json",
             //"data": function (data) {
             
@@ -78,7 +80,7 @@ $(document).ready(function () {
                 name: "UserID",
                 render: function (data, type, row) {
                     var user = document.getElementById("user");
-                    var usertext;
+                    var usertext = "";
                     for (var i = 0; i < user.length; i++) {
                         var id = user[i].value;
                         if (id == row.userID) {
@@ -167,6 +169,8 @@ $(document).ready(function () {
         //"dom": '<"top"l>rt<"bottom"ip><"clear">',
         "initComplete": function (oSettings, json) {
             memobusqueda(json);
+
+            mostrarLeadonline();
            // alert("Datos cargados exitosamente");
         }
         
@@ -182,6 +186,8 @@ $(document).ready(function () {
     });
 
     memoria = empTable;
+   
+    FiltroLeadOnline();
     
 });
 
@@ -203,7 +209,15 @@ function SelectUsuario() {
     var b = document.getElementById("status").value;
      indexstatus = document.getElementById("status").selectedIndex;
 
+    if (z == 10) {
+        if (leadonline != "") {
+            FiltroLeadOnline();
+    }
+    
+    }
+
    
+
     memoria.columns(5).search(x);
     memoria.columns(6).search(y);
     memoria.columns(7).search(z);
@@ -211,6 +225,7 @@ function SelectUsuario() {
     memoria.columns(8).search(b);
     memoria.draw();
 
+    
 }  
 
 function reset() {
@@ -225,6 +240,9 @@ function reset() {
     z.selectedIndex = 0;
     a.selectedIndex = 0;
     b.selectedIndex = 0;
+
+    resetleadonline();
+    mostrarLeadonline();
 }
 
 function memobusqueda(json) {
@@ -278,27 +296,630 @@ function memobusqueda(json) {
 
 
 $("#mif1").click(function () {
-    $(this).toggleClass("btn-danger btn-success");
+    //$(this).toggleClass("btn-danger btn-success");
+    if ($(this).hasClass("btn-danger") == true) {
+        $(this).removeClass("btn-danger");
+        $(this).addClass("btn-success");
+
+        leadonline = "F1";
+        //rojo 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif2").removeClass("btn-success");
+            $("#mif2").addClass("btn-danger");
+        }
+        //rojo 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+    } else {
+        $(this).removeClass("btn-success");
+        $(this).addClass("btn-danger");
+
+        leadonline = "reset";
+
+        //rojo 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif2").removeClass("btn-success");
+            $("#mif2").addClass("btn-danger");
+        }
+        //rojo 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+    }
 });
 $("#mif2").click(function () {
-    $(this).toggleClass("btn-danger btn-success");
-    $("#mif1").toggleClass("btn-success btn-danger");
+    if ($(this).hasClass("btn-danger") == true) {
+        $(this).removeClass("btn-danger");
+        $(this).addClass("btn-success");
+
+        leadonline = "F2";
+
+        if ($("#mif1").hasClass("btn-danger") == true) {
+            $("#mif1").removeClass("btn-danger");
+            $("#mif1").addClass("btn-success");
+        }
+
+        //rojo 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+
+    } else {
+        $(this).removeClass("btn-success");
+        $(this).addClass("btn-danger");
+
+        leadonline = "reset";
+        if ($("#mif1").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif1").removeClass("btn-success");
+            $("#mif1").addClass("btn-danger");
+        }
+
+        //rojo 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+    }
 });
 $("#mif3").click(function () {
-    $(this).toggleClass("btn-danger btn-success");
-    $("#mif1").toggleClass("btn-success btn-danger");
-    $("#mif2").toggleClass("btn-success btn-danger");
+    if ($(this).hasClass("btn-danger") == true) {
+        $(this).removeClass("btn-danger");
+        $(this).addClass("btn-success");
+
+        leadonline = "F3";
+
+        //verde 1
+            if ($("#mif1").hasClass("btn-danger") == true) {
+                $("#mif1").removeClass("btn-danger");
+                $("#mif1").addClass("btn-success");
+        }
+        //verde 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+            $("#mif2").removeClass("btn-danger");
+            $("#mif2").addClass("btn-success");
+        }
+
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+        
+    } else {
+        $(this).removeClass("btn-success");
+        $(this).addClass("btn-danger");
+
+        leadonline = "reset";
+        //rojo 1
+        if ($("#mif1").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif1").removeClass("btn-success");
+            $("#mif1").addClass("btn-danger");
+        }
+        //rojo 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif2").removeClass("btn-success");
+            $("#mif2").addClass("btn-danger");
+        }
+
+        //rojo 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+    }
 });
 $("#mif4").click(function () {
-    $(this).toggleClass("btn-danger btn-success");
-    $("#mif1").toggleClass("btn-success btn-danger");
-    $("#mif2").toggleClass("btn-success btn-danger");
-    $("#mif3").toggleClass("btn-success btn-danger");
+    if ($(this).hasClass("btn-danger") == true) {
+        $(this).removeClass("btn-danger");
+        $(this).addClass("btn-success");
+
+        leadonline = "F4";
+
+        //verde 1
+        if ($("#mif1").hasClass("btn-danger") == true) {
+            $("#mif1").removeClass("btn-danger");
+            $("#mif1").addClass("btn-success");
+        }
+        //verde 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+            $("#mif2").removeClass("btn-danger");
+            $("#mif2").addClass("btn-success");
+        }
+        //verde 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+            $("#mif3").removeClass("btn-danger");
+            $("#mif3").addClass("btn-success");
+        }
+
+        //rojo 5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+
+    } else {
+        $(this).removeClass("btn-success");
+        $(this).addClass("btn-danger");
+
+        leadonline = "reset";
+        //rojo 1
+        if ($("#mif1").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif1").removeClass("btn-success");
+            $("#mif1").addClass("btn-danger");
+        }
+        //rojo 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif2").removeClass("btn-success");
+            $("#mif2").addClass("btn-danger");
+        }
+        //rojo3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo5
+        if ($("#mif5").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif5").removeClass("btn-success");
+            $("#mif5").addClass("btn-danger");
+        }
+    }
 });
 $("#mif5").click(function () {
-    $(this).toggleClass("btn-danger btn-success");
-    $("#mif1").toggleClass("btn-success btn-danger");
-    $("#mif2").toggleClass("btn-success btn-danger");
-    $("#mif3").toggleClass("btn-success btn-danger");
-    $("#mif4").toggleClass("btn-success btn-danger");
+    if ($(this).hasClass("btn-danger") == true) {
+        $(this).removeClass("btn-danger");
+        $(this).addClass("btn-success");
+
+        leadonline = "F5";
+
+        //verde 1
+        if ($("#mif1").hasClass("btn-danger") == true) {
+            $("#mif1").removeClass("btn-danger");
+            $("#mif1").addClass("btn-success");
+        }
+        //verde 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+            $("#mif2").removeClass("btn-danger");
+            $("#mif2").addClass("btn-success");
+        }
+        //verde 3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+            $("#mif3").removeClass("btn-danger");
+            $("#mif3").addClass("btn-success");
+        }
+        //verde 4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+            $("#mif4").removeClass("btn-danger");
+            $("#mif4").addClass("btn-success");
+        }
+
+    } else {
+        $(this).removeClass("btn-success");
+        $(this).addClass("btn-danger");
+
+        leadonline = "reset";
+
+        //rojo 1
+        if ($("#mif1").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif1").removeClass("btn-success");
+            $("#mif1").addClass("btn-danger");
+        }
+        //rojo 2
+        if ($("#mif2").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif2").removeClass("btn-success");
+            $("#mif2").addClass("btn-danger");
+        }
+        //rojo3
+        if ($("#mif3").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif3").removeClass("btn-success");
+            $("#mif3").addClass("btn-danger");
+        }
+        //rojo4
+        if ($("#mif4").hasClass("btn-danger") == true) {
+
+        } else {
+            $("#mif4").removeClass("btn-success");
+            $("#mif4").addClass("btn-danger");
+        }
+    }
 });
+
+
+function FiltroLeadOnline() {
+
+    $.ajax({
+        Type: 'POST',
+        url: "Opportunities/FiltroLeadOnline",
+
+        data: { leadonline },
+        success: function (result) {
+            if (result == "F1") {
+
+                if ($("#mif1").hasClass("btn-danger") == true) {
+                    $("#mif1").removeClass("btn-danger");
+                    $("#mif1").addClass("btn-success");
+
+                    leadonline = "F1";
+                    //rojo 2
+                    if ($("#mif2").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif2").removeClass("btn-success");
+                        $("#mif2").addClass("btn-danger");
+                    }
+                    //rojo 3
+                    if ($("#mif3").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif3").removeClass("btn-success");
+                        $("#mif3").addClass("btn-danger");
+                    }
+                    //rojo 4
+                    if ($("#mif4").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif4").removeClass("btn-success");
+                        $("#mif4").addClass("btn-danger");
+                    }
+                    //rojo 5
+                    if ($("#mif5").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif5").removeClass("btn-success");
+                        $("#mif5").addClass("btn-danger");
+                    }
+                } else {
+                    //$("#mif1").removeClass("btn-success");
+                    //$("#mif1").addClass("btn-danger");
+
+                    leadonline = "";
+
+                    
+                }
+            }
+
+                if (result == "F2") {
+
+                    if ($("#mif2").hasClass("btn-danger") == true) {
+                        $("#mif2").removeClass("btn-danger");
+                        $("#mif2").addClass("btn-success");
+
+                        leadonline = "F2";
+
+                        if ($("#mif1").hasClass("btn-danger") == true) {
+                            $("#mif1").removeClass("btn-danger");
+                            $("#mif1").addClass("btn-success");
+                        }
+
+                        //rojo 3
+                        if ($("#mif3").hasClass("btn-danger") == true) {
+
+                        } else {
+                            $("#mif3").removeClass("btn-success");
+                            $("#mif3").addClass("btn-danger");
+                        }
+                        //rojo 4
+                        if ($("#mif4").hasClass("btn-danger") == true) {
+
+                        } else {
+                            $("#mif4").removeClass("btn-success");
+                            $("#mif4").addClass("btn-danger");
+                        }
+                        //rojo 5
+                        if ($("#mif5").hasClass("btn-danger") == true) {
+
+                        } else {
+                            $("#mif5").removeClass("btn-success");
+                            $("#mif5").addClass("btn-danger");
+                        }
+
+                    } else {
+                        //$("#mif2").removeClass("btn-success");
+                       // $("#mif2").addClass("btn-danger");
+
+                        leadonline = "";
+                        if ($("#mif1").hasClass("btn-danger") == true) {
+                            $("#mif1").removeClass("btn-danger");
+                            $("#mif1").addClass("btn-success");
+
+                        } else {
+                           // $("#mif1").removeClass("btn-success");
+                           // $("#mif1").addClass("btn-danger");
+                        }
+
+                        
+                    }
+
+                }
+
+
+            if (result == "F3") {
+
+                if ($("#mif3").hasClass("btn-danger") == true) {
+                    $("#mif3").removeClass("btn-danger");
+                    $("#mif3").addClass("btn-success");
+
+                    leadonline = "F3";
+
+                    //verde 1
+                    if ($("#mif1").hasClass("btn-danger") == true) {
+                        $("#mif1").removeClass("btn-danger");
+                        $("#mif1").addClass("btn-success");
+                    }
+                    //verde 2
+                    if ($("#mif2").hasClass("btn-danger") == true) {
+                        $("#mif2").removeClass("btn-danger");
+                        $("#mif2").addClass("btn-success");
+                    }
+
+                    //rojo 4
+                    if ($("#mif4").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif4").removeClass("btn-success");
+                        $("#mif4").addClass("btn-danger");
+                    }
+                    //rojo 5
+                    if ($("#mif5").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif5").removeClass("btn-success");
+                        $("#mif5").addClass("btn-danger");
+                    }
+
+                } else {
+                   // $(this).removeClass("btn-success");
+                  //  $(this).addClass("btn-danger");
+
+                    
+                }
+
+            }
+
+            if (result == "F4") {
+                if ($("#mif4").hasClass("btn-danger") == true) {
+                    $("#mif4").removeClass("btn-danger");
+                    $("#mif4").addClass("btn-success");
+
+                    leadonline = "F4";
+
+                    //verde 1
+                    if ($("#mif1").hasClass("btn-danger") == true) {
+                        $("#mif1").removeClass("btn-danger");
+                        $("#mif1").addClass("btn-success");
+                    }
+                    //verde 2
+                    if ($("#mif2").hasClass("btn-danger") == true) {
+                        $("#mif2").removeClass("btn-danger");
+                        $("#mif2").addClass("btn-success");
+                    }
+                    //verde 3
+                    if ($("#mif3").hasClass("btn-danger") == true) {
+                        $("#mif3").removeClass("btn-danger");
+                        $("#mif3").addClass("btn-success");
+                    }
+
+                    //rojo 5
+                    if ($("#mif5").hasClass("btn-danger") == true) {
+
+                    } else {
+                        $("#mif5").removeClass("btn-success");
+                        $("#mif5").addClass("btn-danger");
+                    }
+
+                } else {
+                    //$(this).removeClass("btn-success");
+                    //$(this).addClass("btn-danger");
+
+                    leadonline = "";
+                    //rojo 1
+                    
+                }
+            }
+
+            if (result == "F5") {
+                if ($("#mif5").hasClass("btn-danger") == true) {
+                    $("#mif5").removeClass("btn-danger");
+                    $("#mif5").addClass("btn-success");
+
+                    leadonline = "F5";
+
+                    //verde 1
+                    if ($("#mif1").hasClass("btn-danger") == true) {
+                        $("#mif1").removeClass("btn-danger");
+                        $("#mif1").addClass("btn-success");
+                    }
+                    //verde 2
+                    if ($("#mif2").hasClass("btn-danger") == true) {
+                        $("#mif2").removeClass("btn-danger");
+                        $("#mif2").addClass("btn-success");
+                    }
+                    //verde 3
+                    if ($("#mif3").hasClass("btn-danger") == true) {
+                        $("#mif3").removeClass("btn-danger");
+                        $("#mif3").addClass("btn-success");
+                    }
+                    //verde 4
+                    if ($("#mif4").hasClass("btn-danger") == true) {
+                        $("#mif4").removeClass("btn-danger");
+                        $("#mif4").addClass("btn-success");
+                    }
+
+                } else {
+                   // $(this).removeClass("btn-success");
+                  //  $(this).addClass("btn-danger");
+
+                    leadonline = "";
+
+                    
+                }
+            }
+
+
+        }
+    });
+}
+
+function resetleadonline() {
+    leadonline = "reset";
+    //pasamos  todo  a rojo
+    //f1
+    if ($("#mif1").hasClass("btn-danger") == true) {
+       
+    } else {
+        $("#mif1").removeClass("btn-success");
+        $("#mif1").addClass("btn-danger");
+    }
+    //f2
+    if ($("#mif2").hasClass("btn-danger") == true) {
+
+    } else {
+        $("#mif2").removeClass("btn-success");
+        $("#mif2").addClass("btn-danger");
+    }
+    //f3
+    if ($("#mif3").hasClass("btn-danger") == true) {
+
+    } else {
+        $("#mif3").removeClass("btn-success");
+        $("#mif3").addClass("btn-danger");
+    }
+    //f4
+    if ($("#mif4").hasClass("btn-danger") == true) {
+
+    } else {
+        $("#mif4").removeClass("btn-success");
+        $("#mif4").addClass("btn-danger");
+    }
+    //f5
+    if ($("#mif5").hasClass("btn-danger") == true) {
+
+    } else {
+        $("#mif5").removeClass("btn-success");
+        $("#mif5").addClass("btn-danger");
+    }
+}
+
+function mostrarLeadonline() {
+    var estado = document.getElementById("howfound").value;
+
+    if (estado == 10) {
+        $('#LeadOnline').show();
+    } else {
+        $('#LeadOnline').hide();
+        resetleadonline();
+    }
+    
+   
+}

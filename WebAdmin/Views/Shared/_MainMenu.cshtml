@@ -11,14 +11,14 @@
 
 @if (@ViewBag.RolSystem.Contains("Technical Support"))
 {
-    <li class=" treeview">
-        <a>
+    <li class=" treeview" id="tech">
+        <a onclick="sitech()">
             <i class="fa fa-phone"></i> <span>Technical Support</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
-        <ul class="treeview-menu">
+        <ul class="treeview-menu" id="techsubmenu">
             <li><a asp-action="Index" asp-controller="Cases" asp-route-page="1"><i class="fa fa-circle-o"></i> Dashboard (Cases)</a></li>
             <li><a asp-action="Create" asp-controller="Cases"><i class="fa fa-circle-o"></i>Register Case</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Licenses View</a></li>
@@ -30,15 +30,15 @@
 
 @if (@ViewBag.RolSystem.Contains("Sales Department"))
 {
-    <li class=" treeview">
-        <a>
+    <li class=" treeview" id="sales">
+        <a onclick="sisales()">
             <i class="fa fa-briefcase"></i> <span>Sales</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
-        <ul class="treeview-menu">
-            <li class="active"><a asp-action="Dash" asp-controller="Opportunities"><i class="fa fa-circle-o"></i>Dashboard</a></li>
+        <ul class="treeview-menu" id="salessubmenu">
+            <li ><a asp-action="Dash" asp-controller="Opportunities"><i class="fa fa-circle-o"></i>Dashboard</a></li>
             <li><a asp-action="Index" asp-controller="Opportunities"><i class="fa fa-circle-o"></i>Opportunities</a></li>
             <li><a href="#"><i class="fa fa-circle-o"></i>Query business data</a></li>
             <li><a asp-action="Index" asp-controller="SalesComments"><i class="fa fa-circle-o"></i>Sales Comment</a></li>
@@ -100,15 +100,15 @@
 
 @if (@ViewBag.RolSystem.Contains("Administration"))
 {
-    <li class=" treeview">
-        <a>
+    <li class=" treeview" id="admin">
+        <a onclick="siadminis()">
             <i class="fa fa-desktop"></i> <span>Administration</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
-        <ul class="treeview-menu">
-            <li class="active"><a asp-action="Index" asp-controller="Contracts"><i class="fa fa-circle-o"></i> Contracts</a></li>
+        <ul class="treeview-menu" id="adminsubmenu">
+            <li ><a asp-action="Index" asp-controller="Contracts"><i class="fa fa-circle-o"></i> Contracts</a></li>
             
         </ul>
 

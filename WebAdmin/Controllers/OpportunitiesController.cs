@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using WebAdmin.Models;
+using WebAdmin.Models.Functions;
 using WebAdmin.UserRol;
 
 namespace WebAdmin.Controllers
@@ -17,6 +18,7 @@ namespace WebAdmin.Controllers
     public class OpportunitiesController : Controller
     {
         private readonly DBAdminContext _context;
+        private static string LeadOnline { get; set; }
         
         public IConfiguration Configuration { get; private set; }
 
@@ -1093,9 +1095,24 @@ namespace WebAdmin.Controllers
 
 
         #region ServerSide Proccessing
+        
+        public string FiltroLeadOnline (string leadonline)
+        {
+            if (!string.IsNullOrEmpty(leadonline))
+            {
+                LeadOnline = leadonline;
+            }
 
+            if (leadonline == "reset")
+            {
+                LeadOnline = "";
+            }
+            string prueba = LeadOnline;
+
+             return prueba;
+        }
        
-        public async Task<IActionResult> GetList(int? param)
+        public async Task<IActionResult> GetList(string filtro)
         {
             try
             {
@@ -1110,6 +1127,7 @@ namespace WebAdmin.Controllers
                 var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
                 // Search Value from (Search box)  
                   var searchValue = Request.Form["search[value]"].FirstOrDefault();
+                
 
                 //Paging Size (10,20,50,100)  
                 int pageSize = length != null ? Convert.ToInt32(length) : 0;
@@ -1244,6 +1262,89 @@ namespace WebAdmin.Controllers
                 if (!string.IsNullOrEmpty(Request.Form["columns[7][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.HowFoundID == howfound);
+
+                    
+                    //filtro LeadOnline
+                    List<Opportunities> lista = new List<Opportunities>();
+                   // List<int> IDS = new List<int>();
+                    lista = customerData.ToList();
+                    if (!string.IsNullOrEmpty(LeadOnline))
+                    {
+                        var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 1) as F1, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                       
+                        if (LeadOnline == "F1")
+                        {
+                            
+                            string dato = "00";
+                            var ff =  F.Where(y => y.F1 != dato && y.F2 == dato);
+                            
+                            var sisi  =  customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+                            
+
+                        }
+
+                        //f2
+                        if (LeadOnline == "F2")
+                        {
+
+                           // var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, '00' as F1, '00' as F3, '00' as F4, '00' as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                            string dato = "00";
+                            var ff = F.Where(y => y.F2 != dato && y.F3 == dato);
+
+                            var sisi = customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+
+                        }
+
+                        //f3
+                        if (LeadOnline == "F3")
+                        {
+
+                         //   var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, '00' as F1, '00' as F4, '00' as F2, '00' as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                            string dato = "00";
+                            var ff = F.Where(y => y.F3 != dato && y.F4 == dato);
+
+                            var sisi = customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+
+                        }
+
+                        //f4
+                        if (LeadOnline == "F4")
+                        {
+
+                         //   var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, '00' as F1, '00' as F3, '00' as F5, '00' as F2 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                            string dato = "00";
+                            var ff = F.Where(y => y.F4 != dato && y.F5 == dato);
+
+                            var sisi = customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+
+                        }
+
+                        //f5
+                        if (LeadOnline == "F5")
+                        {
+
+                          //  var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5, '00' as F1, '00' as F3, '00' as F4, '00' as F2 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                            string dato = "00";
+                            var ff = F.Where(y => y.F5 != dato);
+
+                            var sisi = customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+
+                        }
+                       // customerData.Join(IDS, c => c.ID, pli => pli, (c, pli) => c);
+                        //customerData = lista.AsQueryable();
+
+
+                    }
+
+                    
+
+                    
+
                 }
                 if (!string.IsNullOrEmpty(Request.Form["columns[8][search][value]"]))
                 {
@@ -1254,12 +1355,15 @@ namespace WebAdmin.Controllers
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
 
+
                
 
                 //total number of rows count   
                 recordsTotal = customerData.Count();
                 //Paging   
                 var data = customerData.Skip(skip).Take(pageSize).ToList();
+
+               
                 //Returning Json Data  
                 return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data, us = user, ca = category, how = howfound,
                 sta = memostatus, ra = rating});

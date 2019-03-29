@@ -204,7 +204,7 @@
                         <label class=" col-lg-4 control-label">HowFound</label>
                         <div class="col-lg-8">
 
-                            <select id="howfound" class="btn btn-primary dropdown-toggle" type="button" asp-items="@ViewBag.DDLHowFound" data-toggle="dropdown" style="width:80%;">
+                            <select id="howfound" class="btn btn-primary dropdown-toggle" type="button" asp-items="@ViewBag.DDLHowFound" data-toggle="dropdown" onchange="mostrarLeadonline();" style="width:80%;">
                                 <option value="">All</option>
                             </select>
 
@@ -212,13 +212,16 @@
 
 
                     </div>
-                    <div class="form-group text-center">
+                    <div class="form-group text-center" id="LeadOnline">
 
                         <button id="mif1" class="btn btn-danger ">F1</button>
                         <button id="mif2" class="btn btn-danger ">F2</button>
                         <button id="mif3" class="btn btn-danger ">F3</button>
                         <button id="mif4" class="btn btn-danger ">F4</button>
                         <button id="mif5" class="btn btn-danger ">F5</button>
+                        
+                            <input type="hidden" id="F1" name="F1" value="prueba" />
+                        
                     </div>
                     <div class="form-group">
                         <label class=" col-lg-4 control-label">Rating</label>
