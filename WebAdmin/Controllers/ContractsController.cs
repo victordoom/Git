@@ -36,7 +36,7 @@ namespace WebAdmin.Controllers
                 " ISNULL((SELECT(LTRIM(RTRIM(FirstName)) + ' ' + LTRIM(RTRIM(LASTnAME))) FROM[dbo].[SalesOwners] WHERE IDOwner = contractheader.OwnerID_1),'') ownerName, isnull(saleslocations.dba_address + '. ', '') + ' ' + isnull(saleslocations.dba_city + '. ', '') + ' ' + isnull(saleslocations.dba_state + '. ', '') + ' ' + isnull(saleslocations.dba_zipcode, '') dba_Address, "+
                 " saleslocations.Phone, contractheader.contractdate, isnull((SELECT BRAND FROM[dbo].[LicensesBrand] WHERE id = contractheader.brandid),'') SoftwarePos, "+
                 " contractstatus.statusdescription FROM { oj contractheader LEFT OUTER JOIN salescompany ON contractheader.companyid = salescompany.companyid LEFT OUTER JOIN saleslocations ON contractheader.locationid = saleslocations.locationid}, "+
-                "   contractstatus WHERE(contractstatus.statusid = contractheader.contractstatusid) ";
+                " contractstatus WHERE(contractstatus.statusid = contractheader.contractstatusid) and contractstatus.statusid ='03'";
            
 
 

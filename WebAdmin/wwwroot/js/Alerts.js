@@ -25,8 +25,8 @@
 
 function TechStatusSuccess() {
     $.notify({
-        title: '<strong>Technical Support Enabled</strong>',
-        message: 'The technical support service is enabled.'
+        title: '<strong>Technical support Active.</strong>',
+        message: ''
     }, {
             type: 'success',
             animate: {
@@ -41,8 +41,8 @@ function TechStatusSuccess() {
 
 function TechStatusDanger() {
     $.notify({
-        title: '<strong>Technical Support Disabled</strong>',
-        message: 'It does not have technical support, please get in touch to enable the service'
+        title: '<strong>This location has not active technical support. Please contact with your sales representative.</strong>',
+        message: ''
     }, {
             type: 'danger',
             animate: {
@@ -51,3 +51,4 @@ function TechStatusDanger() {
             }
         });
 }
+

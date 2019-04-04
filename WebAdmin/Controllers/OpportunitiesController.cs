@@ -184,20 +184,10 @@ namespace WebAdmin.Controllers
             var today = DateTime.Today.AddMonths(-6);
             //var lastmonth = new DateTime(today.Year, today.Month - 3,today.Day);
             
-            //consulta para admin
-            var dBAdminContext = _context.Opportunities
-                //.Where(c => c.UserID == IDUser)
-                .Where(c => c.VisitedDate >= today)
-                .OrderByDescending(c => c.ID )
-                .Include(c => c.OpportunitiesDetails);
+           
 
 
-            //consulta para user
-            var consulSales =  _context.Opportunities
-                .Where(c => c.UserID == IDUser)
-                .Where(c => c.VisitedDate >= today)
-                .OrderByDescending(c => c.ID)
-                .Include(c => c.OpportunitiesDetails);
+            
 
             // si es de Sales y Admin
             var segsistemausuario = from x in _context.SegSistemaUsuario
@@ -227,6 +217,13 @@ namespace WebAdmin.Controllers
 
             if (admin == 1)
             {
+                //consulta para admin
+                var dBAdminContext = _context.Opportunities
+                    //.Where(c => c.UserID == IDUser)
+                    .Where(c => c.VisitedDate >= today)
+                    .OrderByDescending(c => c.ID)
+                    .Include(c => c.OpportunitiesDetails);
+
                 ViewBag.Esadmin = 0;
                 ViewBag.Rol = "Administrador";
                 return View(await dBAdminContext.ToListAsync());
@@ -234,6 +231,13 @@ namespace WebAdmin.Controllers
            
             if (normal == 1)
             {
+                //consulta para user
+                var consulSales = _context.Opportunities
+                    .Where(c => c.UserID == IDUser)
+                    .Where(c => c.VisitedDate >= today)
+                    .OrderByDescending(c => c.ID)
+                    .Include(c => c.OpportunitiesDetails);
+
                 return View(await consulSales.ToListAsync());
             }
             else
@@ -1271,7 +1275,19 @@ namespace WebAdmin.Controllers
                     if (!string.IsNullOrEmpty(LeadOnline))
                     {
                         var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 1) as F1, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
-                       
+
+                        if (LeadOnline == "F0")
+                        {
+
+                            string dato = "00";
+                            var ff = F.Where(y => y.F1 == dato);
+
+                            var sisi = customerData.Join(ff, x => x.ID, y => y.Idoppor, (x, y) => x);
+                            customerData = sisi;
+
+
+                        }
+                        //f1
                         if (LeadOnline == "F1")
                         {
                             
@@ -1379,35 +1395,7 @@ namespace WebAdmin.Controllers
         }
         #endregion
 
-        #region Funciones OppVerifyOnline
-        public JsonResult OppVerifyOnlineFn(int? oppid, int? rowid)
-        {
-            var LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql(""); ;
-            if (rowid == 1)
-            {
-                 LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F1");
-            }
-            if (rowid == 2)
-            {
-                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F2");
-            }
-            if (rowid == 3)
-            {
-                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F3");
-            }
-            if (rowid == 4)
-            {
-                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F4");
-            }
-            if (rowid == 5)
-            {
-                LeadOnline = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT dbo.Opp_verifyLeadOnlineTmp({oppid}, {rowid}) AS F5");
-            }
-
-            return Json(LeadOnline);
-        }
-
-        #endregion
+        
 
     }
 }

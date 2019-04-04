@@ -796,6 +796,18 @@ namespace WebAdmin.Controllers
             return Json(Info);
         }
 
+        public JsonResult ClientApi()
+        {
+            var dato = _context.Cases.ToList();
+            return Json(dato);
+        }
+
+        public JsonResult GetById(int id)
+        {
+            var dato = _context.Cases.Where(x => x.CasesID == id);
+            return Json(dato);
+        }
+
 
         #endregion
         #region Funciones SqlServer

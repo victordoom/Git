@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAdmin.Models;
+using WebAdmin.Services;
 
 namespace WebAdmin.Controllers
 {
@@ -71,6 +72,9 @@ namespace WebAdmin.Controllers
 
             ViewBag.RolSystem = user.Rol;
 
+            Proxy proxy = new Proxy();
+            var prueba = proxy.GetAll();
+            var segunda = proxy.GetByid(5);
             
             return View();
         }

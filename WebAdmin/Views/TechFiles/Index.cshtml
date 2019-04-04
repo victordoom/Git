@@ -32,11 +32,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.CompanyAddress)
             </th>
-            <th>
-                File
-            </th>
-
-            <th></th>
+         
         </tr>
     </thead>
     <tbody>
@@ -60,21 +56,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CompanyAddress)
             </td>
-            <td>
-                @*<a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile">View File</a>*@
+         
 
-                @if (@item.StrFile != null)
-                {<a href="http://96.231.33.87:7778/@item.ContractID/@item.StrFile" target="_blank"> <img src="@Url.Content("./images/" + item.StrFileExt +".png" )" height='24' width='24' alt="Attachment Document" /></a>
-                }
-            </td>
-
-            <td width="5%">
-                @*@Html.DisplayFor(modelItem => item.IdRow)*@
-                <br />
-                <br />
-                @*<a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.IdRow"><span class="zmdi zmdi-edit"></span></a>
-                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.IdRow"><span class="zmdi zmdi-square-right"></span></a>*@
-            </td>
+          
         </tr>
         }
     </tbody>

@@ -76,6 +76,8 @@
                 $(document).ready(function () {
                     companyID = $('#companyID').val()
                     locationID = $("#IDLocation").val();
+                    $('#TechSuccess').hide();
+                    $('#TechDanger').hide();
 
                     $('#example').DataTable({
                         "order": [[0, "desc"]]
@@ -99,11 +101,13 @@
                                 } else {
                                     $("#locationID").append('<option value="' + dato.locationId + '">' + dato.address + '</option>');
                                 }
-                                GetPhoneEmail(dato.locationId);
-                                GetFnContractBrand(dato.companyId, dato.locationId);
-                                GetFnContractActive(dato.companyId, dato.locationId);
-                                GetTechStatusFn(dato.companyId, dato.locationId);
+                                
                             });
+
+                            GetPhoneEmail(result[0].locationId);
+                            GetFnContractBrand(result[0].companyId, result[0].locationId);
+                            GetFnContractActive(result[0].companyId, result[0].locationId);
+                            GetTechStatusFn(result[0].companyId, result[0].locationId);
                         }
 
 
@@ -139,6 +143,12 @@
                    //Change select
                     $("#companyID").change(function () {
                         $("#locationID").empty();
+                        $("#PhoneS").val("");
+                        $("#EmailS").val("");
+                        $("#SalesManName").val("");
+                        $("#SoftwarePos").val("");
+                        $('#TechSuccess').hide();
+                        $('#TechDanger').hide();
                         companyID = $('#companyID').val()
                         locationID = $('#IDLocation').val()
                         $.ajax({
@@ -155,14 +165,26 @@
                                     }
 
                                     
-                                    GetPhoneEmail(dato.locationId);
-                                    GetFnContractBrand(dato.companyId, dato.locationId);
-                                    GetFnContractActive(dato.companyId, dato.locationId);
-                                    GetTechStatusFn(dato.companyId, dato.locationId);
-                                   
                                 });
+
+                                GetPhoneEmail(result[0].locationId);
+                                GetFnContractBrand(result[0].companyId, result[0].locationId);
+                                GetFnContractActive(result[0].companyId, result[0].locationId);
+                                GetTechStatusFn(result[0].companyId, result[0].locationId);
                             }
                         })
+                    });
+
+                    $("#locationID").change(function () {
+                        //$("#locationID").empty();
+                       var companyId = $('#companyID').val()
+                        var locationId = $('#locationID').val()
+
+                        GetPhoneEmail(locationId);
+                        GetFnContractBrand(companyId, locationId);
+                        GetFnContractActive(companyId, locationId);
+                        GetTechStatusFn(companyId, locationId);
+                        
                     });
                     //get phone, email
                     function GetPhoneEmail(locationid) {
@@ -175,7 +197,7 @@
                             data: { locationid },
                             success: function (Result) {
                                 $("#PhoneS").val(Result[0].phone);
-                                $("#EmailS").val(Result[0].email);
+                                $("#EmailS").val(Result[0].emailMerchant);
 
                                
                             }

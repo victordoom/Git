@@ -76,7 +76,7 @@
 
             </th>
             <th>
-                Opened
+                @*Opened*@
                 @Html.DisplayNameFor(model => model.OpenedDate)
 
             </th>
@@ -84,9 +84,9 @@
                 @Html.DisplayNameFor(model => model.Status)
 
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.FileName)
-            </th>
+            </th>*@
             @*<th></th>*@
         </tr>
     </thead>
@@ -173,11 +173,11 @@
 
             </td>
 
-            <td>
+            @*<td>
                 @if (@item.FileName != null)
                 {<a href="UploadFiles/07/@item.CasesID/@item.FileName" target="_blank"> <img src="@Url.Content("./images/" + item.FileType +".png" )" height='24' width='24' alt="Attachment Document" /></a>
                 }
-            </td>
+            </td>*@
 
             @*<td width="7%">
         <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID"><span class="zmdi zmdi-edit"></span></a>

@@ -179,43 +179,46 @@
                             </dd>
                         </dl>
                     </div>
-
+                   
                     <div class="col-md-4">
-                        <dl class="dl-horizontal">
-                            <dt>
-                               Closed Information
-                            </dt>
-                            <dd>
-                               
-                            </dd>
-                            <dt>
-                                Date
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.ClosedDate)
-                            </dd>
-                            <dt>
-                                By
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.ClosedBy)
-                            </dd>
-                            <dt>
-                                Reason
-                            </dt>
-                            <dd>
-                                @Html.DropDownListFor(model => model.ClosingReasonID, (SelectList)ViewBag.DDLClosingreason, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
-                            </dd>
-                            <dt>
-                               Comment
-                            </dt>
-                            <dd>
-                                @Html.DisplayFor(model => model.ClosedComment)
-                            </dd>
+                        <div class="col-md-12" style="background-color:#BBCDA2;">
+                            <dl class="dl-horizontal">
+                                <dt>
+                                    Closed Information
+                                </dt>
+                                <dd>
 
-                            
-                        </dl>
+                                </dd>
+                                <dt>
+                                    Date
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.ClosedDate)
+                                </dd>
+                                <dt>
+                                    By
+                                </dt>
+                                <dd>
+                                    @Html.DropDownListFor(model => model.ClosedBy, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                                </dd>
+                                <dt>
+                                    Reason
+                                </dt>
+                                <dd>
+                                    @Html.DropDownListFor(model => model.ClosingReasonID, (SelectList)ViewBag.DDLClosingreason, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                                </dd>
+                                <dt>
+                                    Comment
+                                </dt>
+                                <dd>
+                                    @Html.DisplayFor(model => model.ClosedComment)
+                                </dd>
+
+
+                            </dl>
+                        </div>
                     </div>
+
                 </div>
 
                 <div class="panel-footer">

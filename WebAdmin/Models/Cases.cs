@@ -59,6 +59,7 @@ namespace WebAdmin.Models
         public string ContractId { get; set; }
         public int? OpenedByOld { get; set; }
         public int? AssignedToOld { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage ="Company is needed.")]
         [Display(Name = "Company")]
         public int? CompanyId { get; set; }
         [Display(Name = "Location")]

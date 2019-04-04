@@ -348,7 +348,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("SELECT      top 1  GoalID, GoalYear, GoalMonth, GoalQuantityNewContracts, (select count(*) cases from ContractHeader where year(CreationDate)=GoalYear  and month(CreationDate)=GoalMonth ) QuantityReal FROM  SalesGoals where Status=1 order by  GoalYear, GoalMonth desc", sqlConnection);
+                SqlCommand query = new SqlCommand("SELECT      top 1  GoalID, GoalYear, GoalMonth, GoalQuantityNewContracts, (select count(*) cases from ContractHeader where year(CreationDate)=GoalYear  and month(CreationDate)=GoalMonth and ContractStatusID in('03')) QuantityReal FROM  SalesGoals where Status=1 order by  GoalYear, GoalMonth desc", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -386,11 +386,11 @@ namespace WebAdmin.Controllers
                 sqlConnection.Open();
                 SqlCommand query = new SqlCommand("declare @CurrentYear int, @CurrentMonth int set @CurrentYear = @year set  @CurrentMonth = @month"+
                      " select UserID id, NOMBRE_USUARIO + ' ' + APELLIDO_USUARIO SalesMan, (select count(*) from ContractHeader" +
-                     " where month(CreationDate) = @CurrentMonth AND YEAR(CreationDate) = @CurrentYear and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in('03')) cases " +
-                     "from SEG_USUARIOS where ID_PERSONA  in ( select id from Employees where DepartmentID=2  and PositionID=2) and ESTADO_USUARIO='A'  "+
-                     "or(ID_PERSONA  in (select id from Employees where DepartmentID = 2  and PositionID = 2) and ESTADO_USUARIO = 'I'  and"+
-                     "(select count(*) from ContractHeader where month(CreationDate) = @CurrentMonth   AND YEAR(CreationDate) = @CurrentYear   and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in ('03')) > 0)"+
-                     "order by SalesMan", sqlConnection);
+                     " where month(CreationDate) = @CurrentMonth AND YEAR(CreationDate) = @CurrentYear and ContractStatusID in('03') and userid = SEG_USUARIOS.ID_USUARIO) cases " +
+                     " from SEG_USUARIOS " +
+                     " where ID_PERSONA in (select id from Employees where DepartmentID = 2 and PositionID=2) and ESTADO_USUARIO = 'A' " +
+                     " or ID_PERSONA  in (select id from Employees where ESTADO_USUARIO = 'I'  and(select count(*) from ContractHeader where month(CreationDate) = @CurrentMonth   AND YEAR(CreationDate) = @CurrentYear   and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in ('03')) > 0) " +
+                     " order by SalesMan", sqlConnection);
 
                 query.Parameters.AddWithValue("@month", month);
                 query.Parameters.AddWithValue("@year", year);
@@ -433,7 +433,7 @@ namespace WebAdmin.Controllers
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                SqlCommand query = new SqlCommand("SELECT      top 1  GoalID, GoalYear, GoalMonth, GoalQuantityNewContracts, (select count(*) cases from ContractHeader where year(CreationDate)=GoalYear  and month(CreationDate)=GoalMonth ) QuantityReal FROM  SalesGoals where Status=0 order by  GoalYear desc, GoalMonth desc", sqlConnection);
+                SqlCommand query = new SqlCommand("SELECT top 1  GoalID, GoalYear, GoalMonth, GoalQuantityNewContracts, (select count(*) cases from ContractHeader where year(CreationDate)=GoalYear  and month(CreationDate)=GoalMonth and ContractStatusID in('03')) QuantityReal FROM  SalesGoals where Status=0 order by  GoalYear desc, GoalMonth desc", sqlConnection);
                 query.CommandType = System.Data.CommandType.Text;
                 int result = query.ExecuteNonQuery();
 
@@ -470,11 +470,13 @@ namespace WebAdmin.Controllers
             {
                 sqlConnection.Open();
                 SqlCommand query = new SqlCommand("declare @LastYear int, @LastMonth int set @LastYear = @year set  @LastMonth = @month" +
-                     " select NOMBRE_USUARIO + ' ' + APELLIDO_USUARIO SalesMan, (select count(*) from ContractHeader where month(CreationDate) = @LastMonth "+
-                     " AND YEAR(CreationDate) = @LastYear  and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in('03')) cases from SEG_USUARIOS where "+
-                     " ID_PERSONA  in (select id from Employees where DepartmentID = 2  and PositionID = 2) and ESTADO_USUARIO = 'A' or(ID_PERSONA  in (select id from Employees where DepartmentID = 2  and PositionID = 2) "+
-                     "and ESTADO_USUARIO = 'I'  and   (select count(*) from ContractHeader where month(CreationDate) = @LastMonth "+
-                     " AND YEAR(CreationDate) = @LastYear  and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in ('03')) > 0) order by SalesMan", sqlConnection);
+                     " select NOMBRE_USUARIO + ' ' + APELLIDO_USUARIO SalesMan, (select count(*) from ContractHeader" +
+                     " where month(CreationDate) = @LastMonth AND YEAR(CreationDate) = @LastYear and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in('03')) cases " +
+                     " from SEG_USUARIOS " + "" +
+                     " where ID_PERSONA in (select id from Employees where DepartmentID = 2 and PositionID=2 ) and ESTADO_USUARIO = 'A' " +
+                     " or ID_PERSONA  in (select id from Employees where ESTADO_USUARIO = 'I'  and(select count(*) from ContractHeader where month(CreationDate) = @LastMonth   AND YEAR(CreationDate) = @LastYear   and userid = SEG_USUARIOS.ID_USUARIO and ContractStatusID in ('03')) > 0) " +
+                     " order by SalesMan" 
+                     , sqlConnection);
 
                 query.Parameters.AddWithValue("@month", month);
                 query.Parameters.AddWithValue("@year", year);

@@ -83,7 +83,9 @@
                                         <label asp-for="CompanyId" class="control-label"></label>
                                     </div>
                                     <div class="col-md-12 col-sm-6 col-xs-12">
-                                        <select asp-for="CompanyId" id="companyID" class="example col-md-12 form-control" asp-items="ViewBag.CompanyId"></select>
+                                        <select asp-for="CompanyId" id="companyID" class="example col-md-12 form-control" asp-items="ViewBag.CompanyId">
+                                            <option value="0">Select a company</option>
+                                        </select>
                                         <span asp-validation-for="CompanyId" class="text-danger"></span>
                                         @*@Html.DropDownListFor(model => model.CompanyId, (SelectList)ViewBag.CompanyId,"Select Item", htmlAttributes: new {@id="companyID", @class = "example form-control" })*@
                                     </div>
@@ -313,10 +315,10 @@
                     <div class="row col-lg-12 col-sm-12">
                         <br />
                         <div class="alert alert-danger" id="TechDanger">
-                            <strong>Technical Support Disabled</strong> It does not have technical support, please get in touch to enable the service.
+                            <strong>This location has not active technical support. Please contact with your sales representative.</strong>
                         </div>
                         <div class="alert alert-success" id="TechSuccess">
-                            <strong>Technical Support Enabled</strong>The technical support service is enabled.
+                            <strong>Technical support Active.</strong>
                         </div>
                     </div>
                    
