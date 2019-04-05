@@ -6,6 +6,7 @@ var indexrating;
 var indexstatus;
 
 var leadonline;
+var reasonfilter;
 $('#advancedSearchModal').on('shown.bs.modal', function () {
 
 });
@@ -14,6 +15,7 @@ $('#advancedSearchModal').on('shown.bs.modal', function () {
 $(document).ready(function () {
 
     leadonline = ""
+    reasonfilter = "";
     
     var y = $('input[name=Esadmin]')[0].value;
     var idtabla = $('input[name=tablaid]')[0].value;
@@ -38,7 +40,7 @@ $(document).ready(function () {
         },
         "columnDefs":
             [{
-                //"targets": [0],
+                //"targets": [13],
                 "visible": false,
                 "searchable": false,
 
@@ -146,6 +148,7 @@ $(document).ready(function () {
             },
             { "data": "numberLeadToFollowUp", "name": "NumberLeadToFollowUp", "autoWidth": true },
             { "data": "timeZone", "name": "TimeZone", "autoWidth": true },
+            
             {
                 data: "rating",
                 name: "Rating",
@@ -160,7 +163,20 @@ $(document).ready(function () {
                     return row.lastComment;
                 },
             },
-
+            //{
+            //    data: "closingReasonID",
+            //    name: "ClosingReasonID",
+            //    render: function (data, type, row) {
+            //        var Reason;
+            //        if (row.closingReasonID == null) {
+            //            Reason = "";
+            //        } else {
+            //            Reason = row.closingReasonID;
+            //        }
+            //        return Reason;
+            //    }
+            //},
+            
         ],
 
         "processing": true, // for show progress bar  
@@ -210,13 +226,20 @@ function SelectUsuario() {
     var a = document.getElementById("rating").value;
      indexrating = document.getElementById("rating").selectedIndex;
     var b = document.getElementById("status").value;
-     indexstatus = document.getElementById("status").selectedIndex;
+    indexstatus = document.getElementById("status").selectedIndex;
+    var c = document.getElementById("SelectReasonFilter").value;
+    indexreason = document.getElementById("SelectReasonFilter").selectedIndex;
 
     if (z == 10) {
         if (leadonline != "") {
             FiltroLeadOnline();
+            
     }
     
+    }
+
+    if (b == 1) {
+
     }
 
    
@@ -226,6 +249,7 @@ function SelectUsuario() {
     memoria.columns(7).search(z);
     memoria.columns(10).search(a);
     memoria.columns(8).search(b);
+   // memoria.columns(13).search(c);
     memoria.draw();
 
     
@@ -237,12 +261,14 @@ function reset() {
     var z = document.getElementById("howfound");
     var a = document.getElementById("rating");
     var b = document.getElementById("status");
+    var b = document.getElementById("SelectReasonFilter");
 
     x.selectedIndex = 0;
     y.selectedIndex = 0;
     z.selectedIndex = 0;
     a.selectedIndex = 0;
     b.selectedIndex = 0;
+   // c.selectedIndex = 0;
 
     resetleadonline();
     mostrarLeadonline();
@@ -291,6 +317,14 @@ function memobusqueda(json) {
         var id = la[i].value;
         if (id == json.ra) {
             la.selectedIndex = i;
+
+        }
+    }
+    var lc = document.getElementById("SelectReasonFilter");
+    for (var i = 0; i < la.length; i++) {
+        var id = lc[i].value;
+        if (id == json.rea) {
+            lc.selectedIndex = i;
 
         }
     }

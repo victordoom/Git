@@ -13,6 +13,7 @@ using WebAdmin.Models;
 using X.PagedList;
 
 
+
 namespace WebAdmin.Controllers
 {
     public class CasesController : Controller
@@ -246,7 +247,8 @@ namespace WebAdmin.Controllers
             }
 
 
-            return View(model);
+             return View(model);
+            
         }
 
         // POST: Cases/Create
@@ -810,6 +812,7 @@ namespace WebAdmin.Controllers
 
 
         #endregion
+
         #region Funciones SqlServer
         public JsonResult GetContractBrandFn(int? locationid, int? companyid)
         {
@@ -834,6 +837,71 @@ namespace WebAdmin.Controllers
             var Status = _context.FnContractGetTechStatus.FromSql($"SELECT  dbo.CONTRACT_GetTechnicalSupportStatus({companyid}, {locationid}) as HasTechnicalSpp");
 
             return Json(Status);
+        }
+        #endregion
+
+        #region Report Prueba
+
+        public async Task<IActionResult> ReportCasePDF(int? id)
+        {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cases = await _context.Cases
+                .Include(c => c.AssignedToNavigation)
+                .Include(c => c.Company)
+                .Include(c => c.Location)
+                .Include(c => c.CasesDetails)
+                .FirstOrDefaultAsync(m => m.CasesID == id);
+            if (cases == null)
+            {
+                return NotFound();
+            }
+
+           
+            //ViewBag.Newdetails = new CasesDetails();
+            //ViewBag.DDLdetails = _context.CasesDetails.Where(x => x.CasesID == cases.CasesID);
+            //ViewBag.DDlCompanies = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName");
+            //ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+
+            
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+           
+
+           
+            ViewBag.User = Email; 
+
+
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+            if (ViewBag.User == null)
+            {
+                return RedirectToAction("../Identity/Account/Login");
+            }
+            
+
+
+            return View(cases);
+        }
+
+       
+
+        public JsonResult GetUser(int id)
+        {
+            var user = _context.SegUsuarios.FirstOrDefault(x => x.UserID == id);
+
+            return Json(user);
+        }
+        public JsonResult GetCompany(int id)
+        {
+            var company = _context.SalesCompany.FirstOrDefault(x => x.CompanyId == id);
+
+            return Json(company);
         }
         #endregion
         //public JsonResult FindDataUser2(int? UserID)

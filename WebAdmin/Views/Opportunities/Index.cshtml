@@ -155,6 +155,9 @@
             <th>TimeZone</th>
             <th>Rating</th>
             <th>FollowUp</th>
+            @*<th>ClosingReasonID</th>*@
+            
+
         </tr>
     </thead>
     <tfoot>
@@ -255,6 +258,18 @@
 
                         </div>
                     </div>
+                    <div class="form-group" id="ReasonFilter">
+                        <label class=" col-lg-4 control-label">Reason</label>
+                        <div class="col-lg-8">
+
+
+                            <select id="SelectReasonFilter" name="SelectReason" class="form-control" asp-items="ViewBag.ClosingReason" style="width:80%;" ></select>
+
+
+                            
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -298,7 +313,7 @@
                 <label>Comment </label>
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" id="IdUser" name="IdUser" />
+                    <input type="hidden" id="IdUser" name="IdUser" value="@ViewBag.UserID" />
                     <input type="hidden" id="Id" name="Id" />
 
 

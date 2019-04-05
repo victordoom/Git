@@ -49,3 +49,21 @@ function siadminis() {
         localStorage.setItem('memomenu', 'activoadmin');
     }
 }
+
+//Datos para el reporte en PDF del Case
+function Users() {
+    var id = $("#userid").val();
+
+    $.ajax({
+        Type: 'POST',
+        url: '/Cases/GetUser',
+        dataType: 'json',
+        data: { id },
+        success: function (Result) {
+            $("#userid").val(result[0].nombreUsuario);
+
+
+        }
+    })
+
+}

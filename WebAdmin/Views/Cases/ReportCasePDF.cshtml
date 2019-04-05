@@ -1,0 +1,310 @@
+﻿@model WebAdmin.Models.Cases
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ReportCasePDF</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
+    <!-- Theme style -->
+    @*<link rel="stylesheet" href="~/css/dataTables.bootstrap.min.css" />*@
+    <link rel="stylesheet" href="~/css/responsive.bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/select2.min.css" />
+
+    <link rel="stylesheet" href="~/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/dist/css/skins/skin-blue.min.css">
+
+
+
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+    folder instead of downloading all of them to reduce the load. -->
+    @*<link rel="stylesheet" href="~/dist/css/skins/_all-skins.min.css">*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+    <script src="~/lib/jquery/dist/responsive.bootstrap.min.js"></script>
+    <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="~/dist/js/adminlte.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.mask.js"></script>
+    <script src="~/lib/jquery/dist/select2.min.js"></script>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="~/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <script src="~/lib/jquery/dist/jquery.dataTables.min.js"></script>
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/bower_components/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="~/bower_components/Ionicons/css/ionicons.min.css">
+    <!-- Google Font -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" />
+    <link rel="stylesheet" href=" https://cdn.datatables.net/1.10.19/css/dataTables.material.min.css" />
+
+
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <script src="~/lib/jquery/dist/dataTables.bootstrap4.min.js"></script>
+    <script src="~/lib/jquery/dist/dataTables.responsive.min.js"></script>
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="~/js/CasesJS.js"></script>
+    <script>
+        $(document).ready(function () {
+            Users();
+        });
+    </script>
+    <style>
+        .customDrowDown {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: 0px;
+        }
+    </style>
+</head>
+<body>
+ <div>
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading"> <h3 class="panel-title">Details  Case</h3></div>
+            <div class="panel-body">
+                <div class="col-md-4">
+
+                    <dl class="dl-horizontal">
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ContractId)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ContractId)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Company)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Company.CompanyName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Location)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Location.Address)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.OpenedDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.OpenedDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.OpenedBy)
+                        </dt>
+                        <dd>
+                           
+
+                            @*@Html.DisplayFor(model => model.OpenedBy)*@
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Status)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Title)
+                        </dd>
+
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CallerName)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CallerName)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CallerTitle)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CallerTitle)
+                        </dd>
+
+                    </dl>
+
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CallerEmail)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CallerEmail)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CallerPhone)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.CallerPhone)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Description)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DueDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.DueDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Priority)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Priority)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Category)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Category)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.ResolvedDate)
+                        </dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.ResolvedDate)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.AssignedTo)
+                        </dt>
+
+                        <dd>
+                            <input  id="userid" name="userid" value="@Html.DisplayFor(model => model.AssignedTo)"/>
+                            @*@Html.DropDownListFor(model => model.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })*@
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <div>
+                    @*<a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.CasesID">Edit</a> |*@
+                    <a class="btn btn-success" asp-action="CreateCasesDetails" asp-route-id="@Model.CasesID">Add Follow up</a> |
+                    @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
+                    <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @*@using (Html.BeginForm("Details", "Cases", FormMethod.Post, new { id = "frm-comprobante" }))
+        {*@
+    @*<form class="form-inline">
+            <div class="form-group">
+                <strong>Comments</strong>
+                <textarea id="NewComment" class="form-control" rows="2" cols="60"></textarea>
+            </div>
+            <div class="form-group">
+
+                <strong>Status</strong>
+                <select id="NewStatus" class="form-control">
+                    <option>In Proccess</option>
+                    <option>Pending</option>
+                    <option>Resolved</option>
+                </select>
+            </div>
+
+            <button type="submit" formmethod="post" class="btn btn-primary" value="NewDetail" name="action">Submit</button>
+
+        </form>*@
+    @*}*@
+
+    </div>
+
+
+
+
+
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Segumiento</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-condensed table-hover table-striped wrap dt-responsive" style="width:100%" id="example">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CasesDetails.FirstOrDefault().DetailDatetime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CasesDetails.FirstOrDefault().Comment)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CasesDetails.FirstOrDefault().Status)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.CasesDetails.FirstOrDefault().UserID)
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.CasesDetails.OrderByDescending(g => g.DetailDatetime))
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DetailDatetime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Comment)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+                                    <td>
+                                        @*@Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })*@
+                                    </td>
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

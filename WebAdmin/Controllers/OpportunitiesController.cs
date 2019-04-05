@@ -1241,8 +1241,26 @@ namespace WebAdmin.Controllers
                     memostatus = 1;
                     status = true;
                 }
+               
                 string rating = Request.Form["columns[10][search][value]"].FirstOrDefault();
-                
+                bool reason = false;
+                //inicializar con un numero diferente de 0 y 1
+                int memoreason = 10;
+                var reasonid = Request.Form["columns[13][search][value]"].FirstOrDefault();
+                if (reasonid == "")
+                {
+
+                }
+                if (reasonid == "0")
+                {
+                    memoreason = 0;
+                    reason = false;
+                }
+                if (reasonid == "1")
+                {
+                    memoreason = 1;
+                    reason = true;
+                }
 
                 //Sorting  
                 //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
@@ -1370,9 +1388,12 @@ namespace WebAdmin.Controllers
                 {
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
+                if (!string.IsNullOrEmpty(Request.Form["columns[13][search][value]"]))
+                {
+                    customerData = customerData.Where(m => m.ClosingReasonID == memoreason);
+                }
 
 
-               
 
                 //total number of rows count   
                 recordsTotal = customerData.Count();
@@ -1382,7 +1403,7 @@ namespace WebAdmin.Controllers
                
                 //Returning Json Data  
                 return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data, us = user, ca = category, how = howfound,
-                sta = memostatus, ra = rating});
+                sta = memostatus, ra = rating, rea = memoreason});
 
             }
             catch (Exception)
