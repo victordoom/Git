@@ -1243,23 +1243,16 @@ namespace WebAdmin.Controllers
                 }
                
                 string rating = Request.Form["columns[10][search][value]"].FirstOrDefault();
-                bool reason = false;
+                int reason = 0;
                 //inicializar con un numero diferente de 0 y 1
-                int memoreason = 10;
+                int memoreason = 0;
                 var reasonid = Request.Form["columns[13][search][value]"].FirstOrDefault();
-                if (reasonid == "")
+                string closingreason = reasonid.ToString();
+                
+                if (!string.IsNullOrEmpty(closingreason))
                 {
-
-                }
-                if (reasonid == "0")
-                {
-                    memoreason = 0;
-                    reason = false;
-                }
-                if (reasonid == "1")
-                {
-                    memoreason = 1;
-                    reason = true;
+                    reason = Int32.Parse(closingreason);
+                    memoreason = reason;
                 }
 
                 //Sorting  
@@ -1388,9 +1381,10 @@ namespace WebAdmin.Controllers
                 {
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[13][search][value]"]))
+
+                if (!string.IsNullOrEmpty(Request.Form["columns[13][search][value]"]) && reason != 0)
                 {
-                    customerData = customerData.Where(m => m.ClosingReasonID == memoreason);
+                    customerData = customerData.Where(m => m.ClosingReasonID == reason);
                 }
 
 

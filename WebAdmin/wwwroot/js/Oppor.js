@@ -40,9 +40,9 @@ $(document).ready(function () {
         },
         "columnDefs":
             [{
-                //"targets": [13],
+                "targets": [13],
                 "visible": false,
-                "searchable": false,
+                //"searchable": false,
 
             }],
         "columns": [
@@ -50,9 +50,14 @@ $(document).ready(function () {
                 data: "id",
                 name: "ID",
                 render: function (data, type, row) {
-                    return '<a href="Opportunities/Edit/' + row.id + '" class="btn btn-warning" asp-route-id=""><span class="zmdi zmdi-edit"></span></a>' +
-                        '<a href="Opportunities/Details/' + row.id + '" class="btn btn-info" ><span class="zmdi zmdi-square-right"></span></a>' +
-                        '<a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed(' + row.id + ',' + row.userID + ')"><span class="zmdi zmdi-square-right"></span></a>';
+
+                    var op = '<a href="Opportunities/Edit/' + row.id + '" class="btn btn-warning" asp-route-id=""><span class="zmdi zmdi-edit"></span></a>';
+                    op += '<a href="Opportunities/Details/' + row.id + '" class="btn btn-info" ><span class="zmdi zmdi-square-right"></span></a>';
+                    if (row.closed == false) {
+                        op += '<a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed(' + row.id + ',' + row.userID + ')"><span class="zmdi zmdi-square-right"></span></a>';
+                    }
+                    return op;
+                        
                 },
             },
             {
@@ -163,19 +168,19 @@ $(document).ready(function () {
                     return row.lastComment;
                 },
             },
-            //{
-            //    data: "closingReasonID",
-            //    name: "ClosingReasonID",
-            //    render: function (data, type, row) {
-            //        var Reason;
-            //        if (row.closingReasonID == null) {
-            //            Reason = "";
-            //        } else {
-            //            Reason = row.closingReasonID;
-            //        }
-            //        return Reason;
-            //    }
-            //},
+            {
+                data: "closingReasonID",
+                name: "ClosingReasonID",
+                render: function (data, type, row) {
+                    var Reason;
+                    if (row.closingReasonID == null) {
+                        Reason = "";
+                    } else {
+                        Reason = row.closingReasonID;
+                    }
+                    return Reason;
+                }
+            },
             
         ],
 
@@ -190,6 +195,7 @@ $(document).ready(function () {
             memobusqueda(json);
 
             mostrarLeadonline();
+            mostrarClosingReason();
            // alert("Datos cargados exitosamente");
         }
         
@@ -249,7 +255,7 @@ function SelectUsuario() {
     memoria.columns(7).search(z);
     memoria.columns(10).search(a);
     memoria.columns(8).search(b);
-   // memoria.columns(13).search(c);
+    memoria.columns(13).search(c);
     memoria.draw();
 
     
@@ -261,17 +267,18 @@ function reset() {
     var z = document.getElementById("howfound");
     var a = document.getElementById("rating");
     var b = document.getElementById("status");
-    var b = document.getElementById("SelectReasonFilter");
+    var c = document.getElementById("SelectReasonFilter");
 
     x.selectedIndex = 0;
     y.selectedIndex = 0;
     z.selectedIndex = 0;
     a.selectedIndex = 0;
     b.selectedIndex = 0;
-   // c.selectedIndex = 0;
+    c.selectedIndex = 0;
 
     resetleadonline();
     mostrarLeadonline();
+    mostrarClosingReason();
 }
 
 function memobusqueda(json) {
@@ -1150,13 +1157,34 @@ function resetleadonline() {
 
 function mostrarLeadonline() {
     var estado = document.getElementById("howfound").value;
+    var status = document.getElementById("status").value;
+    var reason = document.getElementById("SelectReasonFilter");
 
     if (estado == 10) {
         $('#LeadOnline').show();
+            if (status == 1) {
+               $('#ReasonFilter').show();
+            }  
+        
     } else {
         $('#LeadOnline').hide();
+        $('#ReasonFilter').hide();
+        reason.selectedIndex = 0;
         resetleadonline();
     }
     
    
+}
+function mostrarClosingReason() {
+
+    var estado = document.getElementById("howfound").value;
+    var status = document.getElementById("status").value;
+    var reason = document.getElementById("SelectReasonFilter");
+
+    if (estado == 10 && status == 1) {
+        $('#ReasonFilter').show();
+    } else {
+        $('#ReasonFilter').hide();
+        reason.selectedIndex = 0;
+    }
 }

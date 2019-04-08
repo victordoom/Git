@@ -155,7 +155,7 @@
             <th>TimeZone</th>
             <th>Rating</th>
             <th>FollowUp</th>
-            @*<th>ClosingReasonID</th>*@
+            <th>ClosingReasonID</th>
             
 
         </tr>
@@ -248,7 +248,7 @@
                         <div class="col-lg-8">
 
 
-                            <select id="status" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:80%;">
+                            <select id="status" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="width:80%;" onchange="mostrarClosingReason()">
                                 <option value="">All</option>
                                 <option value="0">Open</option>
                                 <option value="1">Closed</option>
@@ -263,7 +263,7 @@
                         <div class="col-lg-8">
 
 
-                            <select id="SelectReasonFilter" name="SelectReason" class="form-control" asp-items="ViewBag.ClosingReason" style="width:80%;" ></select>
+                            <select id="SelectReasonFilter" name="SelectReason" class="form-control dropdown-toggle" asp-items="ViewBag.ClosingReason" style="width:80%;" ></select>
 
 
                             
