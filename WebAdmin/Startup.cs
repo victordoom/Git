@@ -97,7 +97,8 @@ namespace WebAdmin
 
 
             });
-           // Rotativa.AspNetCore.RotativaConfiguration.Setup(env);
+            Rotativa.AspNetCore.RotativaConfiguration.Setup(env);
+           
           
         }
     }

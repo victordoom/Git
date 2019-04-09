@@ -180,14 +180,17 @@ namespace WebAdmin.Controllers
                 Console.WriteLine(dat.AddMonths(ctr).ToString("d"));
 
 
-            // show only data for the last three month
-            var today = DateTime.Today.AddMonths(-6);
+            //record since the last twelve month for opportunities that is equal to online
+            var DateFromOnline = DateTime.Today.AddMonths(-12);
+            // record since the last three month for opportunities that is not equal to online
+            var DateFromOthers = DateTime.Today.AddMonths(-3);
             //var lastmonth = new DateTime(today.Year, today.Month - 3,today.Day);
-            
-           
+
+            var today = DateFromOthers;
+            var todayOnline = DateFromOnline;
 
 
-            
+
 
             // si es de Sales y Admin
             var segsistemausuario = from x in _context.SegSistemaUsuario
@@ -220,7 +223,7 @@ namespace WebAdmin.Controllers
                 //consulta para admin
                 var dBAdminContext = _context.Opportunities
                     //.Where(c => c.UserID == IDUser)
-                    .Where(c => c.VisitedDate >= today)
+                    .Where(c => (c.VisitedDate >= todayOnline && c.HowFoundID == 10) || (c.VisitedDate >= today && c.HowFoundID != 10))
                     .OrderByDescending(c => c.ID)
                     .Include(c => c.OpportunitiesDetails);
 
@@ -234,7 +237,7 @@ namespace WebAdmin.Controllers
                 //consulta para user
                 var consulSales = _context.Opportunities
                     .Where(c => c.UserID == IDUser)
-                    .Where(c => c.VisitedDate >= today)
+                    .Where(c => (c.VisitedDate >= todayOnline && c.HowFoundID == 10) || (c.VisitedDate >= today && c.HowFoundID != 10))
                     .OrderByDescending(c => c.ID)
                     .Include(c => c.OpportunitiesDetails);
 
@@ -1139,7 +1142,14 @@ namespace WebAdmin.Controllers
                 int recordsTotal = 0;
 
 
-                var today = DateTime.Today.AddMonths(-3);
+                //record since the last twelve month for opportunities that is equal to online
+                var DateFromOnline = DateTime.Today.AddMonths(-12);
+                // record since the last three month for opportunities that is not equal to online
+                var DateFromOthers = DateTime.Today.AddMonths(-3);
+                //var lastmonth = new DateTime(today.Year, today.Month - 3,today.Day);
+
+                var today = DateFromOthers;
+                var todayOnline = DateFromOnline;
 
                 string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
                 string Email = this.User.FindFirstValue(ClaimTypes.Name);
@@ -1173,16 +1183,17 @@ namespace WebAdmin.Controllers
                 //Getting all Customer data
                 if (admin == 1)
                 {
-                     customerData = from oppor in _context.Opportunities
-                                       where oppor.VisitedDate >= today
-                                       orderby oppor.ID descending
-                                       select oppor;
+                    customerData = from oppor in _context.Opportunities
+                                   where (oppor.VisitedDate >= todayOnline && oppor.HowFoundID == 10) || (oppor.VisitedDate >= DateFromOthers && oppor.HowFoundID != 10)
+                                   orderby oppor.ID descending
+                                   select oppor;
                 } else
                 {
                     if (normal == 1)
                     {
                         customerData = from oppor in _context.Opportunities
-                                       where (oppor.VisitedDate >= today && oppor.UserID == IDUser)
+                                       where ((oppor.VisitedDate >= todayOnline && oppor.HowFoundID == 10) || (oppor.VisitedDate >= DateFromOthers && oppor.HowFoundID != 10)) && oppor.UserID == IDUser
+                                       //where (oppor.VisitedDate >= today && oppor.UserID == IDUser)
                                        orderby oppor.ID descending
                                        select oppor;
                     }
@@ -1285,7 +1296,7 @@ namespace WebAdmin.Controllers
                     lista = customerData.ToList();
                     if (!string.IsNullOrEmpty(LeadOnline))
                     {
-                        var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 1) as F1, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
+                        var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 1) as F1, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5 from Opportunities Where Opportunities.VisitedDate >= {DateFromOnline} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
 
                         if (LeadOnline == "F0")
                         {

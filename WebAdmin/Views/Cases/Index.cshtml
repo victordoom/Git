@@ -101,7 +101,7 @@
                 <br />
                 <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.CasesID" asp-route-pagina="@ViewBag.PagM"><span class="zmdi zmdi-edit"></span></a>
                 <a asp-action="Details" class="btn btn-info" asp-route-id="@item.CasesID"><span class="zmdi zmdi-square-right"></span></a>
-                @*<a  class="btn btn-default external" onclick="pdf(@item.CasesID)" ><span class="zmdi zmdi-local-printshop"></span></a>*@
+                <a  class="btn btn-default external" onclick="pdf(@item.CasesID)" ><span class="zmdi zmdi-local-printshop"></span></a>
             </td>
             <td width="20%">
                 <b>@Html.DisplayFor(modelItem => item.Company.CompanyName)</b>

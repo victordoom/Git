@@ -72,31 +72,14 @@ namespace WebAdmin.Controllers
 
             ViewBag.RolSystem = user.Rol;
 
-            Proxy proxy = new Proxy();
-            var prueba = proxy.GetAll();
-            var segunda = proxy.GetByid(5);
+           // Proxy proxy = new Proxy();
+          //  var prueba = proxy.GetAll();
+          //  var segunda = proxy.GetByid(5);
             
             return View();
         }
 
-        //public JsonResult selectSBU(string id)
-        //{
-        //    List<BranchModel> branches = PopulateBranches();
-        //    var productos = branches.Where(x => x.Branchcode == id);
-        //    return Json(branches.Where(x => x.Branchcode == id));
-        //}
-
-        //// Get Branch from Database.
-        //private static List<BranchModel> PopulateBranches()
-        //{
-        //    List<BranchModel> branches = new List<BranchModel>();
-        //    branches.Add(new BranchModel { Branchcode = "1", BranchName = "Branch 1" });
-        //    branches.Add(new BranchModel { Branchcode = "2", BranchName = "Branch 2" });
-        //    branches.Add(new BranchModel { Branchcode = "3", BranchName = "Branch 3" });
-        //    branches.Add(new BranchModel { Branchcode = "4", BranchName = "Branch 4" });
-        //    branches.Add(new BranchModel { Branchcode = "5", BranchName = "Branch 5" });
-        //    return branches;
-        //}
+        
 
         public IActionResult About()
         {

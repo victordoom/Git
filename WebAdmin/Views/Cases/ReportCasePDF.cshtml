@@ -207,8 +207,10 @@
                         </dt>
 
                         <dd>
-                            <input  id="userid" name="userid" value="@Html.DisplayFor(model => model.AssignedTo)"/>
-                            @*@Html.DropDownListFor(model => model.AssignedTo, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })*@
+                            @*<input  id="userid" name="userid" value="@Html.DisplayFor(model => model.AssignedTo)"/>*@
+                            @Html.DropDownListFor(model => model.AssignedTo, (SelectList)ViewData["DDLUsers"], "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
+                            
+                            @*<label>@ViewData["DDLUsers"]</label>*@
                         </dd>
                     </dl>
                 </div>
@@ -219,6 +221,7 @@
                     <a class="btn btn-success" asp-action="CreateCasesDetails" asp-route-id="@Model.CasesID">Add Follow up</a> |
                     @*@Html.ActionLink("Create Details", "CreateCasesDetails",new { id = Model.Id })*@ |
                     <a asp-action="Index" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Back to List</a>
+                    <a asp-action="Export" class="btn btn-default"> <span class="glyphicon glyphicon-arrow-left"></span> Convert</a>
                 </div>
             </div>
         </div>
@@ -291,7 +294,7 @@
                                         @Html.DisplayFor(modelItem => item.Status)
                                     </td>
                                     <td>
-                                        @*@Html.DropDownListFor(model => item.UserID, (SelectList)ViewBag.DDLUsers, "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })*@
+                                        @Html.DropDownListFor(model => item.UserID, (SelectList)ViewData["DDLUsers"], "", htmlAttributes: new { @disabled = "disabled", @class = "customDrowDown" })
                                     </td>
 
                                 </tr>
@@ -305,6 +308,6 @@
         </div>
 
     </div>
-
+    <label>@ViewData["prueba"]</label>
 </body>
 </html>

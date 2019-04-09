@@ -10,15 +10,15 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebAdmin.Models;
-using X.PagedList;
-
-
+using Microsoft.AspNetCore.Hosting;
+using Rotativa.AspNetCore;
 
 namespace WebAdmin.Controllers
 {
     public class CasesController : Controller
     {
         private readonly DBAdminContext _context;
+        
 
         public static bool IsTechSupport { get; set; }
        
@@ -28,6 +28,7 @@ namespace WebAdmin.Controllers
         public CasesController(DBAdminContext context)
         {
             _context = context;
+            
            
         }
      
@@ -861,17 +862,19 @@ namespace WebAdmin.Controllers
                 return NotFound();
             }
 
-           
+
             //ViewBag.Newdetails = new CasesDetails();
             //ViewBag.DDLdetails = _context.CasesDetails.Where(x => x.CasesID == cases.CasesID);
             //ViewBag.DDlCompanies = new SelectList(_context.SalesCompany, "CompanyId", "CompanyName");
             //ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
 
-            
-            string Email = this.User.FindFirstValue(ClaimTypes.Name);
-           
 
-           
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+
+            ViewData["DDLUsers"] = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewData["prueba"] = "pasar varios viewdata";
+
+            
             ViewBag.User = Email; 
 
 
@@ -883,13 +886,18 @@ namespace WebAdmin.Controllers
             {
                 return RedirectToAction("../Identity/Account/Login");
             }
-            
 
 
-            return View(cases);
+
+            return new  ViewAsPdf(cases, ViewData);
         }
 
-       
+        //public ActionResult Export()
+        //{
+            
+        //}
+
+
 
         public JsonResult GetUser(int id)
         {
@@ -904,40 +912,7 @@ namespace WebAdmin.Controllers
             return Json(company);
         }
         #endregion
-        //public JsonResult FindDataUser2(int? UserID)
-        //{
-        //    object consulta;
-
-        //    consulta = from s in _context.SegUsuarios
-        //               where s.UserID == UserID
-        //               select s;
-
-
-        //    //var list = consulta.ToArray();
-        //    return Json(consulta);
-        //}
-
-
-        //public JsonResult FindDataUser(int? UserID)
-        //{
-        //    return Json(FindDataUser2(UserID));
-        //}
-
-
-        //public List<SegUsuarios> FindDataUser2(int? pUserID)
-        //{
-        //        var productos = _context.SegUsuarios.OrderBy(x => x.Login)
-        //                               .Where(x => x.UserID == pUserID).ToList();
-        //        return productos;
-
-        //}
-
-        //[HttpPost]
-        //public ActionResult GetUserData(int UserID)
-        //{
-        //    return Json(FindDataUser2(2));
-
-        //}
+        
         public async Task<IActionResult> IndexTechFiles()
         {
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
