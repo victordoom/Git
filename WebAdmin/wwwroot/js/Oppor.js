@@ -38,9 +38,11 @@ $(document).ready(function () {
             //"data": function (data) {
             
         },
+        
         "columnDefs":
             [{
-                "targets": [13],
+                
+               // "targets": [13],
                 "visible": false,
                 //"searchable": false,
 
@@ -172,13 +174,20 @@ $(document).ready(function () {
                 data: "closingReasonID",
                 name: "ClosingReasonID",
                 render: function (data, type, row) {
-                    var Reason;
-                    if (row.closingReasonID == null) {
-                        Reason = "";
-                    } else {
-                        Reason = row.closingReasonID;
+                    var Reason = "";
+                    var Comment = "";
+                    var closingreason = document.getElementById("SelectReasonFilter");
+                    for (var i = 0; i < closingreason.length; i++) {
+                        var id = closingreason[i].value;
+                        if (id == row.closingReasonID) {
+                            Reason = closingreason[i].text;
+                        }
                     }
-                    return Reason;
+                    if (row.closedComment != null) {
+                        Comment = row.closedComment;
+                    }
+
+                    return '' + Reason + ' ||  Comment: ' + Comment + '';
                 }
             },
             
@@ -209,6 +218,11 @@ $(document).ready(function () {
         
 
     });
+    if (y == "0") {
+        empTable.columns(13).visible(true);
+    } else {
+        empTable.columns(13).visible(false);
+    }
 
     memoria = empTable;
    

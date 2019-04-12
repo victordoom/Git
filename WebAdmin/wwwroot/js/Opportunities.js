@@ -108,3 +108,18 @@ function ReOpenOppor(action) {
     
 
 }
+
+$(document).ready(function () {
+    var su = $('input[name=success]')[0].value;
+
+    switch (su) {
+
+        case "Exito":
+            $('#Success').modal('show')
+            break;
+        case "Error":
+            $('#Error').modal('show')
+        default:
+    }
+    
+});

@@ -19,7 +19,8 @@ namespace WebAdmin.Controllers
     {
         private readonly DBAdminContext _context;
         private static string LeadOnline { get; set; }
-        
+        private static string SuccessWin { get; set; }
+
         public IConfiguration Configuration { get; private set; }
 
         public OpportunitiesController(DBAdminContext context, IConfiguration con)
@@ -103,8 +104,10 @@ namespace WebAdmin.Controllers
             return View();
         }
         // GET: Opportunities
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Opportunities opportunities)
         {
+            ViewBag.Success = SuccessWin;
+            
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
 
             ViewBag.User = lEmail; // HttpContext.Session.GetString("Email");
@@ -172,14 +175,25 @@ namespace WebAdmin.Controllers
             
 
             ViewBag.DDLUsers = sales;
-            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
-            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
+          //  ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
+         //   ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
 
             var dat = new DateTime(2015, 12, 31);
             for (int ctr = 0; ctr <= 15; ctr++)
                 Console.WriteLine(dat.AddMonths(ctr).ToString("d"));
+            //modal create
+            Opportunities model = new Opportunities();
+            model.CreatedDate = DateTime.Today;
+            model.VisitedDate = DateTime.Today;
+            model.OpenDate = DateTime.Today;
+            model.UserID = User.UserID;
+            model.Rating = "Cold";
+            model.EstRevenue = 0;
 
-
+            ViewBag.DDLUsersm = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
+            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
+            ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
             //record since the last twelve month for opportunities that is equal to online
             var DateFromOnline = DateTime.Today.AddMonths(-12);
             // record since the last three month for opportunities that is not equal to online
@@ -229,7 +243,7 @@ namespace WebAdmin.Controllers
 
                 ViewBag.Esadmin = 0;
                 ViewBag.Rol = "Administrador";
-                return View(await dBAdminContext.ToListAsync());
+                return View(model);
             }
            
             if (normal == 1)
@@ -241,7 +255,7 @@ namespace WebAdmin.Controllers
                     .OrderByDescending(c => c.ID)
                     .Include(c => c.OpportunitiesDetails);
 
-                return View(await consulSales.ToListAsync());
+                return View(model);
             }
             else
             {
@@ -309,37 +323,37 @@ namespace WebAdmin.Controllers
         }
 
         // GET: Opportunities/Create
-        public IActionResult Create()
-        {
-            string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
-            string Email = this.User.FindFirstValue(ClaimTypes.Name);
-            var User = _context.AspNetUsers.Single(m => m.Email == Email);
-            if (User == null)
-            {
-                return NotFound();
-            }
+        //public IActionResult Create()
+        //{
+        //    string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
+        //    string Email = this.User.FindFirstValue(ClaimTypes.Name);
+        //    var User = _context.AspNetUsers.Single(m => m.Email == Email);
+        //    if (User == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            Opportunities model = new Opportunities();
-            model.CreatedDate = DateTime.Today;
-            model.VisitedDate = DateTime.Today;
-            model.OpenDate = DateTime.Today;
-            model.UserID = User.UserID;
-            model.Rating = "Cold";
-            model.EstRevenue = 0;
+        //    Opportunities model = new Opportunities();
+        //    model.CreatedDate = DateTime.Today;
+        //    model.VisitedDate = DateTime.Today;
+        //    model.OpenDate = DateTime.Today;
+        //    model.UserID = User.UserID;
+        //    model.Rating = "Cold";
+        //    model.EstRevenue = 0;
 
-            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
-            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
-            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
-            ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
-
-
-            //le damos acceso a las opciones del menu segun el usuario
-            var rol = new UserRol.UserRol();
-            ViewBag.RolSystem = rol.Rol;
+        //    ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+        //    ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
+        //    ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
+        //    ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
 
 
-            return View(model);
-        }
+        //    //le damos acceso a las opciones del menu segun el usuario
+        //    var rol = new UserRol.UserRol();
+        //    ViewBag.RolSystem = rol.Rol;
+
+
+        //    return View(model);
+        //}
 
         // POST: Opportunities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -348,6 +362,9 @@ namespace WebAdmin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Opportunities opportunities, string dComment, string dStatus, string dNextVisit, string dEmailnotification)
         {
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
             OpportunitiesDetails detail = new OpportunitiesDetails();
             if (ModelState.IsValid)
             {
@@ -408,15 +425,18 @@ namespace WebAdmin.Controllers
                     await _context.SaveChangesAsync();
 
                     //sendMail(cases.CasesID);
-
+                    SuccessWin = "Exito";
                     return RedirectToAction(nameof(Index));
                 }
 
-
+                SuccessWin = "Exito";
                 return RedirectToAction(nameof(Index));
             }
-            return View(opportunities);
+            SuccessWin = "Error";
+            return RedirectToAction(nameof(Index), opportunities);
         }
+
+       
 
         // GET: Opportunities/Edit/5
         public async Task<IActionResult> Edit(int? id)
