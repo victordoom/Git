@@ -108,16 +108,8 @@ namespace WebAdmin.Models
 
 
         public virtual Collection<OpportunitiesDetails> OpportunitiesDetails { get; set; }
-
-        //[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        //public string UrlRating
-        //{
-        //    get { return UrlRating + "; " + UrlRating; }
-        //    private set
-        //    {
-        //        //Just need this here to trick EF
-        //    }
-        //}
+        [NotMapped]
+        public string Alerta { get; set; }
     }
 }
 

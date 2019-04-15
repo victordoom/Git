@@ -1,6 +1,8 @@
 ﻿@model WebAdmin.Models.Opportunities
 
 @{ 
+   
+
     List<SelectListItem> listItemsm = new List<SelectListItem>();
     listItemsm.Add(new SelectListItem
     {
@@ -170,6 +172,10 @@
         color: #fff;
     }
 </style>
+@{ 
+    Model.VisitedDate = DateTime.Today;
+    Model.OpenDate = DateTime.Today;
+}
 <div class="modal-content">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -232,7 +238,8 @@
                     <div class="form-group">
                         <label asp-for="UserID" class="col-xs-6 control-label">By </label>
                         <div class="col-xs-6">
-                            <select asp-for="UserID" id="Select_assignedto" class="form-control" disabled="disabled" asp-items="ViewBag.DDLUsersm"></select>
+                            <input asp-for="UserID" type="hidden" />
+                            <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle" disabled="disabled" asp-items="ViewBag.Users"></select>
                             <span asp-validation-for="UserID" class="text-danger"></span>
                         </div>
                     </div>
