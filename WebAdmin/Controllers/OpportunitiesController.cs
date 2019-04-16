@@ -339,37 +339,37 @@ namespace WebAdmin.Controllers
         }
 
         // GET: Opportunities/Create
-        //public IActionResult Create()
-        //{
-        //    string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
-        //    string Email = this.User.FindFirstValue(ClaimTypes.Name);
-        //    var User = _context.AspNetUsers.Single(m => m.Email == Email);
-        //    if (User == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult Create()
+        {
+            string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
+            string Email = this.User.FindFirstValue(ClaimTypes.Name);
+            var User = _context.AspNetUsers.Single(m => m.Email == Email);
+            if (User == null)
+            {
+                return NotFound();
+            }
 
-        //    Opportunities model = new Opportunities();
-        //    model.CreatedDate = DateTime.Today;
-        //    model.VisitedDate = DateTime.Today;
-        //    model.OpenDate = DateTime.Today;
-        //    model.UserID = User.UserID;
-        //    model.Rating = "Cold";
-        //    model.EstRevenue = 0;
+            Opportunities model = new Opportunities();
+            model.CreatedDate = DateTime.Today;
+            model.VisitedDate = DateTime.Today;
+            model.OpenDate = DateTime.Today;
+            model.UserID = User.UserID;
+            model.Rating = "Cold";
+            model.EstRevenue = 0;
 
-        //    ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
-        //    ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
-        //    ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
-        //    ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
-
-
-        //    //le damos acceso a las opciones del menu segun el usuario
-        //    var rol = new UserRol.UserRol();
-        //    ViewBag.RolSystem = rol.Rol;
+            ViewBag.DDLUsers = new SelectList(_context.SegUsuarios, "UserID", "NombreUsuario");
+            ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
+            ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
+            ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName");
 
 
-        //    return View(model);
-        //}
+            //le damos acceso a las opciones del menu segun el usuario
+            var rol = new UserRol.UserRol();
+            ViewBag.RolSystem = rol.Rol;
+
+
+            return View(model);
+        }
 
         // POST: Opportunities/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -1465,109 +1465,7 @@ namespace WebAdmin.Controllers
         }
         #endregion
 
-        #region OpporAlert
-        public class OpportunitiesAlert
-        {
-            
-            public int ID { get; set; }
-            [Display(Name = "Business Name")]
-            [Required(ErrorMessage = "Business Name is needed.")]
-            public string CompanyName { get; set; }
-            //public int Employee  { get; set; }
-            public string Category { get; set; }
-
-            [Required(ErrorMessage = "Rating is needed.")]
-            public string Rating { get; set; }
-
-            public string HowFound { get; set; }
-
-            [DataType(DataType.Date)]
-            [Display(Name = "Open Date")]
-            public DateTime? OpenDate { get; set; }
-            public double Probability { get; set; }
-
-            [Display(Name = "Est Revenue")]
-            public Decimal? EstRevenue { get; set; }
-
-            [DataType(DataType.Date)]
-            [Display(Name = "Est Return")]
-            public DateTime? EstClosedDate { get; set; }
-
-            [DataType(DataType.DateTime)]
-            [Display(Name = "Created Date")]
-            public DateTime? CreatedDate { get; set; }
-            public string Description { get; set; }
-            public string Comments { get; set; }
-            public string USState { get; set; }
-
-            [Display(Name = "Address")]
-            [Required(ErrorMessage = "Address is needed.")]
-            public string Address { get; set; }
-
-            [Display(Name = "State")]
-            [Required(ErrorMessage = "State is needed.")]
-            public string State { get; set; }
-
-            [Display(Name = "City")]
-            [Required(ErrorMessage = "City is needed.")]
-            public string City { get; set; }
-
-            [Display(Name = "ZipCode")]
-            [Required(ErrorMessage = "ZipCode is needed.")]
-            public string ZipCode { get; set; }
-            [Display(Name = "Owner Name")]
-            public string OwnerName { get; set; }
-
-            [Display(Name = "Phone Number")]
-            [DataType(DataType.PhoneNumber)]
-            [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Phone number")]
-            public string PhoneNumber { get; set; }
-
-            [DataType(DataType.Date)]
-            [Display(Name = "Visited Date")]
-            public DateTime? VisitedDate { get; set; }
-
-            [Display(Name = "Registration By")]
-            public int UserID { get; set; }
-
-            [Display(Name = "Category")]
-            public int CategoryID { get; set; }
-
-            [Display(Name = "POS Program")]
-            public int ProgramID { get; set; }
-            public string POSProgramAssigned { get; set; }
-
-            [Required(ErrorMessage = "How Found is needed.")]
-            [Display(Name = "How Found")]
-            public int HowFoundID { get; set; }
-
-            [Display(Name = "Lead #")]
-            public string NumberLeadToFollowUp { get; set; }
-
-            [Display(Name = "Email Address")]
-            //[Required(ErrorMessage = "The email address is required")]
-            [EmailAddress(ErrorMessage = "Invalid Email Address")]
-            public string EmailAddress { get; set; }
-            public string Web { get; set; }
-
-            public string LastComment { get; set; }
-            [Display(Name = "Time Zone")]
-            [Required(ErrorMessage = "Time Zone is needed.")]
-            public string TimeZone { get; set; }
-
-            public int? ClosingReasonID { get; set; }
-
-            //closed opportunities
-            public DateTime? ClosedDate { get; set; }
-            public int? ClosedBy { get; set; }
-            public string ClosedComment { get; set; }
-            public bool Closed { get; set; }
-
-            public string Alerta { get; set; }
-
-            
-        }
-        #endregion
+        
 
 
 

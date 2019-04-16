@@ -163,15 +163,15 @@ function agregarComment(action) {
     if (x != 0) {
         $('input[name=Idto]').val(x);
         var siadmin = $('input[name=Idto]')[0].value;
-        idto = siadmin
+        idto = siadmin;
 
         
     }
     
-   
+   //si es usuario normal elmismo id en los dos campos
     if (x == 0) {
         var admin = $('input[name=Idto]')[0].value;
-        idto = admin
+        idto = idby;
     }
    
 

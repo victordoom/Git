@@ -172,10 +172,7 @@
         color: #fff;
     }
 </style>
-@{ 
-    Model.VisitedDate = DateTime.Today;
-    Model.OpenDate = DateTime.Today;
-}
+
 <div class="modal-content">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>

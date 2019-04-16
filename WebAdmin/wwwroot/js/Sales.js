@@ -150,10 +150,10 @@ function agregarComment(action) {
         idto = siadmin
 
     } else {
-       
+       //si es usuario normal el mismo id en los dos campos
         var selectAdmin = $('input[name=Idtoadmin]')[0].value;
 
-        idto = selectAdmin
+        idto = idby
     }
 
     var comment = $('textarea[name=Comment]')[0].value;
