@@ -119,7 +119,24 @@ $(document).ready(function () {
             break;
         case "Error":
             $('#Error').modal('show')
+            break;
+        case "ExitoEdit":
+            $('#SuccessEdit').modal('show')
+            break;
         default:
     }
     
 });
+
+
+function CargarEdit(id) {
+    //var id = 5993;
+    $.ajax({
+        url: "Opportunities/Edit/" + id + "",
+        type: "Get",
+        success: function (response) {
+            $("#cargaredit").html(response)
+            $('#Editar').modal('show')
+        }
+    });
+}

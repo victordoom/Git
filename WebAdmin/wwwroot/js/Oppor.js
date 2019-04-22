@@ -53,7 +53,7 @@ $(document).ready(function () {
                 name: "ID",
                 render: function (data, type, row) {
 
-                    var op = '<a href="Opportunities/Edit/' + row.id + '" class="btn btn-warning" asp-route-id=""><span class="zmdi zmdi-edit"></span></a>';
+                    var op = '<a onclick="CargarEdit(' + row.id + ')" class="btn btn-warning" asp-route-id=""><span class="zmdi zmdi-edit"></span></a>';
                     op += '<a href="Opportunities/Details/' + row.id + '" class="btn btn-info" ><span class="zmdi zmdi-square-right"></span></a>';
                     if (row.closed == false) {
                         op += '<a class="btn btn-success" data-toggle="modal" data-target="#opportunitiesclosed" onclick="OpporDataByClosed(' + row.id + ',' + row.userID + ')"><span class="zmdi zmdi-square-right"></span></a>';
@@ -84,7 +84,7 @@ $(document).ready(function () {
                 data: "visitedDate",
                 name: "VisitedDate",
                 render: function (data, type, row) {
-                    return moment(row.createdDate).format("MM/DD/YYYY");
+                    return moment(row.visitedDate).format("MM/DD/YYYY");
                 },
             },
             {

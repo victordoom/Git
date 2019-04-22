@@ -3,7 +3,7 @@
 @{
     int id = ViewBag.UserID;
     string pru = id.ToString();
-    
+
 }
 
 @{
@@ -83,7 +83,7 @@
         Value = "Pacific Time Zone"
     });
 }
-}
+
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Varela+Round" />
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -476,9 +476,6 @@
         display: inline-block;
         margin: 100px auto;
     }
-
-    
-
 </style>
 
 <input type="hidden" name="memousu" id="memousu" value="@ViewBag.ListaUsu" />
@@ -496,12 +493,12 @@
             <span class="glyphicon glyphicon-search"
                   aria-hidden="true"></span> Advanced Search
         </button>
-       
+
     </div>
     <div class="col-md-6">
 
         <p style="text-align:right">
-            <a  data-toggle="modal"  href="#myModal" class="btn btn-success">Create New</a>
+            <a data-toggle="modal" href="#myModal" class="btn btn-success">Create New</a>
         </p>
     </div>
 </div>
@@ -714,10 +711,10 @@
                     <div class="row ">
                         <div class="col-md-6">
 
-                            <div class="form-group col-md-7" >
+                            <div class="form-group col-md-7">
                                 <label class=" control-label ">ID </label>
 
-                                <input type="text" class="form-control" >
+                                <input type="text" class="form-control">
 
                             </div>
                             <div class="form-group col-md-7">
@@ -733,54 +730,54 @@
                                 <label asp-for="HowFoundID" class=" control-label">HowFound </label>
                                 <select asp-for="HowFoundID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLHowFound"></select>
                                 <span asp-validation-for="HowFoundID" class="text-danger"></span>
-                            </div> 
-                            <div class="form-group col-md-6">
-                                    <label asp-for="NumberLeadToFollowUp" class=" control-label">#Lead </label>
-                                    <input asp-for="NumberLeadToFollowUp" class="form-control" />
-                                    <span asp-validation-for="NumberLeadToFollowUp" class="text-danger"></span>
                             </div>
-                           
+                            <div class="form-group col-md-6">
+                                <label asp-for="NumberLeadToFollowUp" class=" control-label">#Lead </label>
+                                <input asp-for="NumberLeadToFollowUp" class="form-control" />
+                                <span asp-validation-for="NumberLeadToFollowUp" class="text-danger"></span>
+                            </div>
+
 
                             <div class="form-group col-md-6">
-                                
-                                    <label asp-for="ProgramID" class=" control-label">Pos Program </label>
-                                    <select asp-for="ProgramID" id="Select_ProgramID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLPrograms"></select>
-                                    <span asp-validation-for="ProgramID" class="text-danger"></span>
+
+                                <label asp-for="ProgramID" class=" control-label">Pos Program </label>
+                                <select asp-for="ProgramID" id="Select_ProgramID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLPrograms"></select>
+                                <span asp-validation-for="ProgramID" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-6">
-                                    <label asp-for="CategoryID" class=" control-label">Category</label>
-                                    <select asp-for="CategoryID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLCategories"></select>
-                                    <span asp-validation-for="CategoryID" class="text-danger"></span>
+                                <label asp-for="CategoryID" class=" control-label">Category</label>
+                                <select asp-for="CategoryID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLCategories"></select>
+                                <span asp-validation-for="CategoryID" class="text-danger"></span>
                             </div>
-                           
+
 
 
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group col-md-2"></div>
                             <div class="form-group col-md-4  ">
-                                <label asp-for="CreatedDate"  class=" control-label  " >Created Date </label>
-                                </div>
-                            <div class=" form-group col-md-6" >
-                                    <input asp-for="CreatedDate" class="form-control float-right" disabled="disabled" />
-                                    <span asp-validation-for="CreatedDate" class="text-danger float-right"></span>
-                                
+                                <label asp-for="CreatedDate" class=" control-label  ">Created Date </label>
+                            </div>
+                            <div class=" form-group col-md-6">
+                                <input asp-for="CreatedDate" class="form-control float-right" disabled="disabled" />
+                                <span asp-validation-for="CreatedDate" class="text-danger float-right"></span>
+
                             </div>
                             <div class="form-group col-md-4"></div>
-                            <div class="form-group col-md-2 " >
-                                <label asp-for="UserID" class=" control-label" >By </label>
-                                </div>
+                            <div class="form-group col-md-2 ">
+                                <label asp-for="UserID" class=" control-label">By </label>
+                            </div>
                             <div class="form-group col-md-6">
-                                    <input asp-for="UserID" type="hidden" />
-                                    <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle" disabled="disabled" asp-items="ViewBag.Users"></select>
-                                    <span asp-validation-for="UserID" class="text-danger"></span>
-                                
+                                <input asp-for="UserID" type="hidden" />
+                                <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle" disabled="disabled" asp-items="ViewBag.Users"></select>
+                                <span asp-validation-for="UserID" class="text-danger"></span>
+
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="control-label"> Description</label>
                                 <textarea name="Description" class="form-control" required></textarea>
                             </div>
-                            
+
 
                         </div>
 
@@ -831,16 +828,16 @@
 
                             </div>
                             <div class="form-group col-md-6">
-                                
-                                    <label asp-for="City" class=" control-label">City </label>
-                                    <input asp-for="City" class="form-control" />
-                                    <span asp-validation-for="City" class="text-danger"></span>
+
+                                <label asp-for="City" class=" control-label">City </label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
                             </div>
-                             
+
                         </div>
 
 
-                    
+
                         <div class="col-md-6">
                             <div class="form-group col-md-6">
 
@@ -958,6 +955,23 @@
     </div>
 </div>
 
+<div id="SuccessEdit" class="modal fade">
+    <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+            <div class="modal-header" style="background: #eeb711;">
+                <div class="icon-box">
+                    <i class="material-icons">&#xE876;</i>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <h4>Great!</h4>
+                <p>Your Opportunities has been edited successfully.</p>
+                <button class="btn btn-success" data-dismiss="modal"><span>Start Exploring</span> <i class="material-icons">&#xE5C8;</i></button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Modal Error -->
 <div id="Error" class="modal fade">
@@ -978,6 +992,15 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="~/js/Opportunities.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-<script src="~/js/Oppor.js"></script>
+
+
+
+
+<div id="Editar" class="modal fade">
+    <div class="modal-dialog modal-lg contact-modal" id="cargaredit">
+        </div>
+    </div>
+
+        <script type="text/javascript" src="~/js/Opportunities.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+        <script src="~/js/Oppor.js"></script>

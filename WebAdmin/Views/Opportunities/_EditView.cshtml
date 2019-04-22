@@ -1,0 +1,479 @@
+﻿@model WebAdmin.Models.Opportunities
+
+@{
+    
+
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Cold.png",
+        Value = "~/images/Cold.png"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Cold.png",
+        Value = "~/images/Cold.png",
+        Selected = true
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "~/images/Hot.png",
+        Value = "~/images/Hot.png"
+    });
+
+
+    //modalcrear
+
+    List<SelectListItem> listItemsm = new List<SelectListItem>();
+    listItemsm.Add(new SelectListItem
+    {
+        Text = "Hot",
+        Value = "Hot"
+    });
+    listItemsm.Add(new SelectListItem
+    {
+        Text = "Warm",
+        Value = "Warm"
+    });
+    listItemsm.Add(new SelectListItem
+    {
+        Text = "Cold",
+        Value = "Cold",
+        Selected = true
+    });
+
+    List<SelectListItem> listItems2m = new List<SelectListItem>();
+    listItems2m.Add(new SelectListItem
+    {
+        Text = "In Proccess",
+        Value = "In Proccess"
+    });
+    listItems2m.Add(new SelectListItem
+    {
+        Text = "Closed",
+        Value = "Closed"
+    });
+
+    List<SelectListItem> listzone = new List<SelectListItem>();
+    listzone.Add(new SelectListItem
+    {
+        Text = "Central Time Zone",
+        Value = "Central Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Eastern Time Zone",
+        Value = "Eastern Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Mountain Time Zone",
+        Value = "Mountain Time Zone"
+    });
+    listzone.Add(new SelectListItem
+    {
+        Text = "Pacific Time Zone",
+        Value = "Pacific Time Zone"
+    });
+}
+
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Varela+Round" />
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .customDrowDown {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 0px;
+        background: transparent;
+    }
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+    .badge {
+        padding: 1px 9px 2px;
+        font-size: 12.025px;
+        font-weight: bold;
+        white-space: nowrap;
+        color: #ffffff;
+        background-color: #999999;
+        -webkit-border-radius: 9px;
+        -moz-border-radius: 9px;
+        border-radius: 9px;
+    }
+
+        .badge:hover {
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .badge-error {
+        background-color: #b94a48;
+    }
+
+        .badge-error:hover {
+            background-color: #953b39;
+        }
+
+    .badge-warning {
+        background-color: #f89406;
+    }
+
+        .badge-warning:hover {
+            background-color: #c67605;
+        }
+
+    .badge-success {
+        background-color: #468847;
+    }
+
+        .badge-success:hover {
+            background-color: #356635;
+        }
+
+    .badge-info {
+        background-color: #3a87ad;
+    }
+
+        .badge-info:hover {
+            background-color: #2d6987;
+        }
+
+    .badge-inverse {
+        background-color: #333333;
+    }
+
+        .badge-inverse:hover {
+            background-color: #1a1a1a;
+        }
+
+    .custom-loader-color {
+        color: #fff !important;
+        font-size: 40px !important;
+    }
+
+    .custom-loader-background {
+        background-color: #f60 !important;
+    }
+
+    .custom-middle-align {
+        vertical-align: middle !important;
+    }
+
+
+    /*modal create*/
+    .modal-create {
+        background: #47c9a2;
+        color: #fff;
+    }
+
+    .form-group .control-label {
+        font-family: 'Varela Round', sans-serif;
+        font-size: 13px;
+        color: #566787;
+        /*background: #f5f5f5;*/
+    }
+
+    .form-control {
+        border-color: #e5e5e5;
+        box-shadow: none;
+    }
+
+        .form-control:focus {
+            border-color: #0cb4aa;
+        }
+
+    .contact-modal {
+        padding: 50px;
+        margin: 30px auto;
+    }
+
+        .contact-modal h4 {
+            font-size: 26px;
+            display: inline-block;
+        }
+
+        .contact-modal .form-control, .contact-modal .btn {
+            /*min-height: 38px;*/
+            border-radius: 1px;
+            outline: none;
+            border-radius: 2px;
+            transition: all 0.5s;
+        }
+
+        .contact-modal textarea {
+            height: 150px;
+        }
+
+        .contact-modal .btn-primary {
+            min-width: 120px;
+            background: #0cb4aa;
+            border: none;
+        }
+
+            .contact-modal .btn-primary:hover, .contact-modal .btn-primary:focus {
+                background: #0ba69e;
+                outline: none;
+            }
+
+        .contact-modal .btn-link {
+            color: #0cb4aa;
+        }
+
+        .contact-modal label {
+            opacity: 0.9;
+            font-weight: normal;
+            /*font-size: 95%;*/
+        }
+
+        .contact-modal textarea {
+            resize: vertical;
+        }
+
+        .contact-modal .modal-header {
+            padding: 20px 35px 15px;
+        }
+
+        .contact-modal .modal-content {
+            border-radius: 1px;
+        }
+
+    .modal-footer {
+        padding: 20px 35px;
+    }
+
+    .contact-modal .close {
+        position: absolute;
+        right: 35px;
+        top: 25px;
+    }
+
+    .contact-modal .modal-body {
+        padding: 25px 35px 15px;
+    }
+
+    .hint-text {
+        opacity: 0.8;
+    }
+    /*.trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }*/
+    .modal-lg {
+        /*width: 1000px;*/
+    }
+
+    .bussines-title {
+        /*padding-bottom: 15px;*/
+        background: #435d7d;
+        color: #fff;
+        /*padding: 16px 30px;*/
+        /*margin: -20px -25px 10px;*/
+        border-radius: 3px 3px 0 0;
+    }
+
+    .follow-title {
+        background: #eeb711;
+        color: #fff;
+    }
+</style>
+
+<div class="modal-content">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <input type="hidden" asp-for="UserID" />
+        <input type="hidden" asp-for="Web" />
+        <input type="hidden" asp-for="Probability" />
+        <div class="modal-header modal-create">
+            <h4 class="modal-title">Edit Opportunities</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row ">
+                <div class="col-md-6">
+
+                    <div class="form-group col-md-7">
+                        <label class=" control-label ">ID </label>
+
+                        <input type="text" class="form-control">
+
+                    </div>
+                    <div class="form-group col-md-7">
+                        <label asp-for="VisitedDate" class=" control-label">Visited Day </label>
+
+                        <input asp-for="VisitedDate" class="form-control" />
+                        <span asp-validation-for="VisitedDate" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+
+                        <label asp-for="HowFoundID" class=" control-label">HowFound </label>
+                        <select asp-for="HowFoundID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLHowFound"></select>
+                        <span asp-validation-for="HowFoundID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="NumberLeadToFollowUp" class=" control-label">#Lead </label>
+                        <input asp-for="NumberLeadToFollowUp" class="form-control" />
+                        <span asp-validation-for="NumberLeadToFollowUp" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+
+                        <label asp-for="ProgramID" class=" control-label">Pos Program </label>
+                        <select asp-for="ProgramID" id="Select_ProgramID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLPrograms"></select>
+                        <span asp-validation-for="ProgramID" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="CategoryID" class=" control-label">Category</label>
+                        <select asp-for="CategoryID" class="form-control dropdown-toggle" asp-items="ViewBag.DDLCategories"></select>
+                        <span asp-validation-for="CategoryID" class="text-danger"></span>
+                    </div>
+
+
+
+                </div>
+                <div class="col-md-6 ">
+                    <div class="form-group col-md-2"></div>
+                    <div class="form-group col-md-4  ">
+                        <label asp-for="CreatedDate" class=" control-label  ">Created Date </label>
+                    </div>
+                    <div class=" form-group col-md-6">
+                        <input asp-for="CreatedDate" class="form-control float-right" readonly="readonly" />
+                        <span asp-validation-for="CreatedDate" class="text-danger float-right"></span>
+
+                    </div>
+                    <div class="form-group col-md-4"></div>
+                    <div class="form-group col-md-2 ">
+                        <label asp-for="UserID" class=" control-label">By </label>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input asp-for="UserID" type="hidden" />
+                        <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle"  asp-items="ViewBag.DDLUsers" disabled></select>
+                        <span asp-validation-for="UserID" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label class="control-label"> Description</label>
+                        <textarea asp-for="Description" class="form-control" required></textarea>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        @*busines info*@
+        <div class="modal-header bussines-title">
+            <h4 class="modal-title">Bussines Info</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-group">
+                        <label asp-for="CompanyName" class="col-xs-6 control-label">Bussines Name </label>
+
+                        <input asp-for="CompanyName" class="form-control" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OwnerName" class="col-xs-6 control-label">Owner Name </label>
+
+                        <input asp-for="OwnerName" class="form-control" />
+                        <span asp-validation-for="OwnerName" class="text-danger"></span>
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+
+                        <label asp-for="PhoneNumber" class=" control-label">Phone Number</label>
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="TimeZone" class=" control-label">Time Zone</label>
+                        <select class="form-control dropdown-toggle" name="TimeZone" asp-items="listzone"></select>
+                        <span asp-validation-for="TimeZone" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label asp-for="Address" class="col-xs-6 control-label">Address </label>
+
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group col-md-6">
+
+                        <label asp-for="City" class=" control-label">City </label>
+                        <input asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-md-6">
+                    <div class="form-group col-md-6">
+
+                    </div>
+                    <div class="form-group col-md-6">
+
+                        <label asp-for="OpenDate" class=" control-label">Open Date </label>
+                        <input asp-for="OpenDate" class="form-control" />
+                        <span asp-validation-for="OpenDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Rating" class=" control-label">Rating </label>
+                        <select class="form-control dropdown-toggle" name="Rating" asp-items="listItemsm"></select>
+                        <span asp-validation-for="Rating" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+
+
+                        <label asp-for="EmailAddress" class=" control-label">Email</label>
+                        <input asp-for="EmailAddress" class="form-control" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group col-md-6">
+
+
+                        <label asp-for="State" class=" control-label">State </label>
+                        <input asp-for="State" class="form-control" />
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="ZipCode" class=" control-label">Zip Code </label>
+                        <input asp-for="ZipCode" class="form-control" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+       
+        <div class="modal-footer">
+            <input type="button" class="btn btn-link" data-dismiss="modal" value="Cancel">
+            <input type="submit" class="btn btn-primary" value="Edit">
+        </div>
+    </form>
+</div>

@@ -486,9 +486,10 @@ namespace WebAdmin.Controllers
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
-            
 
-            return View(opportunities);
+
+             //  return View(opportunities);
+            return PartialView("_EditView", opportunities);
         }
 
         // POST: Opportunities/Edit/5
@@ -542,17 +543,21 @@ namespace WebAdmin.Controllers
                     }
                 }
 
-                
-                
 
-                return RedirectToAction(nameof(Index));
+
+
+                SuccessWin = "ExitoEdit";
+
+                return RedirectToAction(nameof(Index), new { Success = SuccessWin });
             }
 
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
 
-            return View(opportunities);
+            SuccessWin = "Error";
+
+            return RedirectToAction(nameof(Index), new { Success = SuccessWin });
         }
 
         // GET: Opportunities/Delete/5
