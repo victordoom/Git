@@ -88,395 +88,8 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    .customDrowDown {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        border: 0px;
-        background: transparent;
-    }
 
-    .uppercase {
-        text-transform: uppercase;
-    }
-
-    .badge {
-        padding: 1px 9px 2px;
-        font-size: 12.025px;
-        font-weight: bold;
-        white-space: nowrap;
-        color: #ffffff;
-        background-color: #999999;
-        -webkit-border-radius: 9px;
-        -moz-border-radius: 9px;
-        border-radius: 9px;
-    }
-
-        .badge:hover {
-            color: #ffffff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-    .badge-error {
-        background-color: #b94a48;
-    }
-
-        .badge-error:hover {
-            background-color: #953b39;
-        }
-
-    .badge-warning {
-        background-color: #f89406;
-    }
-
-        .badge-warning:hover {
-            background-color: #c67605;
-        }
-
-    .badge-success {
-        background-color: #468847;
-    }
-
-        .badge-success:hover {
-            background-color: #356635;
-        }
-
-    .badge-info {
-        background-color: #3a87ad;
-    }
-
-        .badge-info:hover {
-            background-color: #2d6987;
-        }
-
-    .badge-inverse {
-        background-color: #333333;
-    }
-
-        .badge-inverse:hover {
-            background-color: #1a1a1a;
-        }
-
-    .custom-loader-color {
-        color: #fff !important;
-        font-size: 40px !important;
-    }
-
-    .custom-loader-background {
-        background-color: #f60 !important;
-    }
-
-    .custom-middle-align {
-        vertical-align: middle !important;
-    }
-
-
-    /*modal create*/
-    .modal-create {
-        background: #47c9a2;
-        color: #fff;
-    }
-
-    .form-group .control-label {
-        font-family: 'Varela Round', sans-serif;
-        font-size: 13px;
-        color: #566787;
-        /*background: #f5f5f5;*/
-    }
-
-    .form-control {
-        border-color: #e5e5e5;
-        box-shadow: none;
-    }
-
-        .form-control:focus {
-            border-color: #0cb4aa;
-        }
-
-    .contact-modal {
-        padding: 50px;
-        margin: 30px auto;
-    }
-
-        .contact-modal h4 {
-            font-size: 26px;
-            display: inline-block;
-        }
-
-        .contact-modal .form-control, .contact-modal .btn {
-            /*min-height: 38px;*/
-            border-radius: 1px;
-            outline: none;
-            border-radius: 2px;
-            transition: all 0.5s;
-        }
-
-        .contact-modal textarea {
-            height: 150px;
-        }
-
-        .contact-modal .btn-primary {
-            min-width: 120px;
-            background: #0cb4aa;
-            border: none;
-        }
-
-            .contact-modal .btn-primary:hover, .contact-modal .btn-primary:focus {
-                background: #0ba69e;
-                outline: none;
-            }
-
-        .contact-modal .btn-link {
-            color: #0cb4aa;
-        }
-
-        .contact-modal label {
-            opacity: 0.9;
-            font-weight: normal;
-            /*font-size: 95%;*/
-        }
-
-        .contact-modal textarea {
-            resize: vertical;
-        }
-
-        .contact-modal .modal-header {
-            padding: 20px 35px 15px;
-        }
-
-        .contact-modal .modal-content {
-            border-radius: 1px;
-        }
-
-    .modal-footer {
-        padding: 20px 35px;
-    }
-
-    .contact-modal .close {
-        position: absolute;
-        right: 35px;
-        top: 25px;
-    }
-
-    .contact-modal .modal-body {
-        padding: 25px 35px 15px;
-    }
-
-    .hint-text {
-        opacity: 0.8;
-    }
-    /*.trigger-btn {
-        display: inline-block;
-        margin: 100px auto;
-    }*/
-    .modal-lg {
-        /*width: 1000px;*/
-    }
-
-    .bussines-title {
-        /*padding-bottom: 15px;*/
-        background: #435d7d;
-        color: #fff;
-        /*padding: 16px 30px;*/
-        /*margin: -20px -25px 10px;*/
-        border-radius: 3px 3px 0 0;
-    }
-
-    .follow-title {
-        background: #eeb711;
-        color: #fff;
-    }
-
-    /*//SUCCESS*/
-    .modal-confirm {
-        color: #434e65;
-        width: 525px;
-    }
-
-        .modal-confirm .modal-content {
-            padding: 20px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        .modal-confirm .modal-header {
-            background: #47c9a2;
-            border-bottom: none;
-            position: relative;
-            text-align: center;
-            margin: -20px -20px 0;
-            border-radius: 5px 5px 0 0;
-            padding: 35px;
-        }
-
-        .modal-confirm h4 {
-            text-align: center;
-            font-size: 36px;
-            margin: 10px 0;
-        }
-
-        .modal-confirm .form-control, .modal-confirm .btn {
-            min-height: 40px;
-            border-radius: 3px;
-        }
-
-        .modal-confirm .close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            color: #fff;
-            text-shadow: none;
-            opacity: 0.5;
-        }
-
-            .modal-confirm .close:hover {
-                opacity: 0.8;
-            }
-
-        .modal-confirm .icon-box {
-            color: #fff;
-            width: 95px;
-            height: 95px;
-            display: inline-block;
-            border-radius: 50%;
-            z-index: 9;
-            border: 5px solid #fff;
-            padding: 15px;
-            text-align: center;
-        }
-
-            .modal-confirm .icon-box i {
-                font-size: 64px;
-                margin: -4px 0 0 -4px;
-            }
-
-        .modal-confirm.modal-dialog {
-            margin-top: 80px;
-        }
-
-        .modal-confirm .btn {
-            color: #fff;
-            border-radius: 4px;
-            background: #eeb711;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            border-radius: 30px;
-            margin-top: 10px;
-            padding: 6px 20px;
-            border: none;
-        }
-
-            .modal-confirm .btn:hover, .modal-confirm .btn:focus {
-                background: #eda645;
-                outline: none;
-            }
-
-            .modal-confirm .btn span {
-                margin: 1px 3px 0;
-                float: left;
-            }
-
-            .modal-confirm .btn i {
-                margin-left: 1px;
-                font-size: 20px;
-                float: right;
-            }
-
-    .trigger-btn {
-        display: inline-block;
-        margin: 100px auto;
-    }
-    /*modalerror*/
-    .modal-error {
-        color: #636363;
-        width: 325px;
-    }
-
-        .modal-error .modal-content {
-            padding: 20px;
-            border-radius: 5px;
-            border: none;
-        }
-
-        .modal-error .modal-header {
-            border-bottom: none;
-            position: relative;
-        }
-
-        .modal-error h4 {
-            text-align: center;
-            font-size: 26px;
-            margin: 30px 0 -15px;
-        }
-
-        .modal-error .form-control, .modal-error .btn {
-            min-height: 40px;
-            border-radius: 3px;
-        }
-
-        .modal-error .close {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-
-        .modal-error .modal-footer {
-            border: none;
-            text-align: center;
-            border-radius: 5px;
-            font-size: 13px;
-        }
-
-        .modal-error .icon-box {
-            color: #fff;
-            position: absolute;
-            margin: 0 auto;
-            left: 0;
-            right: 0;
-            top: -70px;
-            width: 95px;
-            height: 95px;
-            border-radius: 50%;
-            z-index: 9;
-            background: #ef513a;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-        }
-
-            .modal-error .icon-box i {
-                font-size: 56px;
-                position: relative;
-                top: 4px;
-            }
-
-        .modal-error.modal-dialog {
-            margin-top: 80px;
-        }
-
-        .modal-error .btn {
-            color: #fff;
-            border-radius: 4px;
-            background: #ef513a;
-            text-decoration: none;
-            transition: all 0.4s;
-            line-height: normal;
-            border: none;
-        }
-
-            .modal-error .btn:hover, .modal-error .btn:focus {
-                background: #da2c12;
-                outline: none;
-            }
-
-    .trigger-btn {
-        display: inline-block;
-        margin: 100px auto;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="~/css/Opportunities.css" />
 
 <input type="hidden" name="memousu" id="memousu" value="@ViewBag.ListaUsu" />
 
@@ -510,18 +123,18 @@
         <tr>
             <th>ID</th>
             <th>CreatedDate</th>
-            <th>Business Name</th>
-            <th>OwnerName</th>
+            <th>Business Info</th>
+            @*<th>OwnerName</th>*@
             <th>VisitedDate</th>
             <th>Registration By</th>
             <th>Category</th>
             <th>HowFound</th>
             <th>Status</th>
-            <th>Lead#</th>
-            <th>TimeZone</th>
+            @*<th>Lead#</th>
+            <th>TimeZone</th>*@
             <th>Rating</th>
             <th>FollowUp</th>
-            <th>ClosingReason</th>
+            <th>Closing Reason</th>
 
 
         </tr>
@@ -659,7 +272,7 @@
 
 
 
-<!-- Modal -->
+<!-- Modal Closed-->
 <div class="modal fade" id="opportunitiesclosed" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -697,9 +310,9 @@
 </div>
 
 
-<!-- Modal HTML -->
+<!-- Modal Create -->
 <div id="myModal" class="modal fade">
-    <div class="modal-dialog modal-lg contact-modal">
+    <div class="modal-dialog modal-lg ">
         <div class="modal-content">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -712,18 +325,22 @@
                         <div class="col-md-6">
 
                             <div class="form-group col-md-7">
-                                <label class=" control-label ">ID </label>
+                                <label asp-for="CreatedDate" class=" control-label  ">Created Date </label>
 
-                                <input type="text" class="form-control">
+                                <input asp-for="CreatedDate" class="form-control float-right" disabled="disabled" />
+                                <span asp-validation-for="CreatedDate" class="text-danger float-right"></span>
 
                             </div>
                             <div class="form-group col-md-7">
-                                <label asp-for="VisitedDate" class=" control-label">Visited Day </label>
+                                <label asp-for="UserID" class=" control-label">By </label>
 
-                                <input asp-for="VisitedDate" class="form-control" />
-                                <span asp-validation-for="VisitedDate" class="text-danger"></span>
+                                <input asp-for="UserID" type="hidden" />
+                                <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle" disabled="disabled" asp-items="ViewBag.Users"></select>
+                                <span asp-validation-for="UserID" class="text-danger"></span>
 
                             </div>
+
+                            
 
                             <div class="form-group col-md-6">
 
@@ -754,23 +371,24 @@
 
                         </div>
                         <div class="col-md-6 ">
-                            <div class="form-group col-md-2"></div>
-                            <div class="form-group col-md-4  ">
-                                <label asp-for="CreatedDate" class=" control-label  ">Created Date </label>
-                            </div>
-                            <div class=" form-group col-md-6">
-                                <input asp-for="CreatedDate" class="form-control float-right" disabled="disabled" />
-                                <span asp-validation-for="CreatedDate" class="text-danger float-right"></span>
+                            
+                            <div id="OcultarID">
+                                <div class="form-group col-md-4"></div>
+                                <div class="form-group col-md-2  ">
+                                    <label class=" control-label ">ID</label>
+                                </div>
+                                <div class=" form-group col-md-6">
+                                    <input type="text" class="form-control">
 
+                                </div>
                             </div>
-                            <div class="form-group col-md-4"></div>
-                            <div class="form-group col-md-2 ">
-                                <label asp-for="UserID" class=" control-label">By </label>
+                            <div class="form-group col-md-2"></div>
+                            <div class="form-group col-md-4 ">
+                                <label asp-for="VisitedDate" class=" control-label">Visited Day </label>
                             </div>
                             <div class="form-group col-md-6">
-                                <input asp-for="UserID" type="hidden" />
-                                <select asp-for="UserID" id="Select_assignedto" class="form-control dropdown-toggle" disabled="disabled" asp-items="ViewBag.Users"></select>
-                                <span asp-validation-for="UserID" class="text-danger"></span>
+                                 <input asp-for="VisitedDate" class="form-control" />
+                                <span asp-validation-for="VisitedDate" class="text-danger"></span>
 
                             </div>
                             <div class="form-group col-md-12">
@@ -926,7 +544,7 @@
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-link" data-dismiss="modal" value="Cancel">
-                    <input type="submit" class="btn btn-primary" value="Create">
+                    <input type="submit" class="btn btn-success" value="Save">
                 </div>
             </form>
         </div>
@@ -997,10 +615,14 @@
 
 
 <div id="Editar" class="modal fade">
-    <div class="modal-dialog modal-lg contact-modal" id="cargaredit">
+    <div class="modal-dialog modal-lg " id="cargaredit">
         </div>
     </div>
 
-        <script type="text/javascript" src="~/js/Opportunities.js"></script>
+<button data-toggle="modal" data-target="#Success" class="btn"></button>
+<button data-toggle="modal" data-target="#Error" class="btn"></button>
+
+
+        <script type="text/javascript" src="~/js/OpportunitiesJS/Opportunities.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
-        <script src="~/js/Oppor.js"></script>
+        <script src="~/js/OpportunitiesJS/Oppor.js"></script>

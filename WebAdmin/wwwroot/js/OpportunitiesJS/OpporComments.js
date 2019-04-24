@@ -13,14 +13,12 @@ $(document).ready(function () {
     }
     
     var email = $('input[name=Email]')[0].value;
-    //var action = "Opportunities/mostarCommentsOppor";
-
+    
     getComments(email);
-
-
+    
 });
 
-
+//Get Comments
 function getComments(email) {
     $.ajax({
         type: "POST",
@@ -46,55 +44,69 @@ function getComments(email) {
         }
     });
 }
-
+//No Comments
 function nohaycomments() {
     var row = '';
-
-
+    
     $('#opporcomment').html(row);
 }
+
+//Show Comments
 function mostrarComments(response) {
     j = 0;
 
     var row = '';
 
     items = response;
-
-
+    
     $.each(items, function (index, val) {
 
+        var AdminColor = $('input[name=AdminColor]')[0].value;
+        if (AdminColor == 1) {
+
+            if (val.userLogeado == val.commentBy) {
+
+                row += '<div class="direct-chat-msg right">';
+                row += '<div class="direct-chat-info clearfix">';
+                row += '<span class="direct-chat-name pull-right  btn-info">' + val.nombre + '</span>';
+                row += '<span class="direct-chat-timestamp pull-left">' + val.commentDatetime + '</span>';
+                row += '</div>';
+
+                row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+                row += '</div>';
+                row += '</div>';
+
+            } else {
+
+                row += '<div class="direct-chat-msg">';
+                row += '<div class="direct-chat-info clearfix">';
+                row += '<span class="direct-chat-name pull-left  btn-success">' + val.nombre + '</span>';
+                row += '<span class="direct-chat-timestamp pull-right">' + val.commentDatetime + '</span>';
+                row += '</div>';
+
+                row += '<div class="direct-chat-text">' + val.comment + '</div>';
+
+                row += '</div>';
+                row += '</div>';
+            }
+
+        } else {
+
+        
         if (val.userLogeado == val.commentBy) {
-            // row += '<div class="box-body">';
-
-            // row += '<div class="direct-chat-messages">';
-
+            
             row += '<div class="direct-chat-msg">';
             row += '<div class="direct-chat-info clearfix">';
             row += '<span class="direct-chat-name pull-left  btn-success">' + val.nombre + '</span>';
             row += '<span class="direct-chat-timestamp pull-right">' + val.commentDatetime + '</span>';
             row += '</div>';
-
-
-
-
-            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
-
+            
             row += '<div class="direct-chat-text">' + val.comment + '</div>';
 
             row += '</div>';
-
-
-
-
             row += '</div>';
-
-            // row += '</div>';
-
-            //  row +=        '</div>'
-
-
-
-
+            
         } else {
 
             row += '<div class="direct-chat-msg right">';
@@ -102,29 +114,20 @@ function mostrarComments(response) {
             row += '<span class="direct-chat-name pull-right  btn-info">' + val.nombre + '</span>';
             row += '<span class="direct-chat-timestamp pull-left">' + val.commentDatetime + '</span>';
             row += '</div>';
-
-
-
-
-            // row += '<img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image">';
-
+            
             row += '<div class="direct-chat-text">' + val.comment + '</div>';
 
             row += '</div>';
-
-
-
-
             row += '</div>';
+            }
         }
 
     });
-
-
+    
     row += '<div><span id="final"></span></div>';
 
 
-
+    //Move scroll at the end
     $('#opporcomment').html(row);
     var container = $('#opporcomment'),
         scrollTo = $('#final');
@@ -133,7 +136,6 @@ function mostrarComments(response) {
         scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
     });
 
-    //document.getElementById('final').scrollIntoView(true);
 }
 
 function getAdministra(action) {
@@ -153,7 +155,7 @@ function getAdministra(action) {
     });
 }
 
-
+//Add comment
 function agregarComment(action) {
     var idby = $('input[name=Idby]')[0].value;
     var idto;
@@ -164,8 +166,7 @@ function agregarComment(action) {
         $('input[name=Idto]').val(x);
         var siadmin = $('input[name=Idto]')[0].value;
         idto = siadmin;
-
-        
+ 
     }
     
    //si es usuario normal elmismo id en los dos campos
@@ -174,11 +175,7 @@ function agregarComment(action) {
         idto = idby;
     }
    
-
     
-
-   
-
     var comment = $('textarea[name=Comment]')[0].value;
     var title = $('input[name=Title]')[0].value;
 
@@ -207,7 +204,7 @@ function agregarComment(action) {
                         },
                         success: function (response) {
                             if (response = true) {
-                                //$('#modalComments').modal('show');
+                                
                                 $('textarea[name=Comment]').val('');
                                 var x = document.getElementById("Select").value;
                                 if (x != 0) {
@@ -232,6 +229,3 @@ function agregarComment(action) {
 
 
 }
-
-
-

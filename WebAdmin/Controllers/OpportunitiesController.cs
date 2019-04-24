@@ -115,9 +115,10 @@ namespace WebAdmin.Controllers
             {
                 ViewBag.Success = Success;
             }
-            else { 
-            ViewBag.Success = opportunities.Alerta;
-                 }
+            else
+            {
+                ViewBag.Success = opportunities.Alerta;
+            }
 
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
 
@@ -125,7 +126,7 @@ namespace WebAdmin.Controllers
             if (lEmail == null)
             {
                 return RedirectToAction("../Identity/Account/Login");
-                //return RedirectToAction("Index", "Login");
+
             }
 
             string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
@@ -163,7 +164,7 @@ namespace WebAdmin.Controllers
 
             ViewData["ClosingReason"] = closingReason;
 
-            //usuario opportunities sales
+            //Users opportunities sales
             var usersales = from s in _context.SegUsuarios
                             from a in _context.Employees
                             where s.IdPersona == a.Id.ToString()
@@ -173,7 +174,6 @@ namespace WebAdmin.Controllers
             var sales = new List<SelectListItem>();
 
             
-
             foreach (var item in usersales)
             {
                 sales.Add(new SelectListItem
@@ -184,10 +184,7 @@ namespace WebAdmin.Controllers
             }
 
             
-
             ViewBag.DDLUsers = sales;
-          //  ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription");
-         //   ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription");
 
             var dat = new DateTime(2015, 12, 31);
             for (int ctr = 0; ctr <= 15; ctr++)
@@ -200,9 +197,6 @@ namespace WebAdmin.Controllers
             model.UserID = User.UserID;
             model.Rating = "Cold";
             model.EstRevenue = 0;
-
-           
-
 
 
 
@@ -219,9 +213,7 @@ namespace WebAdmin.Controllers
             var today = DateFromOthers;
             var todayOnline = DateFromOnline;
 
-
-
-
+            
             // si es de Sales y Admin
             var segsistemausuario = from x in _context.SegSistemaUsuario
                                     where x.IdUsuario == IDUser &&
@@ -231,9 +223,9 @@ namespace WebAdmin.Controllers
 
             // si es solo Sales
             var segsistemausuarionormal = from x in _context.SegSistemaUsuario
-                                    where x.IdUsuario == IDUser &&
-                                      x.CodigoSistema == 3
-                                    select x;
+                                          where x.IdUsuario == IDUser &&
+                                            x.CodigoSistema == 3
+                                          select x;
 
             var normal = segsistemausuarionormal.Count();
 
@@ -244,10 +236,8 @@ namespace WebAdmin.Controllers
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
 
-           
-
+            
             //si encontro un usuario Significa que es de Sales por logica si tiene Acceso Sales
-
             if (admin == 1)
             {
                 //consulta para admin
@@ -261,7 +251,7 @@ namespace WebAdmin.Controllers
                 ViewBag.Rol = "Administrador";
                 return View(model);
             }
-           
+
             if (normal == 1)
             {
                 //consulta para user
@@ -278,9 +268,6 @@ namespace WebAdmin.Controllers
                 return RedirectToAction("../Home/Privacy");
                 // return NotFound();
             }
-
-            
-
 
         }
 
@@ -372,8 +359,7 @@ namespace WebAdmin.Controllers
         }
 
         // POST: Opportunities/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Opportunities opportunities, string dComment, string dStatus, string dNextVisit, string dEmailnotification)
@@ -480,40 +466,27 @@ namespace WebAdmin.Controllers
             ViewBag.DDLCategories = new SelectList(_context.OpportunitiesCategories, "CategoryID", "CategoryDescription", opportunities.CategoryID);
             ViewBag.DDLHowFound = new SelectList(_context.OpportunitiesHowFound, "HowFoundID", "HowFoundDescription", opportunities.HowFoundID);
             ViewBag.DDLPrograms = new SelectList(_context.Programs, "ProgramID", "ProgramShortName", opportunities.ProgramID);
-
-
+            
 
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
-
-
+            
              //  return View(opportunities);
             return PartialView("_EditView", opportunities);
         }
 
         // POST: Opportunities/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit( Opportunities opportunities)
         {
-            //if (id != opportunities.ID)
-            //{
-            //    return NotFound();
-            //}
-
+           
             if (ModelState.IsValid)
             {
                 try
                 {
-                    //string Id_of_AspNetUser = _clasess.ExtensionMethods.getUserId(this.User);
-                    //string Email = this.User.FindFirstValue(ClaimTypes.Name);
-                    //var User = _context.AspNetUsers.Single(m => m.Email == Email);
-
-                    //opportunities.UserID = User.UserID;
-
+                    
                     //define probability according to rating
                     switch (opportunities.Rating)
                     {
@@ -543,9 +516,7 @@ namespace WebAdmin.Controllers
                     }
                 }
 
-
-
-
+                
                 SuccessWin = "ExitoEdit";
 
                 return RedirectToAction(nameof(Index), new { Success = SuccessWin });
@@ -592,8 +563,7 @@ namespace WebAdmin.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-       
+        
 
         private bool OpportunitiesExists(int id)
         {
@@ -608,8 +578,7 @@ namespace WebAdmin.Controllers
                        where su.UserID == userid
                        select su;
 
-
-            //var list = consulta.ToArray();
+            
             return Json(consulta);
         }
         public JsonResult GetDatosPrograma(int? programid)
@@ -620,8 +589,7 @@ namespace WebAdmin.Controllers
                        where su.ProgramID == programid
                        select su;
 
-
-            //var list = consulta.ToArray();
+            
             return Json(consulta);
         }
         #endregion
@@ -674,12 +642,8 @@ namespace WebAdmin.Controllers
                 }
 
             }
-
-
+            
             return response;
-
-
-
 
         }
 
@@ -769,8 +733,7 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
-
-
+            
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
@@ -811,8 +774,7 @@ namespace WebAdmin.Controllers
         }
 
         // POST: OpportunitiesDetails/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateOpportunitiesDetails(OpportunitiesDetails opportunitiesDetails)
@@ -861,17 +823,12 @@ namespace WebAdmin.Controllers
         }
 
         // POST: OpportunitiesDetails/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditOpportunitiesDetails(OpportunitiesDetails opportunitiesDetails)
         {
-            //if (id != opportunitiesDetails.DetailID)
-            //{
-            //    return NotFound();
-            //}
-
+            
             if (ModelState.IsValid)
             {
                 try
@@ -909,9 +866,7 @@ namespace WebAdmin.Controllers
             {
                 return NotFound();
             }
-
-
-
+            
             //le damos acceso a las opciones del menu segun el usuario
             var rol = new UserRol.UserRol();
             ViewBag.RolSystem = rol.Rol;
@@ -972,13 +927,11 @@ namespace WebAdmin.Controllers
 
 
             var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
-
             
-
 
             List<InfoSalesComments> Comments = new List<InfoSalesComments>();
 
-            // var consul = await _context.SalesComments.ToListAsync();
+            
             Comments.AddRange(con);
 
 
@@ -995,8 +948,7 @@ namespace WebAdmin.Controllers
             var lEmail = this.User.FindFirstValue(ClaimTypes.Name);
             var UserLog = await _context.AspNetUsers.SingleOrDefaultAsync(m => m.Email == lEmail);
 
-
-
+            
             var NombreUserLog = _context.SegUsuarios.SingleOrDefault(x => x.UserID == UserLog.UserID);
             
             //nombre del usuaio del select
@@ -1022,15 +974,11 @@ namespace WebAdmin.Controllers
 
             var con = await join.Where(x => x.SalesId == User.UserID || x.CommentBy == User.UserID ).OrderBy(x => x.CommentDatetime).Take(50).ToListAsync();
 
-
-
-
+            
             List<InfoSalesComments> Comments = new List<InfoSalesComments>();
-
-            // var consul = await _context.SalesComments.ToListAsync();
+            
             Comments.AddRange(con);
-
-
+            
             return Comments;
         }
 
@@ -1115,9 +1063,6 @@ namespace WebAdmin.Controllers
 
             }
 
-
-
-
             return admins;
         }
 
@@ -1137,9 +1082,7 @@ namespace WebAdmin.Controllers
             public DateTime? CommentDatetime { get; set; }
             public string Comment { get; set; }
             public string Title { get; set; }
-
-
-
+            
 
             public string Nombre { get; set; }
             public int UserLogeado { get; set; }
@@ -1229,7 +1172,7 @@ namespace WebAdmin.Controllers
                 var customerData = from oppor in _context.Opportunities
                                    where oppor.VisitedDate >= today
                                    select oppor;
-                //Getting all Customer data
+                //Getting all  data
                 if (admin == 1)
                 {
                     customerData = from oppor in _context.Opportunities
@@ -1249,11 +1192,9 @@ namespace WebAdmin.Controllers
                 }
                 
                 
-
-
-                //recibiendo parametros
+                //recibiendo parametros de busqueda abvanced
                 int user = 0;
-                var userid = Request.Form["columns[5][search][value]"].FirstOrDefault();
+                var userid = Request.Form["columns[4][search][value]"].FirstOrDefault();
                 if (userid == "")
                 {
 
@@ -1263,7 +1204,7 @@ namespace WebAdmin.Controllers
                     user = int.Parse(userid);
                 }
                 int category = 0;
-                var categoryid = Request.Form["columns[6][search][value]"].FirstOrDefault();
+                var categoryid = Request.Form["columns[5][search][value]"].FirstOrDefault();
                 if (categoryid == "")
                 {
 
@@ -1273,7 +1214,7 @@ namespace WebAdmin.Controllers
                     category = int.Parse(categoryid);
                 }
                 int howfound = 0;
-                var howfoundid = Request.Form["columns[7][search][value]"].FirstOrDefault();
+                var howfoundid = Request.Form["columns[6][search][value]"].FirstOrDefault();
                 if (howfoundid == "")
                 {
 
@@ -1286,7 +1227,7 @@ namespace WebAdmin.Controllers
                 bool status = false;
                 //inicializar con un numero diferente de 0 y 1
                 int memostatus = 10;
-                var statusid = Request.Form["columns[8][search][value]"].FirstOrDefault();
+                var statusid = Request.Form["columns[7][search][value]"].FirstOrDefault();
                 if (statusid == "")
                 {
 
@@ -1302,11 +1243,11 @@ namespace WebAdmin.Controllers
                     status = true;
                 }
                
-                string rating = Request.Form["columns[10][search][value]"].FirstOrDefault();
+                string rating = Request.Form["columns[8][search][value]"].FirstOrDefault();
                 int reason = 0;
                 //inicializar con un numero diferente de 0 y 1
                 int memoreason = 0;
-                var reasonid = Request.Form["columns[13][search][value]"].FirstOrDefault();
+                var reasonid = Request.Form["columns[10][search][value]"].FirstOrDefault();
                 string closingreason = reasonid.ToString();
                 
                 if (!string.IsNullOrEmpty(closingreason))
@@ -1315,26 +1256,22 @@ namespace WebAdmin.Controllers
                     memoreason = reason;
                 }
 
-                //Sorting  
-                //if (!(string.IsNullOrEmpty(sortColumn) && string.IsNullOrEmpty(sortColumnDirection)))
-                //{
-                //    customerData = customerData.OrderBy(sortColumn + " " + sortColumnDirection);
-                //}
+                
                 //Search
                 if (!string.IsNullOrEmpty(searchValue))
                 {
                     customerData = customerData.Where(m => m.OwnerName.ToLower().Contains(searchValue.ToLower()) ||
                     m.CompanyName.ToLower().Contains(searchValue.ToLower()) || m.NumberLeadToFollowUp.Contains(searchValue.ToLower()));
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[5][search][value]"]))
+                if (!string.IsNullOrEmpty(Request.Form["columns[4][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.UserID == user);
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[6][search][value]"]))
+                if (!string.IsNullOrEmpty(Request.Form["columns[5][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.CategoryID == category);
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[7][search][value]"]))
+                if (!string.IsNullOrEmpty(Request.Form["columns[6][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.HowFoundID == howfound);
 
@@ -1375,7 +1312,6 @@ namespace WebAdmin.Controllers
                         if (LeadOnline == "F2")
                         {
 
-                           // var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 2) as F2, '00' as F1, '00' as F3, '00' as F4, '00' as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
                             string dato = "00";
                             var ff = F.Where(y => y.F2 != dato && y.F3 == dato);
 
@@ -1388,7 +1324,6 @@ namespace WebAdmin.Controllers
                         if (LeadOnline == "F3")
                         {
 
-                         //   var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 3) as F3, '00' as F1, '00' as F4, '00' as F2, '00' as F5 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
                             string dato = "00";
                             var ff = F.Where(y => y.F3 != dato && y.F4 == dato);
 
@@ -1401,7 +1336,6 @@ namespace WebAdmin.Controllers
                         if (LeadOnline == "F4")
                         {
 
-                         //   var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 4) as F4, '00' as F1, '00' as F3, '00' as F5, '00' as F2 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
                             string dato = "00";
                             var ff = F.Where(y => y.F4 != dato && y.F5 == dato);
 
@@ -1414,7 +1348,6 @@ namespace WebAdmin.Controllers
                         if (LeadOnline == "F5")
                         {
 
-                          //  var F = _context.OppVerfyLeadOnlineTmp.FromSql($"SELECT Opportunities.ID as Idoppor, dbo.Opp_verifyLeadOnlineTmp(Opportunities.ID, 5) as F5, '00' as F1, '00' as F3, '00' as F4, '00' as F2 from Opportunities Where Opportunities.VisitedDate >= {today} and Opportunities.HowFoundID = 10 order by Opportunities.ID desc").ToList();
                             string dato = "00";
                             var ff = F.Where(y => y.F5 != dato);
 
@@ -1422,39 +1355,30 @@ namespace WebAdmin.Controllers
                             customerData = sisi;
 
                         }
-                       // customerData.Join(IDS, c => c.ID, pli => pli, (c, pli) => c);
-                        //customerData = lista.AsQueryable();
-
-
+                      
                     }
 
-                    
-
-                    
-
+                 
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[8][search][value]"]))
+                if (!string.IsNullOrEmpty(Request.Form["columns[7][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.Closed == status);
                 }
-                if (!string.IsNullOrEmpty(Request.Form["columns[10][search][value]"]))
+                if (!string.IsNullOrEmpty(Request.Form["columns[8][search][value]"]))
                 {
                     customerData = customerData.Where(m => m.Rating == rating);
                 }
 
-                if (!string.IsNullOrEmpty(Request.Form["columns[13][search][value]"]) && reason != 0)
+                if (!string.IsNullOrEmpty(Request.Form["columns[10][search][value]"]) && reason != 0)
                 {
                     customerData = customerData.Where(m => m.ClosingReasonID == reason);
                 }
-
-
-
+                
                 //total number of rows count   
                 recordsTotal = customerData.Count();
                 //Paging   
                 var data = customerData.Skip(skip).Take(pageSize).ToList();
-
-               
+                
                 //Returning Json Data  
                 return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data, us = user, ca = category, how = howfound,
                 sta = memostatus, ra = rating, rea = memoreason});
@@ -1464,7 +1388,6 @@ namespace WebAdmin.Controllers
             {
                 throw;
             }
-
 
 
         }

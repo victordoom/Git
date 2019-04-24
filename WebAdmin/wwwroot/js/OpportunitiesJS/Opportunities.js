@@ -7,7 +7,7 @@ $('#opportunitiesreopen').on('shown.bs.modal', function () {
 });
 
 
-
+//Closed Opportunities
 function OpporDataByClosed(id, iduser) {
     $('input[name=Id]').val(id);
     $('input[name=IdUser]').val(iduser);
@@ -59,7 +59,7 @@ function CerrarOppor(action) {
 
 }
 
-
+//Reopen Opportunities
 function OpporDataReOpen(idopor, iduser) {
     $('input[name=Id]').val(idopor);
     $('input[name=IdUser]').val(iduser);
@@ -70,9 +70,7 @@ function ReOpenOppor(action) {
     var reopencomment = $('textarea[name=ReopenComment]')[0].value;
     var id = $('input[name=Id]')[0].value;
     var iduser = $('input[name=IdUser]')[0].value;
-   // var reason = document.getElementById("SelectReason").value;
-
-   
+  
         if (reopencomment == "") {
             $('#ReopenComment').focus();
         } else {
@@ -105,10 +103,8 @@ function ReOpenOppor(action) {
 
         }
 
-    
-
 }
-
+//Load Modal Info Create, Edit
 $(document).ready(function () {
     var su = $('input[name=success]')[0].value;
 
@@ -125,12 +121,13 @@ $(document).ready(function () {
             break;
         default:
     }
+    $('#OcultarID').hide();
     
 });
 
-
+//Load Edit Modal
 function CargarEdit(id) {
-    //var id = 5993;
+    
     $.ajax({
         url: "Opportunities/Edit/" + id + "",
         type: "Get",

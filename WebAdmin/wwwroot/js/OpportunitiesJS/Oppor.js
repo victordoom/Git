@@ -27,16 +27,14 @@ $(document).ready(function () {
     }
 
    
-
+    //Load Table Opportunities
     var empTable = $("#user" + idtabla + "").DataTable({
 
         "ajax": {
             "url": "/Opportunities/GetList",
             "type": "POST",
-           // "data": { filtro: leadonline },
             "datatype": "json",
-            //"data": function (data) {
-            
+             
         },
         
         "columnDefs":
@@ -45,7 +43,6 @@ $(document).ready(function () {
                // "targets": [13],
                 "visible": false,
                 //"searchable": false,
-
             }],
         "columns": [
             {
@@ -72,14 +69,26 @@ $(document).ready(function () {
             {
                 data: "companyName",
                 name: "CompanyName",
+                width: "15%",
                 render: function (data, type, row) {
                     if (row.timeZone == null) {
                         row.timeZone = "";
                     }
-                    return '' + row.companyName + ' Phone: ' + row.phoneNumber + ' Address: ' + row.city + ' ' + row.state + ' '+ row.timeZone + '';
+                    var Info = '<b> ' + row.companyName + '</b>';
+                    Info += '<br>';
+                    Info += '' + row.ownerName + '';
+                    Info += '<br>';
+                    Info += ' Phone: ' + row.phoneNumber + '';
+                    Info += '<br>';
+                    Info += ' Address: ' + row.city + ' ' + row.state + '';
+                    Info += '<br>';
+                    Info += ' Time Zone: ' + row.timeZone + '';
+
+
+                    return Info;
                 },
             },
-            { "data": "ownerName", "name": "OwnerName", "autoWidth": true },
+            //{ "data": "ownerName", "name": "OwnerName", "autoWidth": true },
             {
                 data: "visitedDate",
                 name: "VisitedDate",
@@ -133,10 +142,10 @@ $(document).ready(function () {
                     }
 
                     if (row.howFoundID == 10) {
-                        return '<span class="label label-primary">' + howfoundtext + '</span>';
+                        return '<span class="label label-primary">' + howfoundtext + '</span><br>' + row.numberLeadToFollowUp + '';;
                     }
 
-                    return howfoundtext;
+                    return howfoundtext + '<br>' + row.numberLeadToFollowUp + '';
                 },
             },
             {
@@ -153,8 +162,8 @@ $(document).ready(function () {
 
                 },
             },
-            { "data": "numberLeadToFollowUp", "name": "NumberLeadToFollowUp", "autoWidth": true },
-            { "data": "timeZone", "name": "TimeZone", "autoWidth": true },
+            //{ "data": "numberLeadToFollowUp", "name": "NumberLeadToFollowUp", "autoWidth": true },
+            //{ "data": "timeZone", "name": "TimeZone", "autoWidth": true },
             
             {
                 data: "rating",
@@ -187,7 +196,7 @@ $(document).ready(function () {
                         Comment = row.closedComment;
                     }
 
-                    return '' + Reason + ' ||  Comment: ' + Comment + '';
+                    return '<b>' + Reason + '</b><br>Comment: ' + Comment + '';
                 }
             },
             
@@ -205,37 +214,26 @@ $(document).ready(function () {
 
             mostrarLeadonline();
             mostrarClosingReason();
-           // alert("Datos cargados exitosamente");
+          
         }
         
-           
-                
-            
-        
-            
-        
-
-        
+          
 
     });
+    //Show Closing Reason to Admin
     if (y == "0") {
-        empTable.columns(13).visible(true);
+        empTable.columns(10).visible(true);
     } else {
-        empTable.columns(13).visible(false);
+        empTable.columns(10).visible(false);
     }
-
+    //Save Table in Memo Temp
     memoria = empTable;
-   
+   //Filter Lead Online
     FiltroLeadOnline();
     
 });
 
-
-$(document).ready(function () {
-  //  memobusqueda();  
-});
-
-
+//Parameters to Search Advanced
 function SelectUsuario() {
     var x = document.getElementById("user").value;
      indexuser = document.getElementById("user").selectedIndex;
@@ -250,6 +248,7 @@ function SelectUsuario() {
     var c = document.getElementById("SelectReasonFilter").value;
     indexreason = document.getElementById("SelectReasonFilter").selectedIndex;
 
+    //How Found is Online Run Filter LeadOnline
     if (z == 10) {
         if (leadonline != "") {
             FiltroLeadOnline();
@@ -258,23 +257,18 @@ function SelectUsuario() {
     
     }
 
-    if (b == 1) {
-
-    }
-
-   
-
-    memoria.columns(5).search(x);
-    memoria.columns(6).search(y);
-    memoria.columns(7).search(z);
-    memoria.columns(10).search(a);
-    memoria.columns(8).search(b);
-    memoria.columns(13).search(c);
+    //Sending search parameters according to columns to datatable
+    memoria.columns(4).search(x);
+    memoria.columns(5).search(y);
+    memoria.columns(6).search(z);
+    memoria.columns(8).search(a);
+    memoria.columns(7).search(b);
+    memoria.columns(10).search(c);
     memoria.draw();
 
     
 }  
-
+//Restart the advanced search
 function reset() {
     var x = document.getElementById("user");
     var y = document.getElementById("category");
@@ -294,7 +288,7 @@ function reset() {
     mostrarLeadonline();
     mostrarClosingReason();
 }
-
+//Keep the search in memory
 function memobusqueda(json) {
     var lx = document.getElementById("user");
     
@@ -349,46 +343,46 @@ function memobusqueda(json) {
 
         }
     }
-    //alert("asta qui");
+    
 }
 
-
+//Coloring active button
 $("#mif0").click(function () {
-    //$(this).toggleClass("btn-danger btn-success");
+    
     if ($(this).hasClass("btn-danger") == true) {
         $(this).removeClass("btn-danger");
         $(this).addClass("btn-success");
 
         leadonline = "F0";
-        //rojo 1
+        //red 1
         if ($("#mif1").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif1").removeClass("btn-success");
             $("#mif1").addClass("btn-danger");
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -401,7 +395,7 @@ $("#mif0").click(function () {
 
         leadonline = "reset";
 
-        //rojo 1
+        //red 1
         if ($("#mif1").hasClass("btn-danger") == true) {
 
         } else {
@@ -409,28 +403,28 @@ $("#mif0").click(function () {
             $("#mif1").addClass("btn-danger");
         }
 
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -440,41 +434,41 @@ $("#mif0").click(function () {
     }
 });
 $("#mif1").click(function () {
-    //$(this).toggleClass("btn-danger btn-success");
+    
     if ($(this).hasClass("btn-danger") == true) {
         $(this).removeClass("btn-danger");
         $(this).addClass("btn-success");
 
         leadonline = "F1";
-        //verde 0
+        //Green 0
         if ($("#mif0").hasClass("btn-danger") == true) {
             $("#mif0").removeClass("btn-danger");
             $("#mif0").addClass("btn-success");
         } else {
            
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -487,35 +481,35 @@ $("#mif1").click(function () {
 
         leadonline = "reset";
 
-        //rojo 0
+        //red 0
         if ($("#mif0").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif0").removeClass("btn-success");
             $("#mif0").addClass("btn-danger");
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -540,21 +534,21 @@ $("#mif2").click(function () {
             $("#mif1").addClass("btn-success");
         }
 
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -580,21 +574,21 @@ $("#mif2").click(function () {
             $("#mif1").addClass("btn-danger");
         }
 
-        //rojo 3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -610,30 +604,30 @@ $("#mif3").click(function () {
 
         leadonline = "F3";
 
-        //verde 0
+        //green 0
         if ($("#mif0").hasClass("btn-danger") == true) {
             $("#mif0").removeClass("btn-danger");
             $("#mif0").addClass("btn-success");
         }
-        //verde 1
+        //green 1
             if ($("#mif1").hasClass("btn-danger") == true) {
                 $("#mif1").removeClass("btn-danger");
                 $("#mif1").addClass("btn-success");
         }
-        //verde 2
+        //green 2
         if ($("#mif2").hasClass("btn-danger") == true) {
             $("#mif2").removeClass("btn-danger");
             $("#mif2").addClass("btn-success");
         }
 
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -647,21 +641,21 @@ $("#mif3").click(function () {
 
         leadonline = "reset";
 
-        //rojo 0
+        //red 0
         if ($("#mif0").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif0").removeClass("btn-success");
             $("#mif0").addClass("btn-danger");
         }
-        //rojo 1
+        //red 1
         if ($("#mif1").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif1").removeClass("btn-success");
             $("#mif1").addClass("btn-danger");
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
@@ -669,14 +663,14 @@ $("#mif3").click(function () {
             $("#mif2").addClass("btn-danger");
         }
 
-        //rojo 4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif4").removeClass("btn-success");
             $("#mif4").addClass("btn-danger");
         }
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -692,28 +686,28 @@ $("#mif4").click(function () {
 
         leadonline = "F4";
 
-        //verde 0
+        //green 0
         if ($("#mif0").hasClass("btn-danger") == true) {
             $("#mif0").removeClass("btn-danger");
             $("#mif0").addClass("btn-success");
         }
-        //verde 1
+        //green 1
         if ($("#mif1").hasClass("btn-danger") == true) {
             $("#mif1").removeClass("btn-danger");
             $("#mif1").addClass("btn-success");
         }
-        //verde 2
+        //green 2
         if ($("#mif2").hasClass("btn-danger") == true) {
             $("#mif2").removeClass("btn-danger");
             $("#mif2").addClass("btn-success");
         }
-        //verde 3
+        //green 3
         if ($("#mif3").hasClass("btn-danger") == true) {
             $("#mif3").removeClass("btn-danger");
             $("#mif3").addClass("btn-success");
         }
 
-        //rojo 5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -727,35 +721,35 @@ $("#mif4").click(function () {
 
         leadonline = "reset";
 
-        //rojo 0
+        //red 0
         if ($("#mif0").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif0").removeClass("btn-success");
             $("#mif0").addClass("btn-danger");
         }
-        //rojo 1
+        //red 1
         if ($("#mif1").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif1").removeClass("btn-success");
             $("#mif1").addClass("btn-danger");
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo5
+        //red 5
         if ($("#mif5").hasClass("btn-danger") == true) {
 
         } else {
@@ -771,27 +765,27 @@ $("#mif5").click(function () {
 
         leadonline = "F5";
 
-        //verde 0
+        //green 0
         if ($("#mif0").hasClass("btn-danger") == true) {
             $("#mif0").removeClass("btn-danger");
             $("#mif0").addClass("btn-success");
         }
-        //verde 1
+        //green 1
         if ($("#mif1").hasClass("btn-danger") == true) {
             $("#mif1").removeClass("btn-danger");
             $("#mif1").addClass("btn-success");
         }
-        //verde 2
+        //green 2
         if ($("#mif2").hasClass("btn-danger") == true) {
             $("#mif2").removeClass("btn-danger");
             $("#mif2").addClass("btn-success");
         }
-        //verde 3
+        //green 3
         if ($("#mif3").hasClass("btn-danger") == true) {
             $("#mif3").removeClass("btn-danger");
             $("#mif3").addClass("btn-success");
         }
-        //verde 4
+        //green 4
         if ($("#mif4").hasClass("btn-danger") == true) {
             $("#mif4").removeClass("btn-danger");
             $("#mif4").addClass("btn-success");
@@ -803,35 +797,35 @@ $("#mif5").click(function () {
 
         leadonline = "reset";
 
-        //rojo 0
+        //red 0
         if ($("#mif0").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif0").removeClass("btn-success");
             $("#mif0").addClass("btn-danger");
         }
-        //rojo 1
+        //red 1
         if ($("#mif1").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif1").removeClass("btn-success");
             $("#mif1").addClass("btn-danger");
         }
-        //rojo 2
+        //red 2
         if ($("#mif2").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif2").removeClass("btn-success");
             $("#mif2").addClass("btn-danger");
         }
-        //rojo3
+        //red 3
         if ($("#mif3").hasClass("btn-danger") == true) {
 
         } else {
             $("#mif3").removeClass("btn-success");
             $("#mif3").addClass("btn-danger");
         }
-        //rojo4
+        //red 4
         if ($("#mif4").hasClass("btn-danger") == true) {
 
         } else {
@@ -841,7 +835,7 @@ $("#mif5").click(function () {
     }
 });
 
-
+//Color according to the search memory
 function FiltroLeadOnline() {
 
     $.ajax({
@@ -857,35 +851,35 @@ function FiltroLeadOnline() {
                     $("#mif0").addClass("btn-success");
 
                     leadonline = "F0";
-                    //rojo 1
+                    //red 1
                     if ($("#mif1").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif1").removeClass("btn-success");
                         $("#mif1").addClass("btn-danger");
                     }
-                    //rojo 2
+                    //red 2
                     if ($("#mif2").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif2").removeClass("btn-success");
                         $("#mif2").addClass("btn-danger");
                     }
-                    //rojo 3
+                    //red 3
                     if ($("#mif3").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif3").removeClass("btn-success");
                         $("#mif3").addClass("btn-danger");
                     }
-                    //rojo 4
+                    //red 4
                     if ($("#mif4").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif4").removeClass("btn-success");
                         $("#mif4").addClass("btn-danger");
                     }
-                    //rojo 5
+                    //red 5
                     if ($("#mif5").hasClass("btn-danger") == true) {
 
                     } else {
@@ -893,12 +887,9 @@ function FiltroLeadOnline() {
                         $("#mif5").addClass("btn-danger");
                     }
                 } else {
-                    //$("#mif1").removeClass("btn-success");
-                    //$("#mif1").addClass("btn-danger");
-
+                    
                     leadonline = "";
-
-
+                    
                 }
             }
 
@@ -909,14 +900,14 @@ function FiltroLeadOnline() {
                     $("#mif1").addClass("btn-success");
 
                     leadonline = "F1";
-                    //rojo 2
+                    //red 2
                     if ($("#mif2").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif2").removeClass("btn-success");
                         $("#mif2").addClass("btn-danger");
                     }
-                    //rojo 3
+                    //red 3
                     if ($("#mif3").hasClass("btn-danger") == true) {
 
                     } else {
@@ -930,7 +921,7 @@ function FiltroLeadOnline() {
                         $("#mif4").removeClass("btn-success");
                         $("#mif4").addClass("btn-danger");
                     }
-                    //rojo 5
+                    //red 5
                     if ($("#mif5").hasClass("btn-danger") == true) {
 
                     } else {
@@ -938,11 +929,8 @@ function FiltroLeadOnline() {
                         $("#mif5").addClass("btn-danger");
                     }
                 } else {
-                    //$("#mif1").removeClass("btn-success");
-                    //$("#mif1").addClass("btn-danger");
-
+                    
                     leadonline = "";
-
                     
                 }
             }
@@ -960,21 +948,21 @@ function FiltroLeadOnline() {
                             $("#mif1").addClass("btn-success");
                         }
 
-                        //rojo 3
+                        //red 3
                         if ($("#mif3").hasClass("btn-danger") == true) {
 
                         } else {
                             $("#mif3").removeClass("btn-success");
                             $("#mif3").addClass("btn-danger");
                         }
-                        //rojo 4
+                        //red 4
                         if ($("#mif4").hasClass("btn-danger") == true) {
 
                         } else {
                             $("#mif4").removeClass("btn-success");
                             $("#mif4").addClass("btn-danger");
                         }
-                        //rojo 5
+                        //red 5
                         if ($("#mif5").hasClass("btn-danger") == true) {
 
                         } else {
@@ -983,8 +971,7 @@ function FiltroLeadOnline() {
                         }
 
                     } else {
-                        //$("#mif2").removeClass("btn-success");
-                       // $("#mif2").addClass("btn-danger");
+                        
 
                         leadonline = "";
                         if ($("#mif1").hasClass("btn-danger") == true) {
@@ -992,8 +979,7 @@ function FiltroLeadOnline() {
                             $("#mif1").addClass("btn-success");
 
                         } else {
-                           // $("#mif1").removeClass("btn-success");
-                           // $("#mif1").addClass("btn-danger");
+                           
                         }
 
                         
@@ -1010,25 +996,25 @@ function FiltroLeadOnline() {
 
                     leadonline = "F3";
 
-                    //verde 1
+                    //green 1
                     if ($("#mif1").hasClass("btn-danger") == true) {
                         $("#mif1").removeClass("btn-danger");
                         $("#mif1").addClass("btn-success");
                     }
-                    //verde 2
+                    //green 2
                     if ($("#mif2").hasClass("btn-danger") == true) {
                         $("#mif2").removeClass("btn-danger");
                         $("#mif2").addClass("btn-success");
                     }
 
-                    //rojo 4
+                    //red 4
                     if ($("#mif4").hasClass("btn-danger") == true) {
 
                     } else {
                         $("#mif4").removeClass("btn-success");
                         $("#mif4").addClass("btn-danger");
                     }
-                    //rojo 5
+                    //red 5
                     if ($("#mif5").hasClass("btn-danger") == true) {
 
                     } else {
@@ -1037,10 +1023,7 @@ function FiltroLeadOnline() {
                     }
 
                 } else {
-                   // $(this).removeClass("btn-success");
-                  //  $(this).addClass("btn-danger");
-
-                    
+                  
                 }
 
             }
@@ -1052,23 +1035,23 @@ function FiltroLeadOnline() {
 
                     leadonline = "F4";
 
-                    //verde 1
+                    //green 1
                     if ($("#mif1").hasClass("btn-danger") == true) {
                         $("#mif1").removeClass("btn-danger");
                         $("#mif1").addClass("btn-success");
                     }
-                    //verde 2
+                    //green 2
                     if ($("#mif2").hasClass("btn-danger") == true) {
                         $("#mif2").removeClass("btn-danger");
                         $("#mif2").addClass("btn-success");
                     }
-                    //verde 3
+                    //green 3
                     if ($("#mif3").hasClass("btn-danger") == true) {
                         $("#mif3").removeClass("btn-danger");
                         $("#mif3").addClass("btn-success");
                     }
 
-                    //rojo 5
+                    //red 5
                     if ($("#mif5").hasClass("btn-danger") == true) {
 
                     } else {
@@ -1077,11 +1060,8 @@ function FiltroLeadOnline() {
                     }
 
                 } else {
-                    //$(this).removeClass("btn-success");
-                    //$(this).addClass("btn-danger");
-
+                    
                     leadonline = "";
-                    //rojo 1
                     
                 }
             }
@@ -1093,34 +1073,31 @@ function FiltroLeadOnline() {
 
                     leadonline = "F5";
 
-                    //verde 1
+                    //green 1
                     if ($("#mif1").hasClass("btn-danger") == true) {
                         $("#mif1").removeClass("btn-danger");
                         $("#mif1").addClass("btn-success");
                     }
-                    //verde 2
+                    //green 2
                     if ($("#mif2").hasClass("btn-danger") == true) {
                         $("#mif2").removeClass("btn-danger");
                         $("#mif2").addClass("btn-success");
                     }
-                    //verde 3
+                    //green 3
                     if ($("#mif3").hasClass("btn-danger") == true) {
                         $("#mif3").removeClass("btn-danger");
                         $("#mif3").addClass("btn-success");
                     }
-                    //verde 4
+                    //green 4
                     if ($("#mif4").hasClass("btn-danger") == true) {
                         $("#mif4").removeClass("btn-danger");
                         $("#mif4").addClass("btn-success");
                     }
 
                 } else {
-                   // $(this).removeClass("btn-success");
-                  //  $(this).addClass("btn-danger");
-
+                  
                     leadonline = "";
-
-                    
+ 
                 }
             }
 
@@ -1128,10 +1105,10 @@ function FiltroLeadOnline() {
         }
     });
 }
-
+//Color everything red
 function resetleadonline() {
     leadonline = "reset";
-    //pasamos  todo  a rojo
+    
     //f1
     if ($("#mif1").hasClass("btn-danger") == true) {
        
@@ -1169,6 +1146,7 @@ function resetleadonline() {
     }
 }
 
+//Show hidden fields of advanced search
 function mostrarLeadonline() {
     var estado = document.getElementById("howfound").value;
     var status = document.getElementById("status").value;

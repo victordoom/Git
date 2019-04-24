@@ -42,6 +42,8 @@
 <input type="hidden" id="UserID" name="UserID" value="@ViewBag.UserID" />
 <input type="hidden" id="Ocultarchat" name="Ocultarchat" runat="server"/>
 
+<input type="hidden" id="AdminColor" name="AdminColor" value="@ViewBag.Adminsales"/>
+
 <div class="block-header">
     <h3><a class="list-group-item" href="#"><i class="fa fa-tachometer fa-fw" aria-hidden="true"></i>&nbsp; DASHBOARD - SALES</a></h3>
     <small class="text-muted"></small>
@@ -546,5 +548,16 @@
 
 <div><span id="current"></span></div>
 <script src="~/js/site.js" asp-append-version="true"></script>
-<script src="~/js/OpporComments.js"></script>
+<script src="~/js/OpportunitiesJS/OpporComments.js"></script>
 <script src="~/js/DashEstatico.js"></script>
+<script>
+    document.body.style.zoom = "80%";
+    
+</script>
+<style>
+    .zoom {
+        zoom: 2;
+        -moz-transform: scale(2);
+        -moz-transform-origin: 0 0;
+    }
+</style>
