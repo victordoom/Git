@@ -535,12 +535,6 @@
 
 
 
-
-
-
-
-
-
     </div>
 
 
@@ -551,13 +545,60 @@
 <script src="~/js/OpportunitiesJS/OpporComments.js"></script>
 <script src="~/js/DashEstatico.js"></script>
 <script>
-    document.body.style.zoom = "80%";
-    
+  //  document.body.style.zoom = "80%";
+
+   
 </script>
 <style>
-    .zoom {
-        zoom: 2;
-        -moz-transform: scale(2);
-        -moz-transform-origin: 0 0;
+    body {
+        font-size: 12px;
+    }
+    .content-wrapper, .main-footer {
+        margin-left: 200px;
+    }
+
+    ol, ul {
+        font-size: 12px;
+        line-height: 24px;
+    }
+    .sidebar-menu ul{
+        font-size:12px;
+    }
+    .treeview-menu > li > a{
+        font-size:12px;
+    }
+    .main-sidebar {
+        width: 200px;
+        transition: transform .3s ease-in-out,width .3s ease-in-out;
+    }
+    .main-header .navbar{
+        margin-left:200px;
+    }
+    .main-header .logo{
+        width:200px;
+        padding:0 10px;
+    }
+
+    @@media (max-width:767px) {
+        .content-wrapper, .main-footer {
+            margin-left: 0;
+        }
+        .sidebar-open .content-wrapper, .sidebar-open .main-footer {
+            -webkit-transform: translate(200px, 0);
+            -ms-transform: translate(200px, 0);
+            -o-transform: translate(200px, 0);
+            transform: translate(200px, 0);
+        }
+        .main-header .navbar {
+            margin-left: 0;
+        }
+        .main-header .logo, .main-header .navbar {
+            width: 100%;
+            float: none;
+        }
+        ol, ul {
+            font-size: 12px;
+            line-height: 24px;
+        }
     }
 </style>
